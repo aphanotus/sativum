@@ -1,2 +1,3 @@
 # sativum
-Functions and data for teaching genetics
+
+Now in active development. Target roll-out is 13 April 2023.

@@ -1,0 +1,16 @@
+Package: sativum
+Type: Package
+Title: Tools for teaching genetics
+Version: 2023.02.14
+Description: Functions and data for teaching genetics. 
+    Features classic datasets as well as easy-to-use functions
+    suitable for novice R users.
+License: CC0 1.0 Universal
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.1
+NeedsCompilation: no
+VignetteBuilder: knitr
+Author: Dave Angelini [aut, cre],
+Maintainer: Dave Angelini <dave.angelini@colby.edu>
+
