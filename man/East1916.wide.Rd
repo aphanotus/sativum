@@ -8,10 +8,10 @@
 An object of class \code{data.frame} with 24 rows and 27 columns.
 }
 \source{
-Dave Angelini \email{david.r.angelini@gmail.com} [aut]
+East, E. 1916. Studies on Size Inheritance in \emph{Nicotiana}. \emph{Genetics} 1(2): 164-176
+    \url{http://www.genetics.org/content/1/2/164/}
 }
 \usage{
-East1916
 East1916.wide
 }
 \description{
@@ -20,14 +20,10 @@ A dataset reporting the corolla lengths of \emph{Nicotiana} flowers of different
     for longer or shorter corolla lengths.
 }
 \details{
-These data originally appeared in East (1916). This daatset is often used in genetics courses
+These data originally appeared in East (1916). This dataset is often used in genetics courses
     to present the effects of selection on quantitative traits.
 
     \code{East1916} organizes the data in a "tidy" long format. \code{East1916.wide} presents the data in
-    a dateframe that most closely resembles the original Table 1 from East (1916).
-}
-\references{
-East, E. 1916. Studies on Size Inheritance in \emph{Nicotiana}. \emph{Genetics} 1(2): 164-176
-    \url{http://www.genetics.org/content/1/2/164/}
+    a data frame that most closely resembles the original Table 1 from East (1916).
 }
 \keyword{datasets}
