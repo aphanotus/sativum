@@ -3,7 +3,7 @@
 #' @param x An object of biological sequence data. Must be one of the following:
 #'     A character string containing the FASTA format sequences as downloaded from NCBI.
 #'     A named vector of sequences.
-#'     A data frame with columns for the sequence names and sequence text, as produced by \code{phytools::read.fasta}.
+#'     A data frame with columns for the sequence names and sequence text, as produced by \code{phylotools::read.fasta}.
 #'     A \code{Biostrings::DNAStringSet} or \code{AAStringSet} object.
 #' @param filename A character with the path and filename to create on disk.
 #' @param verbose A logical argument specifying whether to display confirmation. Defaults to \code{TRUE}.
@@ -35,7 +35,7 @@ write.fasta <- function (
     filename <- filename[1]
   }
   if (class(verbose)[1] != "logical") {
-     stop("Errorin argument `verbose`. (See the help entry: `?write.fasta`)\n")
+     stop("Error in argument `verbose`. (See the help entry: `?write.fasta`)\n")
   } else { verbose <- verbose[1] }
   # End preliminary vetting of the input and arguments
 

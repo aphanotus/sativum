@@ -27,7 +27,7 @@ For a complete list of options run \code{rentrez::entrez_db_searchable()}}
 \item{format}{A character name for the output format.
 \code{"raw"}: A character string containing the FASTA format sequences as downloaded from NCBI.
 \code{"character"}: A named vector of sequences.
-\code{"data.frame"} or \code{"table"}: A data frame with columns for the sequence names and sequence text, as produced by \code{phytools::read.fasta}.
+\code{"data.frame"} or \code{"table"}: A data frame with columns for the sequence names and sequence text, as produced by \code{phylotools::read.fasta}.
 \code{"DNAStringSet"}: A \code{Biostrings::DNAStringSet} object. (Default)
 \code{"AAStringSet"}: A \code{Biostrings::AAStringSet} object.}
 

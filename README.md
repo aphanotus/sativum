@@ -31,10 +31,11 @@ See [Sarah's lab activity](https://docs.google.com/document/d/1q7_6T65jznl8OIv6n
 - [x] `search.for.ncbi.ids`
 - [x] `fetch.sequences` (also `fetch.sequence`)
 - [X] `simplify.sequence.names`
-- [x] `write.fasta `
+- [x] `write.fasta`
+- [x] `read.fasta` with output to various formats
 - [x] `combine.sequences`
-- [ ] `align.sequences`
-- [ ] `show.alignment(anole.alignment, format = "text")` or `"pdf"`
+- [x] `align.sequences`
+- [x] `write.alignment` - write out an interleaved Phylip format file
 - [ ] `infer.phylogeny`
 - [ ] a function to get branch lengths between specific tips on a tree (all pairwise?)
 - [ ] color code tips / branches / clades

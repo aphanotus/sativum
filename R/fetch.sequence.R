@@ -6,7 +6,7 @@
 #' @param format A character name for the output format.
 #'     \code{"raw"}: A character string containing the FASTA format sequences as downloaded from NCBI.
 #'     \code{"character"}: A named vector of sequences.
-#'     \code{"data.frame"} or \code{"table"}: A data frame with columns for the sequence names and sequence text, as produced by \code{phytools::read.fasta}.
+#'     \code{"data.frame"} or \code{"table"}: A data frame with columns for the sequence names and sequence text, as produced by \code{phylotools::read.fasta}.
 #'     \code{"DNAStringSet"}: A \code{Biostrings::DNAStringSet} object. (Default)
 #'     \code{"AAStringSet"}: A \code{Biostrings::AAStringSet} object.
 #' @param simplify.names A logical argument specifying whether to simplify the sequence names to species - sequence name - accession number. Defaults to \code{TRUE}.
@@ -77,7 +77,7 @@ fetch.sequence <- function (
     stop("Error in argument `separator`. (See the help entry: `?fetch.sequence`.)\n")
   } else { separator <- separator[1] }
   if (class(verbose)[1] != "logical") {
-     stop("Errorin argument `verbose`. (See the help entry: `?fetch.sequence`.)\n")
+     stop("Error in argument `verbose`. (See the help entry: `?fetch.sequence`.)\n")
   } else { verbose <- verbose[1] }
   # End preliminary vetting of the input and arguments
 
@@ -92,8 +92,7 @@ fetch.sequence <- function (
   # Output: raw format
   if (strtrim(format,1)=="r") {
     if (verbose) {
-      if (!require(stringr)) { stop("Please run  `install.packages('stringr')`  first.") }
-      message("Sequences downloaded: ",str_count(seqs.raw, ">"))
+      if (verbose) { message("Downloaded ",lengths(regmatches(seqs.raw, gregexpr(">", seqs.raw)))," sequence in ",format, " format") }
     }
     return(seqs.raw)
   }
@@ -113,13 +112,13 @@ fetch.sequence <- function (
 
   # Output: named character vector format
   if (strtrim(format,1)=="c") {
-    if (verbose) { message("Sequences downloaded: ",length(seqs)) }
+    if (verbose) { message("Downloaded ",length(seqs)," sequence in ",format, " format") }
     return(seqs)
   }
 
   # Output: data frame
   if (strtrim(format,1)=="d" | strtrim(format,1)=="t") {
-    if (verbose) { message("Sequences downloaded: ",length(seqs)) }
+    if (verbose) { message("Downloaded ",length(seqs)," sequence in ",format, " format") }
     seqs <- data.frame(
       seq.name = seq.names,
       seq.text = seqs
@@ -198,7 +197,7 @@ fetch.sequences <- function (
     stop("Error in argument `separator`. (See the help entry: `?fetch.sequence`.)\n")
   } else { separator <- separator[1] }
   if (class(verbose)[1] != "logical") {
-     stop("Errorin argument `verbose`. (See the help entry: `?fetch.sequence`.)\n")
+     stop("Error in argument `verbose`. (See the help entry: `?fetch.sequence`.)\n")
   } else { verbose <- verbose[1] }
   # End preliminary vetting of the input and arguments
 
@@ -213,8 +212,7 @@ fetch.sequences <- function (
   # Output: raw format
   if (strtrim(format,1)=="r") {
     if (verbose) {
-      if (!require(stringr)) { stop("Please run  `install.packages('stringr')`  first.") }
-      message("Sequences downloaded: ",str_count(seqs.raw, ">"))
+      if (verbose) { message("Downloaded ",lengths(regmatches(seqs.raw, gregexpr(">", seqs.raw)))," sequence in ",format, " format") }
     }
     return(seqs.raw)
   }
@@ -234,13 +232,13 @@ fetch.sequences <- function (
 
   # Output: named character vector format
   if (strtrim(format,1)=="c") {
-    if (verbose) { message("Sequences downloaded: ",length(seqs)) }
+    if (verbose) { message("Downloaded ",length(seqs)," sequence in ",format, " format") }
     return(seqs)
   }
 
   # Output: data frame
   if (strtrim(format,1)=="d" | strtrim(format,1)=="t") {
-    if (verbose) { message("Sequences downloaded: ",length(seqs)) }
+    if (verbose) { message("Downloaded ",length(seqs)," sequence in ",format, " format") }
     seqs <- data.frame(
       seq.name = seq.names,
       seq.text = seqs

@@ -21,7 +21,7 @@ Returns one sequence data object in the same format as the two that are provided
 Combine two sequence data objects of the same type. The objects must be one of the following:
     1. Character strings containing FASTA format sequences as downloaded from NCBI.
     2. Character vectors of sequences.
-    3. Data frames with columns for the sequence names and sequence text, e.g. as produced by \code{phytools::read.fasta}.
+    3. Data frames with columns for the sequence names and sequence text, e.g. as produced by \code{phylotools::read.fasta}.
     4. \code{Biostrings::DNAStringSet} or 5. \code{AAStringSet} objects.
 }
 \examples{

@@ -24,6 +24,8 @@ simplify.sequence.names <- function (
   ids,
   database = "nuccore",
   sequence.name = "",
+  include.species.name = TRUE,
+  include.accession = TRUE,
   separator = "_",
   ...
 )
@@ -54,6 +56,15 @@ simplify.sequence.names <- function (
   if (class(separator)[1] != "character") {
     stop("Error in argument `separator`. (See the help entry: `?simplify.sequence.names`.)\n")
   } else { separator <- separator[1] }
+  if (class(include.species.name)[1] != "logical") {
+    stop("Error in argument `include.species.name`. (See the help entry: `?simplify.sequence.names`.)\n")
+  } else { include.species.name <- include.species.name[1] }
+  if (class(include.accession)[1] != "logical") {
+    stop("Error in argument `include.accession`. (See the help entry: `?simplify.sequence.names`.)\n")
+  } else { include.accession <- include.accession[1] }
+  if (!include.species.name & !include.accession) {
+    warning("You have set both `include.species.name` and `include.accession` to FALSE. How do you expect to distinguish sequences?")
+  }
   # End preliminary vetting of the input and arguments
 
   # Simplify names
@@ -62,20 +73,39 @@ simplify.sequence.names <- function (
   if (is(seq.details)=="esummary_list") {
     taxids <- unname(unlist(lapply(seq.details, function(x) { x$taxid } )))
     taxonomy.details <- entrez_summary(db="taxonomy", id=taxids)
-    species.names <- unname(unlist(lapply(taxonomy.details, function(x) { paste0(x$genus, separator, x$species) } )))
-    seq.names <- unlist(lapply(1:length(seq.details), function(i) {
-      paste0(species.names[i], separator, sequence.name, separator, seq.details[[i]]$accessionversion)
-    }))
+    if (include.species.name) {
+      species.names <- unname(unlist(lapply(taxonomy.details, function(x) { paste0(x$genus, separator, x$species) } )))
+    } else {
+      species.names <- NULL
+    }
+    if (include.accession) {
+      accession.ids <- unlist(lapply(1:length(seq.details), function(i) { seq.details[[i]]$accessionversion }))
+    } else {
+      accession.ids <- NULL
+    }
   } else {
     if (is(seq.details)=="esummary") {
       taxids <- seq.details$taxid
       taxonomy.details <- entrez_summary(db="taxonomy", id=taxids)
-      species.names <- paste0(taxonomy.details$genus, separator, taxonomy.details$species)
-      seq.names <- paste0(species.names, separator, sequence.name, separator, seq.details$accessionversion)
+      if (include.species.name) {
+        species.names <- paste0(taxonomy.details$genus, separator, taxonomy.details$species)
+      } else {
+        species.names <- NULL
+      }
+      if (include.accession) {
+        accession.ids <- seq.details$accessionversion
+      } else {
+        accession.ids <- NULL
+      }
     }
   }
 
+  # seq.names <- paste0(species.names, separator, sequence.name, separator, accession.ids)
+  seq.names <- paste(species.names, sequence.name, accession.ids, sep = separator)
+
   seq.names <- gsub(paste0(separator,separator),separator,seq.names)
+  seq.names <- gsub(paste0("^",separator),"",seq.names)
+  seq.names <- gsub(paste0(separator,"$"),"",seq.names)
 
   return(seq.names)
 

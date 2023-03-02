@@ -3,7 +3,7 @@
 #' Combine two sequence data objects of the same type. The objects must be one of the following:
 #'     1. Character strings containing FASTA format sequences as downloaded from NCBI.
 #'     2. Character vectors of sequences.
-#'     3. Data frames with columns for the sequence names and sequence text, e.g. as produced by \code{phytools::read.fasta}.
+#'     3. Data frames with columns for the sequence names and sequence text, e.g. as produced by \code{phylotools::read.fasta}.
 #'     4. \code{Biostrings::DNAStringSet} or 5. \code{AAStringSet} objects.
 #'
 #' @param x1,x2 Objects of biological sequence data.
@@ -36,7 +36,7 @@ combine.sequences <- function ( x1, x2, verbose = TRUE, ... )
     stop("The objects provided to `x1` and `x2` are different data types. (See the help entry: `?combine.sequences`)\n")
   }
   if (class(verbose)[1] != "logical") {
-     stop("Errorin argument `verbose`. (See the help entry: `?combine.sequences`.)\n")
+     stop("Error in argument `verbose`. (See the help entry: `?combine.sequences`.)\n")
   } else { verbose <- verbose[1] }
   # End preliminary vetting of the input and arguments
 
