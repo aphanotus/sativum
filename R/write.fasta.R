@@ -45,7 +45,7 @@ write.fasta <- function (
     # Input is raw FASTA as a single string
     if (length(x)==1) {
       write(x, filename)
-      sequence.number <- 1
+      sequence.number <- lengths(regmatches(x, gregexpr(">", x)))
     }
     else {
       if (!is.null(names(x))) {
