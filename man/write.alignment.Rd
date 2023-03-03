@@ -30,11 +30,10 @@ write.alignment(
 \description{
 Write a Biostrings MultipleAlignment object to a Phylip file
 }
-\details{
-This function is intended as a user-friendly wrapper for \code{print(x, show="complete")} and accepts other arguments to that function.
-}
 \examples{
 anole.alignment <- align.sequences(anole.ND2)
+
 write.alignment(anole.alignment)
+write.alignment(anole.alignment, filename = "anole.alignment.phy")
 
 }
