@@ -16,11 +16,11 @@ library(sativum)
 
 ### Data sets
 
-- [x] Mendel's data
+- [x] Mendel 1866
 - [ ] Morgan's data
-- [x] East's data
+- [x] East 1916
 - [x] Genome sizes of various organisms
-- [x] Gene content of human chromosomes - **Update length, protein coding genes, pseudogenes, rRNAs and tRNAs for myself from the actual GRCh37 release 110 annotation file!**
+- [x] Gene content of human chromosomes
 - [x] `anole.txt` sequences 
 - [ ] cross data from Fawcett et al. 2018
 - [ ] morphological measurement data from Just et al. 2023

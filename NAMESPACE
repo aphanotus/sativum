@@ -3,6 +3,7 @@
 export(align.sequences)
 export(combine.sequences)
 export(fetch.sequence)
+export(infer.phylogeny)
 export(read.fasta)
 export(search.for.ncbi.ids)
 export(simplify.sequence.names)
