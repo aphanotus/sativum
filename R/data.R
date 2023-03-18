@@ -302,3 +302,52 @@
 #' print(seqs.msa, show="complete")
 "anole.ND2"
 
+#' @title Phylogenetic tree of anole species
+#'
+#' @description A phylogram produced by neighboring joining of anole ND2 mitochondrial sequences (the \code{anole.ND2} dataset).
+#'
+#' @usage anole.tree
+#'
+#' @examples
+#' anole.tree
+#' plot(anole.tree)
+"anole.tree"
+
+#' @title A dataset on the dewlaps of anole lizards
+#'
+#' @description Data for 47 species of \emph{Anolis} lizards. Dewlaps are skin flaps under the chin, which are
+#'     displayed by males to communicate mating and territorial interests. This table comes from Nicholson et al. 2007 (Table 4)
+#'     and lists species, community (island), ecomorph, the relative size of the dewlap, dewlap pattern and color.
+#'     Relative dewlap size are the residuals of actual dewlap size regressed against snout-vent length.
+#'
+#' @usage dewlaps
+#'
+#' @source Nicholson, K. E., Harmon, L. J. and Losos, J. B. 2007. Evolution of \emph{Anolis} Lizard Dewlap Diversity. \emph{Evolution} 2(3): e274
+#'     \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1803026/}
+#'
+#' @examples
+#' boxplot(dewlaps$dewlap.relative.size ~ dewlaps$community)
+"dewlaps"
+
+#' @title A dataset of anole species, ecomorphs and their islands of origin
+#'
+#' @description Data for 16 species of \emph{Anolis} lizard and the related lizard \emph{Leiocephalus barahonensis},
+#'     listing their endemic island and ecomorph.
+#'
+#' @usage anole.natural.history
+#'
+#' @source Nicholson, K. E., Harmon, L. J. and Losos, J. B. 2007. Evolution of \emph{Anolis} Lizard Dewlap Diversity. \emph{Evolution} 2(3): e274
+#'     \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1803026/}
+#'
+#' @examples
+#' unique(anole.natural.history$island)
+#' unlist(lapply(unique(anole.natural.history$island), function(x) {
+#'   sum(anole.natural.history$island==x)
+#' }))
+#' unique(anole.natural.history$ecomorph)
+#' unlist(lapply(unique(anole.natural.history$ecomorph), function(x) {
+#'   sum(anole.natural.history$ecomorph==x)
+#' }))
+#'
+"anole.natural.history"
+

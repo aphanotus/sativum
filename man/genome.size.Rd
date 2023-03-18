@@ -5,7 +5,7 @@
 \alias{genome.size}
 \title{Data on genome sizes}
 \format{
-An object of class \code{data.frame} with 509 rows and 10 columns.
+An object of class \code{data.frame} with 510 rows and 10 columns.
 }
 \usage{
 genome.size

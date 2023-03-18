@@ -33,7 +33,7 @@ chr.length <- human.chrs \%>\%
   ggplot(aes(x=chr.number, y=length_bp/1e6)) +
   theme_classic() +
   geom_col(width = 0.35, fill = "gray35") +
-  geom_point(aes(y=centromere_position/1e6), size = 6 ) +
+  geom_point(aes(y=centromere_position/1e6), size = 5 ) +
   scale_x_discrete(name = "chromosome", labels = human.chrs$chr[-25], position = "top") +
   scale_y_reverse(name = "length (Mbp)")
 

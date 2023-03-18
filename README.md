@@ -12,7 +12,7 @@ devtools::install_github("aphanotus/sativum")
 library(sativum)
 ```
 
-## Tasks for Package Completion: `sativum`
+## Tasks for Package Completion
 
 ### Data sets
 
@@ -21,7 +21,10 @@ library(sativum)
 - [x] East 1916
 - [x] Genome sizes of various organisms
 - [x] Gene content of human chromosomes
-- [x] `anole.txt` sequences 
+- [x] `anole.ND2` sequences 
+- [x] `anole.tree` phylogenetic tree based on the ND2 sequences 
+- [x] `dewlaps`: Table 4 from [Nicholson et al. 2007. *Evolution*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1803026/)
+- [x] `anole.natural.history` traits for user in BI164
 - [ ] cross data from Fawcett et al. 2018
 - [ ] morphological measurement data from Just et al. 2023
 - [ ] historic (updated) BI164 *Brassica* data
@@ -37,15 +40,16 @@ library(sativum)
 - [x] `combine.sequences`
 - [x] `align.sequences`
 - [x] `write.alignment` - write out an interleaved Phylip format file
-- [ ] `infer.phylogeny`
-- [ ] a function to get branch lengths between specific tips on a tree (all pairwise?)
-- [ ] color code tips / branches / clades
-- [ ] rotate nodes
+- [x] `infer.phylogeny`
+- [x] rotate nodes using existing functions from `ape` (**Be sure to include in vignette!**)
+- [x] re-root the tree using existing functions from `ape` (**Be sure to include in vignette!**)
+- [x] `add.branch.lengths` to a tree plot
+- [x] `phylogenetic.distance` finds the totals branch lengths separating two tips on a tree
+- [ ] easily color tree tips or all tips descended from a node
 
 ### Other functions
 
-- [ ] Functions to simulate a cross of X genes, Y alleles, with H dom matrix, for N offspring, E epistatic matrix
-- [ ] Functions for pop gen simulations
+- [ ] Functions to simulate a cross of X genes, Y alleles, with H dom matrix, for N offspring, E epistatic matrix (?)
 - [ ] Haldane's equation for recombination frequency by genetic distance
 
 ### Vignettes
