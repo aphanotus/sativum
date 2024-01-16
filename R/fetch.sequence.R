@@ -68,7 +68,7 @@ fetch.sequence <- function (
     format <- "DNAStringSet"
   }
   if (class(simplify.names)[1] != "logical") {
-     stop("Errorin argument `simplify.names`. (See the help entry: `?fetch.sequence`.)\n")
+     stop("Error in argument `simplify.names`. (See the help entry: `?fetch.sequence`.)\n")
   } else { simplify.names <- simplify.names[1] }
   if (class(sequence.name)[1] != "character") {
     stop("Error in argument `sequence.name`. (See the help entry: `?fetch.sequence`.)\n")
@@ -188,7 +188,7 @@ fetch.sequences <- function (
     format <- "DNAStringSet"
   }
   if (class(simplify.names)[1] != "logical") {
-     stop("Errorin argument `simplify.names`. (See the help entry: `?fetch.sequence`.)\n")
+     stop("Error in argument `simplify.names`. (See the help entry: `?fetch.sequence`.)\n")
   } else { simplify.names <- simplify.names[1] }
   if (class(sequence.name)[1] != "character") {
     stop("Error in argument `sequence.name`. (See the help entry: `?fetch.sequence`.)\n")

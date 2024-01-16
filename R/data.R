@@ -351,7 +351,7 @@
 
 #' @title Anole DNA sequences
 #'
-#' @description Unaligned sequences from mitochondrial DNA of 17 species of anoles, including
+#' @description Unaligned sequences from mitochondrial DNA of 15 species of anoles, including
 #'     the complete CDS of NADH dehydrogenase subunit 2 (ND2), the complete tRNA-Trp sequence,
 #'     partial sequence from tRNA-Ala.
 #'
@@ -372,6 +372,30 @@
 #' seqs.msa <- msa(anole.ND2, method = "ClustalOmega", order = "aligned")
 #' print(seqs.msa, show="complete")
 "anole.ND2"
+
+#' @title Anole DNA sequences
+#'
+#' @description Unaligned sequences from mitochondrial DNA of 17 species of anoles, including
+#'     the complete CDS of NADH dehydrogenase subunit 2 (ND2), the complete tRNA-Trp sequence,
+#'     partial sequence from tRNA-Ala.
+#'
+#' @usage seventeen.species.ND2
+#'
+#' @examples
+#' seventeen.species.ND2
+#' names(seventeen.species.ND2)
+#'
+#' # Make the names more minimalist
+#' names(seventeen.species.ND2) <- sub("_ND2-tRNAtrp-tRNAala_","__",names(seventeen.species.ND2))
+#'
+#' # Par the names down to just the species
+#' names(seventeen.species.ND2) <- stringr::str_split_fixed(names(seventeen.species.ND2),"__",2)[,1]
+#'
+#' # Alignment
+#' require(msa)
+#' seqs.msa <- msa(seventeen.species.ND2, method = "ClustalOmega", order = "aligned")
+#' print(seqs.msa, show="complete")
+"seventeen.species.ND2"
 
 #' @title Phylogenetic tree of anole species
 #'
@@ -460,10 +484,10 @@
 #'    Different modes of classical inheritance would predict different SW frequencies from each cross.
 #'    Data from Supplementary Table 2 of Fawcett et al. 2018 \emph{Nature Communications}.
 #'
-#' @usage sternites
+#' @usage wing.morph.crosses
 #'
-#' @source Fawcett MM, Parks MC, Tibbetts AE, Swart JS, Richards EM, Vanegas JC, Cenzer M, Crowley L, Simmons WR, Hou W, Angelini DR. Manipulation of insulin signaling phenocopies evolution of a host-associated polyphenism. \emph{Nature Communications} (2018) 9:1699.
-#'     \url{https://dx.doi.org/10.1038%2Fs41467-018-04102-1}
+#' @source Fawcett MM, Parks MC, Tibbetts AE, Swart JS, Richards EM, Vanegas JC, Cenzer M, Crowley L, Simmons WR, Hou W, Angelini DR. Manipulation of insulin signaling phenocopies evolution of a host-associated polyphenism. Nature Communications 2018 9:1699.
+#'     \url{https://www.nature.com/articles/s41467-018-04102-1}
 #'
 #' @examples
 #' library(magrittr)
