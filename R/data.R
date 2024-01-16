@@ -278,6 +278,77 @@
 #'
 "human.chrs"
 
+#' @title Data on beak depth in Darwin's finches
+#'
+#' @description Data on the distributions of beak depth in Darwin's medium ground finch (*Geospiza fortis*) from Daphne Major in
+#'     the Galápagos islands for the years 1976 and 1978, flanking a drought year in 1977.
+#'     These data are inferred from the histogram appearing in Freeman's *Biological Science*, 7th edition,
+#'     Figure 22.12, which are based on Boag & Grant (1981).
+#'     They are intended as an illustration of the effects of intense natural selection on a quantitative trait.
+#'
+#' @usage finches
+#'
+#' @source Boag, P. T. and Grant, P. R. 1981. Intense Natural Selection in a Population of Darwin's Finches (Geospizinae) in the Galápagos.
+#'     \emph{Science} 214(4516): 82-85.
+#'     \url{https://doi.org/10.1126/science.214.4516.82}
+#'
+#' @examples
+#' library(magrittr)
+#' library(dplyr)
+#' library(ggplot2)
+#'
+#' # sample size by year
+#' finches %>%
+#'   group_by(year) %>%
+#'   summarize(sample.size = sum(count))
+#'
+#' # means by year
+#' mean.beaks <- finches %>%
+#'   filter(count!=0) %>%
+#'   mutate(sum.of.depths = beak_depth_mm*count) %>%
+#'   group_by(year) %>%
+#'   summarize(mean = sum(sum.of.depths)/sum(count))
+#'
+#' # SD by year
+#' beak.sd <- finches %>%
+#'   mutate(mean = c(rep(mean.beaks$mean[1],dim(finches)[1]/2),rep(mean.beaks$mean[2],dim(finches)[1]/2))) %>%
+#'   mutate(squared.deviation = (beak_depth_mm - mean)^2) %>%
+#'   mutate(SSD.by.category = squared.deviation*count) %>%
+#'   filter(count!=0) %>%
+#'   group_by(year) %>%
+#'   summarize(
+#'     sd = sqrt(sum(SSD.by.category)/(sum(count)-1)),
+#'     mean = unique(mean)
+#'   ) %>%
+#'   mutate(
+#'     meanPlus1SD = mean + sd,
+#'     meanPlus2SD = mean + 2*sd,
+#'     meanMinus1SD = mean - sd,
+#'     meanMinus2SD = mean - 2*sd
+#'   )
+#'
+#' finches %>%
+#'   ggplot(aes(x=beak_depth_mm, y=count)) +
+#'   theme_bw() +
+#'   theme(
+#'     panel.grid.major = element_blank(),
+#'     panel.grid.minor = element_blank()
+#'   ) +
+#'   facet_grid(year~.) + # scales = "free_y"
+#'   geom_col(width = 0.2) +
+#'   geom_hline(yintercept = 0, size = 0.5, color = "gray50") +
+#'   geom_vline(data = mean.beaks, aes(xintercept = mean, group = year), color = "darkred") +
+#'   geom_vline(data = beak.sd, aes(xintercept = meanPlus1SD, group = year), color = "gray20", linetype = 3) +
+#'   geom_vline(data = beak.sd, aes(xintercept = meanPlus2SD, group = year), color = "gray20", linetype = 3) +
+#'   geom_vline(data = beak.sd, aes(xintercept = meanMinus1SD, group = year), color = "gray20", linetype = 3) +
+#'   geom_vline(data = beak.sd, aes(xintercept = meanMinus2SD, group = year), color = "gray20", linetype = 3) +
+#'   labs(x = "beak depth (mm)", y = "number of finches", caption = "Data from Boag & Grant (1981)")
+#'
+#' ggsave('finches.png', width = 4, height = 5, scale = 1)
+#'
+"finches"
+
+
 #' @title Anole DNA sequences
 #'
 #' @description Unaligned sequences from mitochondrial DNA of 17 species of anoles, including
@@ -351,3 +422,59 @@
 #'
 "anole.natural.history"
 
+#' @title Sternite curvature in milkweed bugs
+#'
+#' @description Data on the size and sternite curvature of 542 milkweed bugs (\emph{Oncopeltus fasciatus}).
+#'     Sternite curvature in this species is sex-biased, but shows extensive overlap.
+#'     On average females have more curved sternites.
+#'     This dataset includes measurements of individuals treated during juvenile-to-adult development with dsRNAs
+#'     targeting several candidate genes. These genes were chosen based on potential roles in the development of
+#'     somatic sexually dimorphism in insects.
+#'     Curvature was calculated as the square-root of the mean of squared residuals (residual mean standard deviation)
+#'     from the linear regression of nine landmarks aligned using generalized Procrustes analysis.
+#'
+#' @usage sternites
+#'
+#' @source Just, J., Laslo, M., Lee, Y.J., Yarnell, M., Zhang, Z. and Angelini, D.R. 2023. Distinct developmental mechanisms influence sexual dimorphisms in the milkweed bug \emph{Oncopeltus fasciatus}. \emph{Proc. R. Soc. B.} 290(1992):20222083.
+#'     \url{https://doi.org/10.1098/rspb.2022.2083}
+#'
+#' @examples
+#' library(magrittr)
+#' library(dplyr)
+#' library(ggplot2)
+#'
+#' sternites %>%
+#'   filter(!grepl("^dmrt",treatment)) %>%
+#'   ggplot(aes(x = curvature, fill = sex)) +
+#'   theme_bw() +
+#'   facet_grid(treatment~.) +
+#'   geom_histogram()
+#'
+"sternites"
+
+#' @title Crosses examining inheritance of wing morphs in the soapberry bug \emph{Jadera haematoloma}
+#'
+#' @description Soapberry bugs (\emph{Jadera haematoloma}) may develop to adulthood with long or short wings.
+#'    This dataset includes the results of 32 single-pair crosses that were conducted to test the possibility that wing morphs are in fact inherited in classical Mendelian fashion.
+#'    For each cross, the number of surviving adult F1 offspring and their frequency of the short wing (SW) morph are listed.
+#'    Different modes of classical inheritance would predict different SW frequencies from each cross.
+#'    Data from Supplementary Table 2 of Fawcett et al. 2018 \emph{Nature Communications}.
+#'
+#' @usage sternites
+#'
+#' @source Fawcett MM, Parks MC, Tibbetts AE, Swart JS, Richards EM, Vanegas JC, Cenzer M, Crowley L, Simmons WR, Hou W, Angelini DR. Manipulation of insulin signaling phenocopies evolution of a host-associated polyphenism. \emph{Nature Communications} (2018) 9:1699.
+#'     \url{https://dx.doi.org/10.1038%2Fs41467-018-04102-1}
+#'
+#' @examples
+#' library(magrittr)
+#' library(dplyr)
+#' library(ggplot2)
+#'
+#' sternites %>%
+#'   filter(!grepl("^dmrt",treatment)) %>%
+#'   ggplot(aes(x = curvature, fill = sex)) +
+#'   theme_bw() +
+#'   facet_grid(treatment~.) +
+#'   geom_histogram()
+#'
+"wing.morph.crosses"
