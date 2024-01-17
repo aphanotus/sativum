@@ -13,15 +13,24 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
+  rmarkdown.html_vignette.check_title = FALSE,
   collapse = TRUE,
-  comment = "#>"
+  warning = FALSE,
+  error = FALSE,
+  highlight = TRUE,
+  indent = "  ",
+  comment = ""
 )
 ```
 
 ```{r load.packages, include = FALSE}
+library(stringr)
 library(sativum)
 library(ape)
 library(Biostrings)
+library(rentrez)
+library(msa)
+library(phangorn)
 ```
 
 ## I. Introduction to Phylogenetics
@@ -113,25 +122,21 @@ First you need to obtain the COII amino acid sequences from the fish and tetrapo
 print(fish.COII)
 ```
 
-In addition to COII sequences from the species in the table above, you will add the amino acid sequence for an additional amphibian, the African clawed frog (*Xenopus laevis*).
+Your console output may be color-coded to highlight specific amino acids.
 
-The National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.nih.gov)) hosts a series of databases important to bioinformatics, including [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), one of the oldest, most extensive, and most well-annotated databases of biomolecular sequences. 
+In addition to these COII sequences, you will add the amino acid sequence for an additional amphibian, the African clawed frog (*Xenopus laevis*).
 
-**Download protein sequence data** for *Xenopus laevis* COII using the directions below.
+The National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.nih.gov)) hosts a series of databases important to bioinformatics, including [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), one of the oldest, most extensive, and most well-annotated databases of biomolecular sequences. Follow the directions below to download protein sequence data for *Xenopus laevis* COII.
 
-1. Go to the NCBI homepage http://www.ncbi.nlm.nih.gov
+1. **Go to NCBI** at http://www.ncbi.nlm.nih.gov
 
-2. Search "All Databases" for *Xenopus laevis*. 
-
-3. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and click on "Protein".
+2. **Search** "All Databases" for *Xenopus laevis*. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and click on "Protein".
 
 This search returns more than 200,000 results! So you will need to narrow the search. 
 
-4. Refine the search text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. 
+3. **Refine the search** text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. 
 
-5. The results should now include 10 hits, a manageable number. Choose one sequence whose title includes "cytochrome c oxidase subunit II" (or "subunit 2") but not the word "partial". (We want to the complete protein sequence.) Make your selection by checking the box to the left of the entry.
-
-6. In the "Summary" drop-down menu, select "FASTA (text)". This will bring you to the amino acid sequence of the *Xenopus laevis* cytochrome c oxidase subunit II protein in FASTA format. 
+4. The results should now include 10 hits, a manageable number. **Choose one** sequence whose title includes "cytochrome c oxidase subunit II" (or "subunit 2") but not the word "partial". (We want to the complete protein sequence.) Make your selection by checking the box to the left of the entry. In the "Summary" drop-down menu, select "FASTA (text)". This will bring you to the amino acid sequence of the *Xenopus laevis* cytochrome c oxidase subunit II protein in FASTA format. 
 
 ```
 >sp|P00407.1|COX2_XENLA RecName: Full=Cytochrome c oxidase subunit 2; AltName: Full=Cytochrome c oxidase polypeptide II
@@ -142,6 +147,52 @@ VEAVPLTDFENWSSSMLEA
 ```
 
 The [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) is the most common way DNA and protein sequences are stored and used by bioinformatics software. The first line contains information about the sequence (the metadata), including the NCBI accession number ("P00407.1"), sequence name ("COX2_XENLA") and description ("RecName: Full=Cytochrome c oxidase..."). The following lines represent the amino acid sequence of the protein using the one-letter [amino acid abbreviations](https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#General_chemical_properties). This is the sequence that comprises the COII protein in this species. 
+
+5. **Download the new sequence** for *Xenopus laevis* COII. There are several ways to do this, but the R package `sativum` provides convenient tools. We will need the sequence's GenBank ID or "GI" number. (Sorry, this is different from the accession number!)
+
+- Option 1. To get the GI number, search the NCBI protein database using the accession number with the function `search.for.ncbi.ids`, following the example sequence below. (If you chose a different *X. laevis* COII sequence, then simply use that sequence's accession number.) That function will return a GI number, "117049" in this example. Then use that GI number in the function `fetch.sequence`
+  
+```{r frog.search, echo=TRUE}
+frog.id <- search.for.ncbi.ids("P00407.1", database = "protein")
+frog.sequence <- fetch.sequence(ids = frog.id, database = "protein", format = "AA")
+```
+
+- Option 2. If you still have the NCBI website up, go back to the page with your search results. Notice that below the description of each sequence, in smaller print, are two numbers labeled "Accession" and "GI". The first is the NCBI accession number and the second is the GenBank GI number we need. You can copy the GI number and paste it into your R command.
+
+```{r frog.fetch, echo=TRUE}
+frog.sequence <- fetch.sequence(ids = "117049", database = "protein", format = "AA")
+```
+
+Either way the result is the same. 
+
+6. **Combine** the old and new COII sequences into one dataset using the `combine.sequences` function.
+
+```{r combine, echo=TRUE}
+combined.coii <- combine.sequences(fish.COII, frog.sequence)
+```
+
+7. **Save** this dataset to a file in your R work space.
+
+```{r write.fasta}
+write.fasta(combined.coii, filename = "combined.coii.fasta")
+```
+
+```{r look.at.combined.dataset, echo=FALSE}
+combined.coii
+```
+
+8. **Align the sequences**. If you run `combined.coii` notice that the amino acids line up pretty well, but not perfectly. The amphibian sequences are shifted on the right. This is a common problem in phylogenetics. Solving it requires aligning the sequences. While you can do this manually, it's more reproducible (and faster!) to use software. Several algorithms have been developed for alignment of multiple sequences of amino acids or nucleotides. We will use a common algorithm for multiple sequence alignment (MSA) called [ClustalOmega](http://www.clustal.org/omega/). It can be implemented in R using the `align.sequences` function.
+
+```{r msa, echo=TRUE}
+coii.alignment <- align.sequences(combined.coii, method = "ClustalOmega", order = "input")
+print(coii.alignment, show="complete")
+```
+
+9. **Infer a phylogeny.** There are many methods to infer phylogenetic relationships from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. Genetic distances are used in the NJ method to actually calculate the lengths of the tree branches. This method is implemented in R using the `infer.phylogeny` function.
+
+```{r nj, echo=TRUE}
+coii.tree <- infer.phylogeny(coii.alignment)
+```
 
 
 

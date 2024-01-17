@@ -3,7 +3,7 @@
 #' @param query A character search term.
 #' @param database A character name of an NCBI database. Defaults to \code{"nuccore"}, or the non-redundant nucleotide database (NR).
 #'     For a complete list of options run \code{rentrez::entrez_db_searchable()}
-#' @param verbose A logical argument specifying whether to display the summary output. Defaults to \code{TRUE}.
+#' @param verbose A logical argument specifying whether to display the summary output. Defaults to \code{FALSE}.
 #'
 #' @details This function is intended as a user-friendly wrapper for \code{rentrez::entrez_search} and accepts other arguments to that function.
 #'
@@ -20,7 +20,7 @@
 search.for.ncbi.ids <- function (
   query,
   database = "nuccore",
-  verbose = TRUE,
+  verbose = FALSE,
   ...
 )
 { # Begin the function

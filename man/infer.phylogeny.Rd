@@ -25,8 +25,8 @@ infer.phylogeny(
 \item{method}{A character indicating the phylogenetic method. Available methods include \code{"NJ"} (default) or \code{"UPGMA"}}
 
 \item{model}{A character indicating the substitution model to be used.
-For DNA alignments, available methods include "F81" (default) and "JC69".
-For amino acid alignments: "WAG", "JTT", "LG", "Dayhoff", "cpREV", "mtmam", "mtArt", "MtZoa", "mtREV24", "VT","RtREV", "HIVw", "HIVb", "FLU", "Blosum62", "Dayhoff_DCMut" and "JTT_DCMut".
+For DNA alignments, available methods include "F81" and "JC69" (default) .
+For amino acid alignments: "WAG", "JTT", "LG", "Dayhoff", "cpREV", "mtmam", "mtArt", "MtZoa", "mtREV24", "VT","RtREV", "HIVw", "HIVb", "FLU", "Blosum62" (default), "Dayhoff_DCMut" and "JTT_DCMut".
 For more information see \code{?phangorn::dist.ml}.}
 
 \item{truncate.names}{An optional number of characters by which to truncate sequence names.}

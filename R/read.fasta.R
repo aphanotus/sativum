@@ -110,5 +110,3 @@ read.fasta <- function (
   }
 
 } # End of function
-
-read.fasta(filename = file.choose())
