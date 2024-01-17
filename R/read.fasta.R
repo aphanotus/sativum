@@ -35,6 +35,9 @@ read.fasta <- function (
   if (!require(phylotools)) {
     stop("Please run  `install.packages('phylotools')`  first.")
   }
+  if (!require(stringr)) {
+    stop("Please run  `install.packages('stringr')`  first.")
+  }
 
   # Vet the input
   if (!exists(quote(filename))) {
@@ -82,7 +85,15 @@ read.fasta <- function (
     s <- seqs$seq.name
     seqs <- seqs$seq.text
     names(seqs) <- s
-    seqs.ss <- DNAStringSet(seqs)
+    # Check that the sequence doesn't include any amino acid abbreviations
+    aa.letters <- c("E","F","I","L","P")
+    if (any(unlist(lapply(aa.letters, function(x) { grepl(x, seqs, ignore.case = TRUE)})))) {
+      # If so, save it as amino acid data and throw a warning
+      seqs.ss <- AAStringSet(seqs)
+      warning("These data appear to be amino acid sequences and have been important as an AAStringSet.")
+    } else {
+      seqs.ss <- DNAStringSet(seqs)
+    }
     if (verbose) { print(seqs.ss) }
     return(seqs.ss)
   }
@@ -99,3 +110,5 @@ read.fasta <- function (
   }
 
 } # End of function
+
+read.fasta(filename = file.choose())

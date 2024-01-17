@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 ```{r load.packages, include = FALSE}
 library(sativum)
 library(ape)
+library(Biostrings)
 ```
 
 ## I. Introduction to Phylogenetics
@@ -109,7 +110,7 @@ Today you will explore which type of fish may have given rise to the first tetra
 First you need to obtain the COII amino acid sequences from the fish and tetrapods. As a starting point, these sequences have been provided for you as an object accessible from the R package `sativum`. you can preview these sequences by entering `fish.COII` in the R console. You should see the output shown below.
 
 ```{r fish.COII.preview, echo=FALSE}
-fish.COII
+print(fish.COII)
 ```
 
 In addition to COII sequences from the species in the table above, you will add the amino acid sequence for an additional amphibian, the African clawed frog (*Xenopus laevis*).
