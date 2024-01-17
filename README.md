@@ -22,7 +22,8 @@ library(sativum)
 - [x] `genome.size`: Genome sizes of various organisms
 - [x] `human.chrs`: Gene content of human chromosomes
 - [x] `finches`: data on beak depth in Darwin's medium ground finch (*Geospiza fortis*) from [Boag & Grant 1981](https://doi.org/10.1126/science.214.4516.82)
-- [x] `anole.ND2`: Unaligned mitochondrial sequences from 17 species of anoles, including the complete CDS of NADH dehydrogenase subunit 2 (ND2), the complete tRNA-Trp sequence, partial sequence from tRNA-Ala. 
+- [x] `fish.COII`: Unaligned amino acid sequences from mitochondrial cytochrome c oxidase II (COII) for 5 species of vertebrates. 
+- [x] `anole.ND2`: Unaligned nucleotide sequences from 15 species of anoles, including the complete CDS of mitochondrial NADH dehydrogenase subunit 2 (ND2), the complete tRNA-Trp sequence, and partial sequence from tRNA-Ala. 
 - [x] `anole.tree`: Phylogenetic tree based on the ND2-Ala sequences 
 - [x] `dewlaps`: Dewlap phenotype data from 47 species of anoles. (Table 4 from [Nicholson et al. 2007. *Evolution*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1803026/))
 - [x] `anole.natural.history`: Data for 16 species of anoles and the related lizard \emph{Leiocephalus barahonensis}, listing their endemic island and ecomorph (from [Nicholson et al. 2007](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1803026/)). For use in BI164.
