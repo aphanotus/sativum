@@ -348,6 +348,22 @@
 #'
 "finches"
 
+#' @title Fish cytochrome c oxidase subunit II amino acid sequences
+#'
+#' @description Unaligned sequences from mitochondrial cytochrome c oxidase subunit II
+#'     from shark, coelacanth, lungfish, zebrafish and yellow-bellied toad.
+#'
+#' @usage fish.COII
+#'
+#' @examples
+#' fish.COII
+#' names(fish.COII)
+#'
+#' # Alignment
+#' require(msa)
+#' seqs.msa <- msa(fish.COII, type = "protein", method = "ClustalOmega", order = "input")
+#' print(seqs.msa, show="complete")
+"fish.COII"
 
 #' @title Anole DNA sequences
 #'

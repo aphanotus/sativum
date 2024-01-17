@@ -1,0 +1,154 @@
+---
+title: "Phylogenetics & Bioinformatics"
+author: "Colby College BI164"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    css: mostlymodest.css
+vignette: >
+  %\VignetteIndexEntry{phylogenetics-tetrapod-exercise}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r load.packages, include = FALSE}
+library(sativum)
+library(ape)
+```
+
+## I. Introduction to Phylogenetics
+
+### Objectives
+
+1. Interpret phylogenetic trees based on morphological and molecular characteristics.
+2. Connect the information in phylogenetic trees to the evolutionary and natural history of organisms.
+
+### Introduction
+
+Biological **systematics** is the study of the relationships among living things. Systematists often seek to produce a classification or **taxonomy**, which reflects the evolutionary history of organisms. Taxonomic relationships are often visualized as phylogenetic trees in which organisms are grouped together based on relatedness to their common ancestors. 
+
+### Understanding a Tree
+
+Let's consider the simple tree to the right, where the letters at the tips represent different species.  
+
+```{r example.tree, echo=FALSE, fig.height=1.5, fig.width=3, fig.align = 'center', message=FALSE, warning=FALSE}
+x <- read.tree(text = "(((D,C),B),A);")
+par(mar = rep(0.25,4))
+plot(x)
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+```
+
+- Time in a phylogeny is represented as moving from the base to the tips of the tree (left to right in this example). This tree tells us that the first event was the evolutionary split into two different lineages, one leading to species A and one to the other branches of the tree. The next event was the splitting of B from the line that leads to C and D. The final and most recent event is the splitting of C and D into two separate species. 
+- You can identify three different monophyletic groups (ABCD, BCD, and CD). A monophyletic group is a clade that consists of a species and all its descendants from a common ancestor. (So, as a counter-example, species A and B are *not* a monophyletic group.)
+- Species B is more closely related Species C and D than to Species A. Even though the number of ancestral nodes separating B and the other species is the same (one), you should always look forward in time in the tree to identify closest relatives.
+- Species B is no more closely related to C than it is to D. All nodes are able to be rotated 180° without fundamentally changing the tree, because the order of branching is preserved. All of the trees below show the *same* relationships as the figure above.
+
+```{r more.example.trees, echo=FALSE, fig.height=1.5, fig.width=2, fig.show='hold', message=FALSE, warning=FALSE}
+par(mar = rep(0.25,4))
+x <- read.tree(text = "(((C,D),B),A);")
+plot(x)
+x <- read.tree(text = "((B,(C,D)),A);")
+plot(x)
+x <- read.tree(text = "(A,(B,(D,C)));")
+plot(x)
+x <- read.tree(text = "(A,(B,(C,D)));")
+plot(x)
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+```
+
+### What do you need to develop a phylogeny?
+
+**Characters and character states**: To build a phylogeny a researcher must identify traits or characters that are relevant for distinguishing taxa within the group. Characters can include morphological, life history or molecular information. The more characters that are used, the more accurate the tree may be. Once the characters have been identified, each organism is scored or graded on which character state it possesses. A character state is the value of a character. For example if the number of cervical vertebrae is a character in the analysis, then the character state of different taxa might be 7 (for humans) or 14 (for chickens). If the dataset includes nucleotide sequences, then each position in the sequence is a character and the character state for a taxon can be one of the four nucleotides (A, C, G or T).
+
+**Outgroups**: We cannot know the real character states for ancestral species at the base of our tree. Instead, we must choose an existing species that can stand in for an ancestor. We these taxa the outgroup. 
+- The outgroup should represent a lineage that diverges before the group under consideration (the "ingroup"). 
+- Therefore, the outgroup species cannot be a member of the group for which you are creating a tree. The outgroup must be *out of the group*!
+- With that said, the outgroup should have as many similarities as possible while not being considered a member of the ingroup. Importantly the outgroup must have all the characters being used to create the tree. So, if you were building a phylogeny of fish based on their number of cervical vertebrae, you could not use invertebrates as your outgroup, because they do not have vertebrae! There would no meaningful value for their character state.
+
+**Shared Derived Characters**: Not all characters are equally helpful in creating a phylogeny. A character state that is shared by two or more taxa may suggest that those organisms are closely related.  From there, you have to distinguish between two types of character states: ancestral and derived. 
+- Ancestral (or "primitive") character states are those that have been inherited and not significantly changed from a distant ancestor.
+- Derived character states are those that have undergone evolutionary change to a different value within the group. 
+- Characters for which some taxa share derived character states are the most helpful in creating a tree, because it suggests that those taxa share a recent common ancestor since the base of the tree. In contrast shared ancestral character states don't distinguish organisms across evolutionary time. So they are not particularly useful in creating a tree.
+
+**Parsimony**: A tree should be constructed so that it reflects the most parsimonious (simplest and most straight-forward) evolutionary history. The total number of evolutionary changes is often referred to as the tree length. A tree that reflects a single evolutionary change for a trait is more parsimonious than one with an alternate arrangement that reflects multiple evolutionary changes. Why do you think we can often assume that a more parsimonious evolutionary history is likely to have occurred? 
+
+**Convergence and Reversal**: Sometimes, the same character state can evolve separately in distantly related organisms. In such cases, we say the character state shows evolutionary convergence. Additionally, a derived character state can revert back to the ancestral condition. When this happens it is known as an evolutionary reversal. Either of these situations will cause a character to change more than once. 
+
+### Molecular and morphological characters
+
+The characters or traits used to generate a phylogeny can come from multiple sources, including morphological characters and biomolecular sequences, as well as information on ecology, behavior or life cycles of organisms. In the early days of systematics, taxonomy was based solely on morphological traits. However choosing characters based on morphology can be subjective. Molecular sequence data is often less prone to bias, and it has become the dominant basis for systematics in recent decades. However it's important to remember that molecular sequences can be influenced by convergent evolution. In the best circumstances, a combination of molecular and morphological data are used to produce the most accurate evolutionary trees.  
+
+
+## II. Introduction to Bioinformatics
+
+Bioinformatics is a field of science that develops and applies methods to analyze and interpret biological data, especially when the data sets are large and complex. Bioinformatics and computational biology have become critical in all areas of biology. Therefore developing familiarity with common data types and computational tools of bioinformatics is essential to a modern education in biology.
+
+### Case Study: The Origin of Tetrapods
+
+The superclass Tetrapoda comprises the four-limbed vertebrates, including amphibians, reptiles, birds, and mammals. The earliest tetrapods evolved approximately 390 million years ago from an ancient group of fish. However many details of their adaptation to land remain unclear, and this subject is an active area of research among paleontologists.
+
+Today you will explore which type of fish may have given rise to the first tetrapods. Starting with those that have a true jaw, fish are either classified as having cartilaginous (Chondrichtyes) or bony (Osteichthyes) skeletons. Within Osteichthyes, fish are further classified based on the structure of their fins, either ray-finned (Actinopterygii) or lobe-finned (Sacropterygii). Using living examples of each of these four types of fish and two tetrapods, you will create a phylogeny using amino acid sequences for a mitochondrial protein called cytochrome c oxidase subunit II (abbreviated as COX2 or COII, pronounced "C O 2").
+
+| superclass | class | example species | common name | image |
+|:---- |:---- |:---- |:---- |:----:|
+|    | Chondrichthyes | *Squalus acanthias* | spiny dogfish | ![](https://www.cms.int/sites/default/files/species/Squalus%20acanthias%20lateral%20female.jpg){width=200px} |
+| Osteichthyes | Sacropterygii | *Latimeria chalumnae* | coelacanth | ![](https://www.fisheries.noaa.gov/s3/styles/original/s3/dam-migration/640x427-african-coelacanth.png){width=200px} |
+| Osteichthyes | Sarcopterygii | *Protopterus dolloi* | lungfish | ![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Protopterus_dolloi_Boulenger2.jpg/800px-Protopterus_dolloi_Boulenger2.jpg){width=200px} |
+| Osteichthyes | Actinopterygii | *Danio rerio* | zebrafish | ![](https://www.zebrafishfilm.org/uploads/1/1/3/5/113588191/small-zebrafish-from-shutterstock_orig.png){width=200px} |
+| Tetrapoda | Amphibia | *Bombina variegata* | yellow-bellied toad | ![](https://marmotamaps.com/de/alpentiere/mobile/gelbbauchunke-mobile.gif){width=200px} |
+
+### Methods
+
+First you need to obtain the COII amino acid sequences from the fish and tetrapods. As a starting point, these sequences have been provided for you as an object accessible from the R package `sativum`. you can preview these sequences by entering `fish.COII` in the R console. You should see the output shown below.
+
+```{r fish.COII.preview, echo=FALSE}
+fish.COII
+```
+
+In addition to COII sequences from the species in the table above, you will add the amino acid sequence for an additional amphibian, the African clawed frog (*Xenopus laevis*).
+
+The National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.nih.gov)) hosts a series of databases important to bioinformatics, including [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), one of the oldest, most extensive, and most well-annotated databases of biomolecular sequences. 
+
+**Download protein sequence data** for *Xenopus laevis* COII using the directions below.
+
+1. Go to the NCBI homepage http://www.ncbi.nlm.nih.gov
+
+2. Search "All Databases" for *Xenopus laevis*. 
+
+3. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and click on "Protein".
+
+This search returns more than 200,000 results! So you will need to narrow the search. 
+
+4. Refine the search text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. 
+
+5. The results should now include 10 hits, a manageable number. Choose one sequence whose title includes "cytochrome c oxidase subunit II" (or "subunit 2") but not the word "partial". (We want to the complete protein sequence.) Make your selection by checking the box to the left of the entry.
+
+6. In the "Summary" drop-down menu, select "FASTA (text)". This will bring you to the amino acid sequence of the *Xenopus laevis* cytochrome c oxidase subunit II protein in FASTA format. 
+
+```
+>sp|P00407.1|COX2_XENLA RecName: Full=Cytochrome c oxidase subunit 2; AltName: Full=Cytochrome c oxidase polypeptide II
+MAHPSQLGFQDAASPIMEELLHFHDHTLMAVFLISTLVLYIITIMMTTKLTNTNLMDAQEIEMVWTIMPA
+ISLIMIALPSLRILYLMDEVNDPHLTIKAIGHQWYWSYEYTNYEDLSFDSYMIPTNDLTPGQFRLLEVDN
+RMVVPMESPTRLLVTAEDVLHSWAVPSLGVKTDAIPGRLHQTSFIATRPGVFYGQCSEICGANHSFMPIV
+VEAVPLTDFENWSSSMLEA
+```
+
+The [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) is the most common way DNA and protein sequences are stored and used by bioinformatics software. The first line contains information about the sequence (the metadata), including the NCBI accession number ("P00407.1"), sequence name ("COX2_XENLA") and description ("RecName: Full=Cytochrome c oxidase..."). The following lines represent the amino acid sequence of the protein using the one-letter [amino acid abbreviations](https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#General_chemical_properties). This is the sequence that comprises the COII protein in this species. 
+
+
+
+
+
+
+
+
+---
+
+This exercise is based on materials initially developed by Henrik Kibak in 2004.
