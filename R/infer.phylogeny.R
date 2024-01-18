@@ -3,7 +3,7 @@
 #' @param x an \code{MsaDNAMultipleAlignment} or \code{MsaAAMultipleAlignment} object.
 #' @param method A character indicating the phylogenetic method. Available methods include \code{"NJ"} (default) or \code{"UPGMA"}
 #' @param model A character indicating the substitution model to be used.
-#'     For DNA alignments, available methods include "F81" and "JC69" (default) .
+#'     For DNA alignments, available methods include "F81" (default) and "JC69".
 #'     For amino acid alignments: "WAG", "JTT", "LG", "Dayhoff", "cpREV", "mtmam", "mtArt", "MtZoa", "mtREV24", "VT","RtREV", "HIVw", "HIVb", "FLU", "Blosum62" (default), "Dayhoff_DCMut" and "JTT_DCMut".
 #'     For more information see \code{?phangorn::dist.ml}.
 #' @param truncate.names An optional number of characters by which to truncate sequence names.
@@ -45,10 +45,9 @@ infer.phylogeny <- function (
   }
   if (grepl("DNA",class(x)[1])) {
     type.x <- "DNA"
-    if (!(exists(quote(model)))) { model <- "JC69" }
   } else {
     type.x <- "AA"
-    if (!(exists(quote(model)))) { model <- "Blosum62" }
+    if (any(model %in% c("F81","JC69"))) { model <- "Blosum62" }
   }
 
   if (!(exists(quote(method)))) { method <- "NJ" }
@@ -60,8 +59,8 @@ infer.phylogeny <- function (
   }
   if ((class(model)[1] != "character")) {
     stop("Error in argument `model`. (See the help entry: `?infer.phylogeny`)\n")
-  } else { model <- toupper(model[1]) }
-  if (!(model %in% toupper(c("F81","JC69",  "WAG", "JTT", "LG", "Dayhoff", "cpREV", "mtmam", "mtArt", "MtZoa", "mtREV24", "VT","RtREV", "HIVw", "HIVb", "FLU", "Blosum62", "Dayhoff_DCMut", "JTT_DCMut")))) {
+  }
+  if (!(model %in% c("F81","JC69",  "WAG", "JTT", "LG", "Dayhoff", "cpREV", "mtmam", "mtArt", "MtZoa", "mtREV24", "VT","RtREV", "HIVw", "HIVb", "FLU", "Blosum62", "Dayhoff_DCMut", "JTT_DCMut"))) {
     stop("Unrecognized `model`. (See the help entry: `?infer.phylogeny`)\n")
   }
   if ((model %in% c("F81","JC69")) & (type.x == "AA")) {
