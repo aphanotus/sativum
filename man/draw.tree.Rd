@@ -10,8 +10,11 @@ Dave Angelini \email{david.r.angelini@gmail.com} [aut, cre]
 draw.tree(
   tree,
   font = 2,
+  tip.color = "black",
   edge.width = 3,
   show.branch.lengths = TRUE,
+  branch.length.cex = 0.7,
+  branch.length.text.color = "gray50",
   show.scale.bar = TRUE,
   margins = c(0.5, 0.5, 0.5, 0.5),
   ...
@@ -22,9 +25,15 @@ draw.tree(
 
 \item{font}{An integer specifying the type of font for the labels: 1 (plain text), 2 (bold), 3 (italic, the default), or 4 (bold italic).}
 
+\item{tip.color}{A color name or vector for the tip label text.}
+
 \item{edge.width}{An integer specifying the width of branches in the tree.}
 
 \item{show.branch.lengths}{Logical (TRUE or FALSE) specifying whether to show branch lengths on the tree. (Default is TRUE.)}
+
+\item{branch.length.cex}{An integer specifying the character expansion factor for branch length text. (Default is 0.7)}
+
+\item{branch.length.text.color}{A color name for the branch length text.}
 
 \item{show.scale.bar}{Logical (TRUE or FALSE) specifying whether to show a scale bar. (Default is TRUE.)}
 

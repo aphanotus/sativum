@@ -192,8 +192,8 @@ print(coii.alignment, show="complete")
 
 9. **Infer a phylogeny.** There are many methods to infer phylogenetic relationships from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. This method is implemented in R using the `infer.phylogeny` function.  
 
-```{r nj, echo=FALSE, fig.height=2.5, fig.width=6, fig.align = 'center'}
-coii.tree <- infer.phylogeny(coii.alignment, show.tree = FALSE)
+```{r nj, echo=TRUE, fig.align='center', fig.height=2.5, fig.width=6}
+coii.tree <- infer.phylogeny(coii.alignment)
 ```
 
 Genetic distance is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
@@ -207,23 +207,14 @@ coii.tree$tip.label <- c("shark","coelacanth","lungfish","zebrafish","toad","fro
 
 Next, notice that the shark, which is ancestral to the bony fish, appears in the middle of the tree. It's our outgroup, so let's **rotate nodes** in the tree to place the outgroup at the top, using `rotateConstr`. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. 
 
-```{r rerooting.display, eval=FALSE, include=TRUE}
+```{r rerooting.display, echo=TRUE, fig.align='center', fig.height=2.5, fig.width=6}
 coii.tree <- rotateConstr(
   coii.tree, 
   constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
 )
-plot(coii.tree)
+draw.tree(coii.tree, y.lim = c(0,1))
 ```
 
-```{r rerooting, echo=FALSE, fig.height=2.5, fig.width=6}
-coii.tree <- rotateConstr(
-  coii.tree, 
-  constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
-)
-par(mar = rep(0.5,4))
-plot(coii.tree)
-par(mar = c(5.1, 4.1, 4.1, 2.1))
-```
 
 
 
