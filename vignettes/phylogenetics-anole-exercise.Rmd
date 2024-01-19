@@ -219,8 +219,21 @@ anole.tree$tip.label <- simplify.names(anole.tree$tip.label)
 draw.tree(anole.tree, show.scale.bar = FALSE, font = 4)
 ```
 
-13. Color code
+13. **Save the tree** you've created in the [Newick format](https://en.wikipedia.org/wiki/Newick_format), a simple and common format used in phylogenetics to store trees.
 
+```{r eval=FALSE, include=TRUE}
+write.tree(anole.tree, "anole.ND2.tre")
+```
+
+14. Explore
+
+```{r island.annotation, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
+draw.tree(
+  anole.tree, 
+  tip.groups = anole.natural.history$island,
+  legend.title = "island",
+  show.scale.bar = FALSE, tip.font = 4)
+```
 
 
 

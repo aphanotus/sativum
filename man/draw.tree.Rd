@@ -9,8 +9,10 @@ Dave Angelini \email{david.r.angelini@gmail.com} [aut, cre]
 \usage{
 draw.tree(
   tree,
-  font = 2,
-  tip.color = "black",
+  tip.font = 2,
+  tip.color = NULL,
+  tip.groups = NULL,
+  avoid.auto.color.extremes = TRUE,
   edge.width = 3,
   show.branch.lengths = TRUE,
   branch.length.cex = 0.7,
@@ -18,34 +20,95 @@ draw.tree(
   show.scale.bar = TRUE,
   margins = c(0.5, 0.5, 0.5, 0.5),
   y.lim = NULL,
+  show.legend = NULL,
+  legend.position = "topright",
+  legend.title = NULL,
+  legend.title.font = 2,
+  legend.title.color = par("col"),
+  legend.title.cex = par("cex"),
+  legend.title.adj = 0,
+  legend.text = NULL,
+  legend.text.color = par("col"),
+  legend.text.font = par("font"),
+  legend.group.boxes = TRUE,
+  legend.panel.background = par("bg"),
+  legend.border.width = 0,
+  legend.border.color = par("fg"),
+  legend.columns = 1,
   ...
 )
 }
 \arguments{
 \item{tree}{An object of class \code{phylo}.}
 
-\item{font}{An integer specifying the type of font for the labels: 1 (plain text), 2 (bold), 3 (italic, the default), or 4 (bold italic).}
+\item{tip.font}{An integer specifying the type of font for the tip labels: 1 (plain text), 2 (bold), 3 (italic, the default), or 4 (bold italic).}
 
-\item{tip.color}{A color name or vector for the tip label text.}
+\item{tip.color}{An optional color name or vector for the tip label text.}
+
+\item{tip.groups}{An optional vector to identify groups of taxa (tips). The length of this vector must equal the number of tips.}
+
+\item{avoid.auto.color.extremes}{Logical value (TRUE or FALSE) specifying whether to narrow the range of a viridis palette. Default is TRUE, because the extremes can appear very light and very dark, making perception of the color shade difficult.}
 
 \item{edge.width}{An integer specifying the width of branches in the tree.}
 
-\item{show.branch.lengths}{Logical (TRUE or FALSE) specifying whether to show branch lengths on the tree. (Default is TRUE.)}
+\item{show.branch.lengths}{Logical value specifying whether to show branch lengths on the tree. (Default is TRUE.)}
 
 \item{branch.length.cex}{An integer specifying the character expansion factor for branch length text. (Default is 0.7)}
 
 \item{branch.length.text.color}{A color name for the branch length text.}
 
-\item{show.scale.bar}{Logical (TRUE or FALSE) specifying whether to show a scale bar. (Default is TRUE.)}
+\item{show.scale.bar}{Logical value specifying whether to show a scale bar. (Default is TRUE.)}
 
 \item{margins}{A vector of four integers defining the margins of the plot.}
+
+\item{y.lim}{An integer vector with two values specifying the minimum and maximum vertical limits of the plot. \code{x.lim} can also be specified.}
+
+\item{show.legend}{Logical value specifying whether to show a legend for group color-coding. Defaults to TRUE if \code{tip.groups} are defined.}
+
+\item{legend.position}{A character string specifying whether on the plot to place the legend. Options are "bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" and "center".}
+
+\item{legend.title}{A character string specifying the title of the legend.}
+
+\item{legend.title.font}{An integer specifying the type of font for the legend title.}
+
+\item{legend.title.color}{An optional color name for the legend title.}
+
+\item{legend.title.cex}{An integer specifying the character expansion factor for the legend title.}
+
+\item{legend.title.adj}{An integer specifying the horizontal adjustment for the legend title.}
+
+\item{legend.text}{An optional character vector for the group names. Defaults to the unique values of \code{tip.groups}.}
+
+\item{legend.text.color}{An optional color name or vector of colors for the legend text.}
+
+\item{legend.text.font}{An integer specifying the type of font for the legend text.}
+
+\item{legend.group.boxes}{Logical value specifying whether to show boxes with the color of each group. (Default is TRUE.)}
+
+\item{legend.panel.background}{An optional color name for the legend background.}
+
+\item{legend.border.width}{An optional integer specifying the border line width around the legend. (Default is 0, for no border.)}
+
+\item{legend.border.color}{An optional color name for the legend border.}
+
+\item{legend.columns}{An optional integer specifying the number of columns in the legend.}
 }
 \description{
 This function plots a phylogenetic tree (of class \code{phylo}).
-The function is a wrapper for \code{ape::plot.phylo} with a few stylistic changes to the default,
+The function is a wrapper for \code{ape::plot.phylo} with a stylistic changes
 including thicker branches, slightly offset tip labels, different default font style (bold).
 It also includes the display of branch lengths by default using \code{ape::edgelabels},
 with stylistic changes to make it a bit cleaner.
+}
+\details{
+If \code{tip.groups} are defined, then \code{tip.color} can be a vector of color names
+to identify each group. If so, this vector should be equal in length to the number of
+unique group names. Alternatively, \code{tip.color} can be the name of a color palette
+from the \code{viridis} package, including "magma", "inferno", "plasma", "viridis", "cividis", "rocket", "mako" or "turbo",
+or letters A through H which stand in for those palette names.
+If no tip color or palette information is provided, the function defaults to the "viridis" palette.
+
+If \code{legend.text.color = "group"} then legend text will be colored to match the groups.
 }
 \examples{
 draw.tree(anole.tree)
