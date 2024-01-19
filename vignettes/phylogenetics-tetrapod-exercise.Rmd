@@ -50,7 +50,7 @@ Let's consider the simple tree to the right, where the letters at the tips repre
 
 ```{r example.tree, echo=FALSE, fig.height=1.5, fig.width=3, fig.align = 'center'}
 x <- read.tree(text = "(((D,C),B),A);")
-plot.tree(x)
+draw.tree(x)
 ```
 
 - Time in a phylogeny is represented as moving from the base to the tips of the tree (left to right in this example). This tree tells us that the first event was the evolutionary split into two different lineages, one leading to species A and one to the other branches of the tree. The next event was the splitting of B from the line that leads to C and D. The final and most recent event is the splitting of C and D into two separate species. 
@@ -59,16 +59,14 @@ plot.tree(x)
 - Species B is no more closely related to C than it is to D. All nodes are able to be rotated 180° without fundamentally changing the tree, because the order of branching is preserved. All of the trees below show the *same* relationships as the figure above.
 
 ```{r more.example.trees, echo=FALSE, fig.height=1.5, fig.width=2, fig.show='hold', message=FALSE, warning=FALSE}
-par(mar = rep(0.25,4))
 x <- read.tree(text = "(((C,D),B),A);")
-plot(x)
+draw.tree(x)
 x <- read.tree(text = "((B,(C,D)),A);")
-plot(x)
+draw.tree(x)
 x <- read.tree(text = "(A,(B,(D,C)));")
-plot(x)
+draw.tree(x)
 x <- read.tree(text = "(A,(B,(C,D)));")
-plot(x)
-par(mar = c(5.1, 4.1, 4.1, 2.1))
+draw.tree(x)
 ```
 
 ### What do you need to develop a phylogeny?
@@ -194,14 +192,8 @@ print(coii.alignment, show="complete")
 
 9. **Infer a phylogeny.** There are many methods to infer phylogenetic relationships from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. This method is implemented in R using the `infer.phylogeny` function.  
 
-```{r nj.display, eval=FALSE, include=TRUE}
-coii.tree <- infer.phylogeny(coii.alignment)
-```
-
 ```{r nj, echo=FALSE, fig.height=2.5, fig.width=6, fig.align = 'center'}
-par(mar = rep(0.5,4))
-coii.tree <- infer.phylogeny(coii.alignment, verbose = FALSE)
-par(mar = c(5.1, 4.1, 4.1, 2.1))
+coii.tree <- infer.phylogeny(coii.alignment)
 ```
 
 Genetic distance is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
