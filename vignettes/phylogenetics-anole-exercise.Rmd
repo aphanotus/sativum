@@ -1,0 +1,211 @@
+---
+title: "Relationships of Anole Lizards"
+author: "Colby College BI164"
+date: "`r format(Sys.time(),'%d %B %Y')`"
+output:
+  rmarkdown::html_vignette:
+    css: mostlymodest.css
+vignette: >
+  %\VignetteIndexEntry{phylogenetics-anole-exercise}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  error = FALSE,
+  highlight = TRUE,
+  indent = "  ",
+  comment = ""
+)
+```
+
+```{r load.packages, include = FALSE}
+library(stringr)
+library(sativum)
+library(ape)
+library(Biostrings)
+library(rentrez)
+library(msa)
+library(phangorn)
+```
+
+## Objectives
+
+- Learn about hypothesized biogeographical histories of *Anolis* in the Caribbean
+- Develop a phylogenetic tree displaying relatedness of anoles using molecular information
+- Determine which hypothesis about radiation of anoles is best supported by molecular data - Communicate your findings in a full scientific research paper
+
+## Introduction
+
+The more than 700 islands of the Caribbean are home to about 150 species of anoles, a closely related group of lizards (genus *Anolis*) that occupy diverse habitats and niches (Figure 1). Research on these lizards is enriching our understanding of evolutionary processes, such as adaptation by natural selection, evolution, and the formation of new species—and it is helping to illuminate how and why there are so many different kinds of living organisms on Earth. 
+
+The evolutionary history of these anoles serve as a strong example of **adaptive radiation**, where a type of organism diversifies from a common ancestor to occupy a variety of available niches in the environment. The isolated nature of these islands (for land dwelling organisms) makes evaluating adaptive radiation in this system particularly attractive since complexities brought by mainland communities are reduced. Additionally, a pattern revealed by their radiation into numerous species each occupying a distinct niche is that this radiation pattern is replicated on each island in the Greater Antilles. This brings up a question of when the replicated radiation occurred in their evolutionary history. Did it occur earlier on in geologic history when the islands were interconnected into larger island body known as the Proto-Antilles or later after the islands were their own distinct landmasses? Before pursuing how to explore an answer to that question, first let’s learn more about the geologic history of the landscape.
+
+|     |     |
+| --- | --- |
+| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/37728705/medium.jpg){height=275px} | ![](https://www.islandlifecaribbean.com/wp-content/uploads/2021/12/Caribbean-Map.png){height=275px} |
+| *Figure 1.* Diverse anoles share common features. *Anolis cristatellus* is a common anole species found in Puerto Rico. Anole species live in diverse habitats and vary greatly in size and other obvious features such as tail and leg length (Photo by [Janson Jones CC BY-NC](https://www.inaturalist.org/photos/37728705)). | *Figure 2.* Caribbean islands are home to the anoles. The anole species you will be studying in this project live in the islands of Cuba, Jamaica, Hispaniola (Haiti and Dominican Republic) and Puerto Rico (https://www.islandlifecaribbean.com/caribbean-map/) |
+
+## Biogeogrpahy of anoles in the Greater Antilles
+
+If you are to make an informed prediction about the evolution of *Anolis* on these Caribbean Islands, known collectively as the Greater Antilles, you should first have a basic understanding of the history of the formations of the islands themselves (Figure 2). Precursors to some of these the Caribbean Islands, known as the Proto-Antilles, formed in the Pacific Ocean during the Cretaceous Period (145- 65 mya, Figures 3 & 4). 
+
+<center>
+![](geological.strata.png){height=350px} 
+</center>
+
+> *Figure 3.* Geologic time scale from the Jurassic Period to the present. Ages represent the lower estimate of each epoch.
+
+<center>
+![](caribbean.cretaceous.png){width=700px}
+</center>
+
+> *Figure 4.* Paleogeography of the Caribbean in the late Cretaceous. Volcanic arcs supported transient islands, repeatedly exposed and drowned, preventing persistent ecosystems. Modified from [Iturralde-Vinent (2006)](https://doi.org/10.2747/0020-6814.48.9.791).
+
+The Proto-Antilles then moved via tectonic plate action from the Pacific Ocean, through the passage between Central and South America, and into the Carribean around 70 mya. The Proto-Antilles continued to move across the Caribbean, often completely submerged under water for periods. It remained connected as a larger landmass up until the Oligocene (27-29 mya, Figure 5) and then were completely separated 14-16 mya. This landmass included Cuba, Hispaniola, and Puerto Rico but Jamaica had a different geologic history. It was connected to Central America until 50 mya and then moved eastward to its current position and was mostly submerged during that period except for isolated montane islands (Losos 2009). 
+
+<center>
+![](caribbean.oligocene.png){width=700px}
+</center>
+
+> *Figure 5.* Caribbean latest Eocene–Early Oligocene paleogeography (35–33 Mya), updated from Iturralde-Vinent and MacPhee (1999). This scenario provides the possibility of terrestrial biota migration from South America into the Aves–Greater Antilles ridge, and also reduces possibilities of marine biotal exchange across the Caribbean Sea. Figure caption and image taken from [Iturralde-Vinent (2006)](https://doi.org/10.2747/0020-6814.48.9.791).
+
+Based on various methods of dating, the first ancestors to modern-day Anolis are estimated to have evolved between 66-40 mya on the Proto-Antilles, meaning once the land had settled into the Caribbean but long after it passed close to the Central and South American mainland. Once in this position in the Caribbean, there was the neighboring Aves Ridge that could have connected to South America (Figure 6). Much contention surrounds whether the Aves Ridge could have been a land bridge from mainland South America for emigration (Gaarlandia hypothesis) and is still being investigated to this day (Iturralde-Vinent 2006; Ali & Hedges 2021). So although we aren’t sure how the ancestral *Anolis* reached the island (Aves Ridge land bridge or over-water dispersal), we do know the relative timing. 
+
+<center>
+![](ali.hedges.2021.fig2.jpg){width=750px}
+</center>
+
+> Figure 6. This paleogeographic reconstruction of the GAARlandia land bridge shows how it might have appeared 35–33 Ma. Yellow shading represents lowlands, and red shading represents highlands. Thin black lines are outlines of present-day islands and landmasses ([Ali & Hedges 2021](https://doi.org/10.1111/jbi.14234)).
+
+
+## Your Study
+
+Another area of debate is what was the order of events that led this singular ancestral line that first colonized the Proto-Antilles to become the amazing variety of Anolis we see on these islands today- in other words, how did the radiation process happen? Your challenge in this project is to use molecular data and bioinformatics tools to evaluate two competing hypotheses about the radiation of anoles on the Greater Antilles. Did the ancestral anole disperse across the Proto-Antilles and radiate while the islands were a large landmass or did the radiation occur once the islands were separated, either by an expanse of ocean or allopatrically by impassable barriers between what would be the distinct island later. Regardless of the pathway, the radiation events led to speciation of multiple representatives of different ecological morphotypes or **ecomorphs**.
+
+**The Research Question**: How did adaptive radiation of *Anolis* occur in the Greater Antilles?
+
+#### Hypothesis 1: Single Origin of Ecomorphs Hypothesis
+
+Ecomorphs radiated from the ancestral population when islands were likely contiguous or an inter-connected Proto-Antilles. Populations of each type of ecomorph would have dispersed across the contiguous land mass. Then the Proto-Antilles separated as distinct islands, each taking a portion of the population of each ecomorph with it where evolution continued through allopatric means to produce the modern day species. 
+
+#### Hypothesis 2: Replicated Radiation of Ecomorphs Hypothesis
+
+There was a common distant ancestor present across the contiguous Proto-Antilles landmass like with the single origin hypothesis. The Proto-Antilles broke apart into distinct islands, each taking a portion of the ancestral population with them. Then the ancestral populations on each island independently diversified into the many species that exist today and the ecomorphs evolved repeatedly and independently on each of the islands, in a replicated fashion. This situation can be considered a form of **convergent evolution**, where different groups of organisms independently evolve similar traits by adapting to similar environments or ecological niches. 
+
+- Respond to the questions in Parts 1 & 2 below in an electronic version of this document. You can complete one per group or each individual works on their own copy. If done as group work, be sure each group member has an electronic copy since the responses will be helpful in crafting your research paper associated with this project.
+
+### Part 1: Identifying Ecomorphs and Exploring Anole Adaptive Radiation 
+
+1. **Examine the photographs** of 16 species of anole lizards and sort them on the benchtop into as many groups as you want according to how they appear in the photographs. 
+
+2. **Discuss** how you grouped the lizards and your rationale for the various groupings below. If you picked a body feature to sort by, speculate about the advantages or disadvantages of such a body feature in the environment that species occupies. 
+
+3. **Watch** the first part (up until ~09:50) of the film Lizards in an Evolutionary Tree.
+
+4. Now that you have more information about the anoles, **revise** your groupings of your photos and if you wish. You’ve also been provided a photo of a lizard to function as an outgroup, *Leiocephalus barahonensis*. The common name of this species is the Barahona Curly Tailed Lizard and it is found in Haiti and varies between 65-80 mm in length. 
+
+5. Species of Caribbean anoles can be categorized into six groups according to their body characteristics (morphology) and the ecological niches they occupy. The groups are referred to as ecological morphotypes, or ecomorphs. The film discusses four ecomorphs. Additional photo cards identifying those film ecomorphs are provided with average lengths. Did your groupings match the ecomorphs described in the film? **Why or why not?** 
+
+### Part 2: Generating a Phylogeny from DNA Sequences & Revealing Evolutionary Relationships of Anoles
+
+Using available nucleotide sequence data as well as computational tools and techniques you learned about in the tetrapods tutorial, you will evaluate whether a phylogenetic tree you construct using nucleotide sequences data from modern day anoles offers support for the single origin or convergent evolution hypothesis. 
+
+- *Single Origin Hypothesis*: radiation into each ecomorph occurred on the Proto-Antilles landmass
+- *Convergence Hypothesis*: radiation into each ecomorph occurred convergently on each of four islands studied
+
+6. Think about how the phylogenetic tree might need to look in terms of who would be most closely related to each other to support each of the hypotheses. For each hypothesis, **make predictions** below as to whether inhabitants of the same island or species from the same ecomorph would be more closely related and thus form their own monophyletic groups. 
+
+#### Molecular Phylogenetic Methods
+
+7. **Explore** the starting dataset in R by running the code below.
+
+```{r eval=FALSE, include=TRUE}
+library(sativum)
+```
+
+```{r echo=TRUE}
+anole.ND2
+```
+
+The first command loads the R package `sativum`, which contains data and functions necessary for this lab. The object `anole.ND2` includes the DNA sequences of 14 of the 16 *Anolis* species in the photographs. 
+
+These nucleotide sequences are from a stretch of mitochondrial DNA that includes the *NADH dehydrogenase subunit II* (*ND2*) gene and five tRNA genes (“ND2-tRNAtrp-tRNAala”). These genes are conserved enough among animal species that they can be recognized in two distantly related species, yet they are also variable enough that each species has a unique sequence, and that sequence can be compared to that of closely related species to infer evolutionary relationships. 
+
+Look at the species names in this dataset. 
+
+```{r echo=TRUE}
+names(anole.ND2)
+```
+
+In addition to the anoles, one unrelated lizard species, *Leiocephalus barahonensis*, is included as an outgroup to root the tree. (It's the first sequence in the dataset.) The common name of this species is the Barahona Curly Tailed Lizard and it is found in Haiti. 
+8. Two more anole species, *Anolis sheplani* and *A. valencienni*, need their sequences added to the dataset. **Search** for the *ND2* sequence for each species in the NCBI database of nucleotide sequences using the `search.for.ncbi.ids` function as shown below.
+
+```{r echo=TRUE}
+new.ids <- search.for.ncbi.ids("Anolis sheplani ND2")
+```
+
+Run the second search, and add those results to the first.
+
+```{r echo=TRUE}
+new.ids <- c(new.ids, search.for.ncbi.ids("Anolis valencienni ND2"))
+```
+
+The output of `search.for.ncbi.ids` is simply an index number for the NCBI database. To obtain the new sequences, we can use the `fetch.sequence` function.
+
+```{r echo=TRUE}
+new.sequences <- fetch.sequence(new.ids) 
+```
+
+This command saves the sequences in the `new.sequences` object and displays an abbreviated version of those sequences in the R console panel. -- But there are five sequences! We only wanted two; one from each species. Check the full names of these sequences.
+
+```{r echo=TRUE}
+names(new.sequences)
+```
+
+We have one sequence for *A. sheplani* and four *A. valencienni*. **Discuss** why you think this might be the case.
+
+9. We will proceed with just one of the sequences for each species. To do that, we'll subset the `new.sequences` object. Then we'll **combine** the new and old sequences together into a new dataset using the `combine.sequences` function.
+
+```{r echo=TRUE}
+new.sequences <- new.sequences[c(1,5)]
+
+combined.ND2 <- combine.sequences(anole.ND2, new.sequences)
+
+combined.ND2
+```
+
+Notice that the new sequences for *A. sheplani* and four *A. valencienni* are now below the original sequence for *A. sagrei*.
+
+10. **Save the dataset** in FASTA format. 
+
+```{r eval=FALSE, include=TRUE}
+write.fasta(combined.ND2, filename = "combined.ND2.fasta")
+```
+
+FASTA is a text-based format commonly used in bioinformatics and genomics. It can represent either nucleotide or amino acid (protein) sequences using single-letter codes. FASTA files are convenient because they can include multiple sequences. Each sequence has a short identifying description, which in this case comes from the name of each row in our dataset.
+
+11. **Align the sequences** using the ClustalOmega algorithm.
+
+```{r echo=TRUE}
+anole.alignment <- align.sequences(combined.ND2, method = "ClustalOmega", order = "input")
+```
+
+You can look at the full alignment. (Not shown here because it's big!)
+
+```{r eval=FALSE, include=TRUE}
+print(anole.alignment, "complete")
+```
+
+12. **Build a phylogeny** using the Neighbor-Joining method.
+
+```{r echo=TRUE}
+anole.tree <- infer.phylogeny(anole.alignment)
+```
+
+
+---

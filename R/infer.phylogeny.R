@@ -60,6 +60,7 @@ infer.phylogeny <- function (
   if ((class(model)[1] != "character")) {
     stop("Error in argument `model`. (See the help entry: `?infer.phylogeny`)\n")
   }
+  model <- model[1]
   if (!(model %in% c("F81","JC69",  "WAG", "JTT", "LG", "Dayhoff", "cpREV", "mtmam", "mtArt", "MtZoa", "mtREV24", "VT","RtREV", "HIVw", "HIVb", "FLU", "Blosum62", "Dayhoff_DCMut", "JTT_DCMut"))) {
     stop("Unrecognized `model`. (See the help entry: `?infer.phylogeny`)\n")
   }
