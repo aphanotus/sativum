@@ -25,9 +25,7 @@ align.sequences <- function (x, method = "ClustalOmega", verbose = TRUE, ...)
 { # Begin the function
 
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(msa)) {
-    stop("Please run  `BiocManager::install('msa')`  first.")
-  }
+  if (!require(msa, quietly = TRUE)) { stop("Please run  `BiocManager::install('msa')`  first.") }
 
   # Vet the input
   if (!exists(quote(x))) {
@@ -45,7 +43,7 @@ align.sequences <- function (x, method = "ClustalOmega", verbose = TRUE, ...)
   if (class(x)[1] == "character") {
     # Input is raw FASTA as a single string
     if (length(x)==1) {
-      if (!require(stringr)) { stop("Please run  `install.packages('stringr')`  first.") }
+      if (!require(stringr, quietly = TRUE)) { stop("Please run  `install.packages('stringr')`  first.") }
       x <- unlist(str_split(x, ">"))[-1]
       seq.names <- str_split_fixed(x, "\\\n", 2)[,1]
       x <- str_split_fixed(x, "\\\n", 2)[,2]

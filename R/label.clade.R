@@ -32,7 +32,7 @@ label.clade <- function (
     font = 2, line.width = 7,
     line.color = "darkred", text.color = "darkred" )
 {
-  if (!require(ape)) { stop("Please run  `install.packages('ape')`  first.") }
+  if (!require(ape, quietly = TRUE)) { stop("Please run  `install.packages('ape')`  first.") }
 
   if (class(tree)[1] != "phylo") {
     stop("Argument `tree` is not a recognized data type. (See the help entry: `?label.clade`)\n")

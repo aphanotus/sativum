@@ -40,9 +40,7 @@ fetch.sequence <- function (
 { # Begin the function
 
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(rentrez)) {
-    stop("Please run  `install.packages('rentrez')`  first.")
-  }
+  if (!require(rentrez, quietly = TRUE)) { stop("Please run  `install.packages('rentrez')`  first.") }
 
   # Vet the input
   if (!exists(quote(ids))) {
@@ -98,7 +96,7 @@ fetch.sequence <- function (
   }
 
   # Parse raw sequence
-  if (!require(stringr)) { stop("Please run  `install.packages('stringr')`  first.") }
+  if (!require(stringr, quietly = TRUE)) { stop("Please run  `install.packages('stringr')`  first.") }
   seqs <- str_split_fixed(seqs.raw,">",length(ids)+1)[1,-1]
   seq.names <- str_split_fixed(seqs,"\n",2)[,1]
   seqs <- str_split_fixed(seqs,"\n",2)[,2]
@@ -128,7 +126,7 @@ fetch.sequence <- function (
 
   # Output: DNAStringSet
   if (strtrim(format,1)=="D") {
-    if (!require(Biostrings)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
+    if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
     # Check that the sequence doesn't include any amino acid abbreviations
     aa.letters <- c("E","F","I","L","P")
     if (any(unlist(lapply(aa.letters, function(x) { grepl(x, seqs, ignore.case = TRUE)})))) {
@@ -144,7 +142,7 @@ fetch.sequence <- function (
 
   # Output: AAStringSet
   if (strtrim(format,1)=="A") {
-    if (!require(Biostrings)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
+    if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
     seqs.ss <- AAStringSet(seqs)
     if (verbose) { print(seqs.ss) }
     return(seqs.ss)
@@ -168,9 +166,7 @@ fetch.sequences <- function (
 { # Begin the function
 
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(rentrez)) {
-    stop("Please run  `install.packages('rentrez')`  first.")
-  }
+  if (!require(rentrez, quietly = TRUE)) { stop("Please run  `install.packages('rentrez')`  first.") }
 
   # Vet the input
   if (!exists(quote(ids))) {
@@ -226,7 +222,7 @@ fetch.sequences <- function (
   }
 
   # Parse raw sequence
-  if (!require(stringr)) { stop("Please run  `install.packages('stringr')`  first.") }
+  if (!require(stringr, quietly = TRUE)) { stop("Please run  `install.packages('stringr')`  first.") }
   seqs <- str_split_fixed(seqs.raw,">",length(ids)+1)[1,-1]
   seq.names <- str_split_fixed(seqs,"\n",2)[,1]
   seqs <- str_split_fixed(seqs,"\n",2)[,2]
@@ -256,7 +252,7 @@ fetch.sequences <- function (
 
   # Output: DNAStringSet
   if (strtrim(format,1)=="D") {
-    if (!require(Biostrings)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
+    if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
     seqs.ss <- DNAStringSet(seqs)
     if (verbose) { print(seqs.ss) }
     return(seqs.ss)
@@ -264,7 +260,7 @@ fetch.sequences <- function (
 
   # Output: AAStringSet
   if (strtrim(format,1)=="A") {
-    if (!require(Biostrings)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
+    if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
     seqs.ss <- AAStringSet(seqs)
     if (verbose) { print(seqs.ss) }
     return(seqs.ss)

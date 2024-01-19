@@ -38,6 +38,9 @@ draw.tree <- function (
     ...
 )
 {
+  # Don't bother running anything if dependent package isn't installed!
+  if (!require(ape, quietly = TRUE)) { stop("Please run  `install.packages('ape')`  first.") }
+
   # if (!exists(quote(y.lim))) {
   if (is.null(y.lim)) {
     y.lim <- c(0.9,length(tree$tip.label)+0.35)

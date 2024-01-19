@@ -19,7 +19,7 @@
 
 phylogenetic.distance <- function (tree, tip1, tip2)
 { # Begin the function
-  if (!require(ape)) { stop("Please run  `install.packages('ape')`  first.") }
+  if (!require(ape, quietly = TRUE)) { stop("Please run  `install.packages('ape')`  first.") }
 
   # Vet the input
   if (!exists(quote(tree))) {

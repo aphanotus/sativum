@@ -27,7 +27,7 @@ write.alignment <- function (
 )
 { # Begin the function
 
-  if (!require(stringr)) { stop("Please run  `install.packages('stringr')`  first.") }
+  if (!require(stringr, quietly = TRUE)) { stop("Please run  `install.packages('stringr')`  first.") }
 
   # Vet the input
   if (!exists(quote(x))) {

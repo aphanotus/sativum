@@ -32,12 +32,8 @@ read.fasta <- function (
 { # Begin the function
 
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(phylotools)) {
-    stop("Please run  `install.packages('phylotools')`  first.")
-  }
-  if (!require(stringr)) {
-    stop("Please run  `install.packages('stringr')`  first.")
-  }
+  if (!require(phylotools, quietly = TRUE)) { stop("Please run  `install.packages('phylotools')`  first.") }
+  if (!require(stringr, quietly = TRUE)) { stop("Please run  `install.packages('stringr')`  first.") }
 
   # Vet the input
   if (!exists(quote(filename))) {
@@ -81,7 +77,7 @@ read.fasta <- function (
 
   # Output: DNAStringSet
   if (strtrim(format,1)=="D") {
-    if (!require(Biostrings)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
+    if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
     s <- seqs$seq.name
     seqs <- seqs$seq.text
     names(seqs) <- s
@@ -100,7 +96,7 @@ read.fasta <- function (
 
   # Output: AAStringSet
   if (strtrim(format,1)=="A") {
-    if (!require(Biostrings)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
+    if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first.") }
     s <- seqs$seq.name
     seqs <- seqs$seq.text
     names(seqs) <- s
