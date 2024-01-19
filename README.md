@@ -45,12 +45,11 @@ library(sativum)
 - [x] `write.alignment` - write out an interleaved Phylip format file
 - [x] `infer.phylogeny` (Consider adding [parsimony](https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html#Parsimony?)
 - [x] rotate nodes using existing functions from `ape` (**Be sure to include in vignette!**)
-- [x] re-root the tree using existing functions from `ape` (**Be sure to include in vignette!**)
-- [x] `plot.tree` with some sensible aesthetic parameters
+- [ ] re-root the tree using existing functions from `ape` (**Be sure to include in vignette!**)
+- [x] `draw.tree` with some sensible aesthetic parameters, includes the ability to easily color-code tree tips
 - [x] `add.branch.lengths` to a tree plot (rendered mostly useless by the `plot.tree` function)
 - [x] `label.clade` with a colored bar and text, based on tip names (rather than node numbers)
 - [x] `phylogenetic.distance` finds the totals branch lengths separating two tips on a tree
-- [ ] easily color tree tips or all tips descended from a node
 
 ### Other functions
 
@@ -65,4 +64,4 @@ library(sativum)
 - [ ] **Mendelian Genetics**: Exploration of Mendel's original data, chi-squared distribution testing, and tests of data from Fawcett et al. 
 - [ ] **Quantitative Genetics**: Exploration of East's quantitative data and the BI164 *Brassica* data
 
-
+---

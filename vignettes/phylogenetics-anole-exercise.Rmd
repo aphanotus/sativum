@@ -120,7 +120,7 @@ Using available nucleotide sequence data as well as computational tools and tech
 
 6. Think about how the phylogenetic tree might need to look in terms of who would be most closely related to each other to support each of the hypotheses. For each hypothesis, **make predictions** below as to whether inhabitants of the same island or species from the same ecomorph would be more closely related and thus form their own monophyletic groups. 
 
-#### Molecular Phylogenetic Methods
+#### **Molecular Phylogenetic Methods**
 
 7. **Explore** the starting dataset in R by running the code below.
 
@@ -259,6 +259,92 @@ draw.tree(
   tip.color = "magma",
   show.scale.bar = FALSE, tip.font = 4)
 ```
+
+You can save these plots by clicking the "Export" button on the plot panel in Rstudio or by taking a screen-capture. 
+
+#### **Analysis Questions**
+
+15. Examine the phylogenetic trees you color coded and answer the following questions.
+
+What general patterns of organization do you see in the tree that is:
+
+- Colored-coded by island?
+<br><br><br>
+- Colored-coded by ecomorph?
+<br><br><br>
+
+16. Do species from the same ecomorph or island group together on the tree into the same clade? Provide evidence to support your answer.
+<br><br><br>
+
+17. Are the genetic distances varied or all similar in length? What is the approximate average?
+<br><br><br>
+
+18. Watch the rest of the film either in lab or as homework. It will help confirm which hypothesis is supported by the nucleotide data.
+
+#### **Thought Questions**
+
+19. Review the two hypotheses. Which hypothesis is supported by the DNA analysis shown in the tree and how does the color coding help reveal that? Justify your answer and explain your reasoning.
+
+20. What would you imagine the process of evolution looked like from the basal ancestral population prior to Caribbean island formation up through radiation of anole on each island. Describe for the reader so they have a mental picture.
+
+21. Speculate about what may have led to a radiation like this where similar ecomorph classes can be found on each of the different islands in the Caribbean. Why do we have the same replicated radiations on each island?
+
+22. What is the interpretation of the genetic distance and what might the similar values across species indicate about the timing of the radiation event of *Anolis* across the island system?
+
+23. Is there evidence from some of Losos’ modern day anole studies of adaptive radiation and/or convergent evolution in anoles? Describe how that backs up or contradicts the findings you made.
+
+24. Is there evidence from other systems of adaptive radiation on islands and how does that connect to what you found?
+
+25. If there are any species that are outliers in terms of where they are located on the tree given which hypothesis you believe is supported, you’d be expected to address this in your Discussion. Examine the relationship between *Anolis sheplani* and *Anolis angusticeps*. Does it support the hypothesis you provided in the question above? Explain your answer. Develop a possible explanation that could explain this relationship.
+
+26. What study might you want to do next with anoles?
+
+## References
+
+Materials taken from Howard Hughes Medical Institute, Biointeractive Resources, Using DNA to Explore Lizard Phenology
+
+Ali, J and B. Hedges. 2021. Colonizing the Caribbean: New geological data and an updated land-vertebrate colonization record challenge the GAARlandia land- bridge  hypothesis. Journal of Biogeography 48:2699–2707.
+
+Iturralde-Vinent, M. 2006. Meso-Cenozoic Caribbean Paleogeography: Implications for the Historical Biogeography of the Region. International Geology Review 48: 791–827.
+
+Losos, J. 2009. Lizards in an Evolutionary Tree: Ecology and Adaptive Radiation of Anoles. UC Press, Berkley, CA. 507.
+
+## Assignment
+
+- Prepare a full paper with an Introduction, Methods, Results and Discussion, Literature Cited sections. Your goal is to address which hypothesis for the research question is supported by the patterns you’ve uncovered in your molecular trees. 
+
+- The write-up should include use of a minimum of five outside sources (some are provided on Moodle in the Literature folder). 
+
+- Not all responses to questions answered above should appear in your paper- only the info that adds to the reader’s understanding of the main question about the origins of anole in Caribbean Islands. For instance, most of Part 1 (Q1-5) will not appear in your Results.
+
+Introduction section should include:
+
+- Background information including what is known as well as gap in knowledge 
+- Research question as a statement of purpose
+- Two competing hypotheses
+- Predictions for trees if each hypothesis was supported  
+
+Methods section should include:
+
+- Study organism subsection about Caribbean anole lizards
+- Study Site subsection about Greater Antilles
+- Data Collection and Analysis subsection describing Part 2 including the molecular data and its the origins, software used, and any manipulations you made to your trees
+- Although the majority of sequences were provided to you for sake of time, you should write the Methods giving directions as if you collected it all yourself.
+- Use the table from `anole.natural.history` in your paper if you want to list info about the *Anolis* species.
+
+Result section should include:
+
+- 2 molecular trees- trees color-coded by ecomorph and one by island of residence.
+- Any details about trees or responses to questions in this handout that are appropriate for a Results section (description of tree organization/patterns, placement of species in relation to one another).
+- Some responses to your analysis questions above may be addressed in the Results. It is up to you to determine what constitutes material to be included in the Results versus Discussion section.
+
+Discussion section should include:
+
+- Some responses to your thought questions above may be addressed in the Discussion. It is up to you to determine what constitutes material to be included in the Results versus Discussion section.
+- Any biological explanation for patterns on phylogeny mentioned in the Results
+- Integration of outside sources that relate to the question about origins of anoles
+- Any studies illustrating adaptive radiation and/or evolutionary potential when new species introduced to an island
+- Studies that investigate adaptive radiation of other organisms on islands
 
 
 
