@@ -12,8 +12,8 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
 knitr::opts_chunk$set(
-  rmarkdown.html_vignette.check_title = FALSE,
   collapse = TRUE,
   warning = FALSE,
   error = FALSE,
@@ -48,11 +48,9 @@ Biological **systematics** is the study of the relationships among living things
 
 Let's consider the simple tree to the right, where the letters at the tips represent different species.  
 
-```{r example.tree, echo=FALSE, fig.height=1.5, fig.width=3, fig.align = 'center', message=FALSE, warning=FALSE}
+```{r example.tree, echo=FALSE, fig.height=1.5, fig.width=3, fig.align = 'center'}
 x <- read.tree(text = "(((D,C),B),A);")
-par(mar = rep(0.25,4))
-plot(x)
-par(mar = c(5.1, 4.1, 4.1, 2.1))
+plot.tree(x)
 ```
 
 - Time in a phylogeny is represented as moving from the base to the tips of the tree (left to right in this example). This tree tells us that the first event was the evolutionary split into two different lineages, one leading to species A and one to the other branches of the tree. The next event was the splitting of B from the line that leads to C and D. The final and most recent event is the splitting of C and D into two separate species. 
@@ -163,7 +161,13 @@ frog.sequence <- fetch.sequence(ids = frog.id, database = "protein", format = "A
 frog.sequence <- fetch.sequence(ids = "117049", database = "protein", format = "AA")
 ```
 
-Either way the result is the same. 
+Either way the result is the same.
+
+Optional: If you're not comfortable with scientific names, like *Xenopus laevis* or if you simply want this sequence's name to match the format of the others, you can change it as shown below.
+
+```{r name.change, echo=TRUE}
+names(frog.sequence) <- "frog P00407.1 COII [Xenopus laevis]"
+```
 
 6. **Combine** the old and new COII sequences into one dataset using the `combine.sequences` function.
 
@@ -188,15 +192,46 @@ coii.alignment <- align.sequences(combined.coii, method = "ClustalOmega", order 
 print(coii.alignment, show="complete")
 ```
 
-9. **Infer a phylogeny.** There are many methods to infer phylogenetic relationships from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. Genetic distances are used in the NJ method to actually calculate the lengths of the tree branches. This method is implemented in R using the `infer.phylogeny` function.
+9. **Infer a phylogeny.** There are many methods to infer phylogenetic relationships from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. This method is implemented in R using the `infer.phylogeny` function.  
 
-```{r nj, echo=TRUE}
+```{r nj.display, eval=FALSE, include=TRUE}
 coii.tree <- infer.phylogeny(coii.alignment)
 ```
 
+```{r nj, echo=FALSE, fig.height=2.5, fig.width=6, fig.align = 'center'}
+par(mar = rep(0.5,4))
+coii.tree <- infer.phylogeny(coii.alignment, verbose = FALSE)
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+```
 
+Genetic distance is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
 
+Let's do some things to clean up this tree and make it easier to interpret. First, let's **make tip labels simpler**. We don't need the NCBI accession numbers anymore, and we know these are all COII sequences. So let's just use the short common names for each taxon. Let's check the current names, in `coii.tree$tip.label`, and then reassign them. (Just be sure to maintain the same order.)
 
+```{r renaming.tips, echo=TRUE}
+coii.tree$tip.label
+coii.tree$tip.label <- c("shark","coelacanth","lungfish","zebrafish","toad","frog")
+```
+
+Next, notice that the shark, which is ancestral to the bony fish, appears in the middle of the tree. It's our outgroup, so let's **rotate nodes** in the tree to place the outgroup at the top, using `rotateConstr`. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. 
+
+```{r rerooting.display, eval=FALSE, include=TRUE}
+coii.tree <- rotateConstr(
+  coii.tree, 
+  constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
+)
+plot(coii.tree)
+```
+
+```{r rerooting, echo=FALSE, fig.height=2.5, fig.width=6}
+coii.tree <- rotateConstr(
+  coii.tree, 
+  constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
+)
+par(mar = rep(0.5,4))
+plot(coii.tree)
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+```
 
 
 

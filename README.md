@@ -45,7 +45,9 @@ library(sativum)
 - [x] `infer.phylogeny` (Consider adding [parsimony](https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html#Parsimony?)
 - [x] rotate nodes using existing functions from `ape` (**Be sure to include in vignette!**)
 - [x] re-root the tree using existing functions from `ape` (**Be sure to include in vignette!**)
-- [x] `add.branch.lengths` to a tree plot
+- [x] `plot.tree` with some sensible aesthetic parameters
+- [x] `add.branch.lengths` to a tree plot (rendered mostly useless by the `plot.tree` function)
+- [x] `label.clade`
 - [x] `phylogenetic.distance` finds the totals branch lengths separating two tips on a tree
 - [ ] easily color tree tips or all tips descended from a node
 

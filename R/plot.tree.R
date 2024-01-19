@@ -1,0 +1,66 @@
+#' Plot a phylogenetic tree
+#'
+#' This function plots a phylogenetic tree (of class \code{phylo}).
+#' The function is a wrapper for \code{ape::plot.phylo} with a few stylistic changes to the default,
+#' including thicker branches, slightly offset tip labels, different default font style (bold).
+#' It also includes the display of branch lengths by default using \code{ape::edgelabels},
+#' with stylistic changes to make it a bit cleaner.
+#'
+#' @param tree An object of class \code{phylo}.
+#' @param font An integer specifying the type of font for the labels: 1 (plain text), 2 (bold), 3 (italic, the default), or 4 (bold italic).
+#' @param edge.width An integer specifying the width of branches in the tree.
+#' @param show.branch.lengths Logical (TRUE or FALSE) specifying whether to show branch lengths on the tree. (Default is TRUE.)
+#' @param show.scale.bar Logical (TRUE or FALSE) specifying whether to show a scale bar. (Default is TRUE.)
+#' @param margins A vector of four integers defining the margins of the plot.
+#'
+#' @source Dave Angelini \email{david.r.angelini@@gmail.com} [aut, cre]
+#'
+#' @export
+#'
+#' @examples
+#' plot.tree(anole.tree)
+#'
+
+plot.tree <- function (
+    tree,
+    font = 2,
+    edge.width = 3,
+    show.branch.lengths = TRUE,
+    show.scale.bar = TRUE,
+    margins = c(0.5,0.5,0.5,0.5),
+    ...
+)
+{
+  original.margins <- par("mai")
+  par(mar = margins)
+
+  if (with(tree, exists(quote(edge.length)))) {
+    plot(tree,
+         font = font,
+         use.edge.length = TRUE,
+         label.offset = 0.02*max(tree$edge.length),
+         edge.width = edge.width,
+         ...
+    )
+    edgelabels(
+      text = signif(coii.tree$edge.length,3),
+      adj = c(0.5,-0.5),
+      bg = NULL,
+      frame = "none"
+    )
+    if (show.scale.bar) {
+      add.scale.bar(lwd = edge.width)
+    }
+  } else {
+    plot(tree,
+         font = font,
+         use.edge.length = FALSE,
+         label.offset = 0.05,
+         edge.width = edge.width,
+         ...
+    )
+  }
+
+  par(mar = original.margins)
+}
+# End of function
