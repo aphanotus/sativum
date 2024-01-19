@@ -62,6 +62,7 @@ pre,
 code {
   font-family: Menlo, Monaco, "Consolas", monospace;
   font-size: .9rem;
+  border-style: none;
 }
 
 pre {
@@ -214,4 +215,5 @@ blockquote {
 pre,
 code {
   background-color: #fafafa;
+  border-style: none;
 }

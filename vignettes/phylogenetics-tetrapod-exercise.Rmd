@@ -1,7 +1,7 @@
 ---
 title: "Phylogenetics & Bioinformatics"
 author: "Colby College BI164"
-date: "`r Sys.Date()`"
+date: "`r format(Sys.time(),'%d %B %Y')`"
 output:
   rmarkdown::html_vignette:
     css: mostlymodest.css
@@ -106,7 +106,7 @@ Today you will explore which type of fish may have given rise to the first tetra
 |:---- |:---- |:---- |:---- |:----:|
 |    | Chondrichthyes | *Squalus acanthias* | spiny dogfish | ![](https://www.cms.int/sites/default/files/species/Squalus%20acanthias%20lateral%20female.jpg){width=200px} |
 | Osteichthyes | Sacropterygii | *Latimeria chalumnae* | coelacanth | ![](https://www.fisheries.noaa.gov/s3/styles/original/s3/dam-migration/640x427-african-coelacanth.png){width=200px} |
-| Osteichthyes | Sarcopterygii | *Protopterus dolloi* | lungfish | ![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Protopterus_dolloi_Boulenger2.jpg/800px-Protopterus_dolloi_Boulenger2.jpg){width=200px} |
+| Osteichthyes | Sarcopterygii | *Protopterus dolloi* | lungfish | ![](http://fishillust.com/files/attach/images/63026/026/063/46885401212fd9494196480d17a2c0b5.jpg){width=200px} |
 | Osteichthyes | Actinopterygii | *Danio rerio* | zebrafish | ![](https://www.zebrafishfilm.org/uploads/1/1/3/5/113588191/small-zebrafish-from-shutterstock_orig.png){width=200px} |
 | Tetrapoda | Amphibia | *Bombina variegata* | yellow-bellied toad | ![](https://marmotamaps.com/de/alpentiere/mobile/gelbbauchunke-mobile.gif){width=200px} |
 
@@ -215,7 +215,7 @@ coii.tree <- rotateConstr(
 draw.tree(coii.tree)
 ```
 
-12. Finally, we can label the clade that contains our tetrapod species, the frog and toad.
+12. Finally, we can label the clade that contains our tetrapod species, the frog and toad, using the `label.clade` function.
 
 ```{r label.clade, echo=TRUE, fig.align='center', fig.height=2.5, fig.width=6}
 draw.tree(coii.tree)
@@ -227,7 +227,6 @@ label.clade(
 )
 ```
 
-
 ### Questions
 
 Use this tree to **answer the questions below** regarding relationships among fish and tetrapods. Check your conclusions with your instructor.
@@ -238,7 +237,4 @@ Use this tree to **answer the questions below** regarding relationships among fi
 
 
 
-
 ---
-
-This exercise is based on materials initially developed by Henrik Kibak in 2004.

@@ -65,7 +65,11 @@ draw.tree <- function (
       col = branch.length.text.color
     )
     if (show.scale.bar) {
-      add.scale.bar(lwd = edge.width)
+      add.scale.bar(
+        lwd = edge.width,
+        cex = branch.length.cex,
+        col = branch.length.text.color
+      )
     }
   } else {
     plot(tree,
