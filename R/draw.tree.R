@@ -43,7 +43,7 @@ draw.tree <- function (
          ...
     )
     edgelabels(
-      text = signif(coii.tree$edge.length,3),
+      text = signif(tree$edge.length,3),
       adj = c(0.5,-0.5),
       bg = NULL,
       frame = "none"
