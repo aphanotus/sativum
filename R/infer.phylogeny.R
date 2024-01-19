@@ -98,7 +98,7 @@ infer.phylogeny <- function (
   }
 
   if (show.tree) {
-    infer.phylogeny(tree)
+    draw.tree(tree)
   }
 
   if (verbose) {
