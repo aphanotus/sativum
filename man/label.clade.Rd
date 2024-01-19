@@ -12,13 +12,13 @@ label.clade(
   text,
   clade,
   offset = NULL,
-  wing.length = NULL,
-  cex = 1,
+  wing.length = 0,
+  cex = 1.2,
   orientation = "vertical",
   font = 2,
-  line.width = 5,
-  line.color = "black",
-  text.color = "black"
+  line.width = 7,
+  line.color = "darkred",
+  text.color = "darkred"
 )
 }
 \arguments{

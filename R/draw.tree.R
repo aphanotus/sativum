@@ -34,11 +34,13 @@ draw.tree <- function (
     branch.length.text.color = "gray50",
     show.scale.bar = TRUE,
     margins = c(0.5,0.5,0.5,0.5),
+    y.lim = NULL,
     ...
 )
 {
-  if (!exists(quote(y.lim))) {
-    y.lim <- c(0.9,length(tree$tip.label)+0.5)
+  # if (!exists(quote(y.lim))) {
+  if (is.null(y.lim)) {
+    y.lim <- c(0.9,length(tree$tip.label)+0.35)
   }
 
   original.margins <- par("mai")

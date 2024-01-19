@@ -17,6 +17,7 @@ draw.tree(
   branch.length.text.color = "gray50",
   show.scale.bar = TRUE,
   margins = c(0.5, 0.5, 0.5, 0.5),
+  y.lim = NULL,
   ...
 )
 }

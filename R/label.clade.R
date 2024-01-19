@@ -27,10 +27,10 @@
 #'
 
 label.clade <- function (
-    tree = NULL, text, clade, offset = NULL, wing.length = NULL,
-    cex = 1, orientation = "vertical",
-    font = 2, line.width = 5,
-    line.color = "black", text.color = "black" )
+    tree = NULL, text, clade, offset = NULL, wing.length = 0,
+    cex = 1.2, orientation = "vertical",
+    font = 2, line.width = 7,
+    line.color = "darkred", text.color = "darkred" )
 {
   if (!require(ape)) { stop("Please run  `install.packages('ape')`  first.") }
 
@@ -47,7 +47,7 @@ label.clade <- function (
     stop("Argument `clade` requires at least two names. (See the help entry: `?label.clade`)\n")
   }
   tip.numbers <- unique(unlist(lapply(clade, function(x) grep(x,tree$tip.label))))
-  if(length(tip.numbers!=length(clade))) {
+  if (length(tip.numbers)!=length(clade)) {
     stop("The names provides to the arguement `clade` do not uniquely identify taxa. (See the help entry: `?label.clade`)\n")
   }
   node <- getMRCA(tree, tip.numbers)

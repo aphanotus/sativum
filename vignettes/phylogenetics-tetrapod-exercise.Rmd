@@ -198,23 +198,43 @@ coii.tree <- infer.phylogeny(coii.alignment)
 
 Genetic distance is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
 
-Let's do some things to clean up this tree and make it easier to interpret. First, let's **make tip labels simpler**. We don't need the NCBI accession numbers anymore, and we know these are all COII sequences. So let's just use the short common names for each taxon. Let's check the current names, in `coii.tree$tip.label`, and then reassign them. (Just be sure to maintain the same order.)
+10. Let's do some things to clean up this tree and make it easier to interpret. First, let's **make tip labels simpler**. We don't need the NCBI accession numbers anymore, and we know these are all COII sequences. So let's just use the short common names for each taxon. Let's check the current names, in `coii.tree$tip.label`, and then reassign them. (Just be sure to maintain the same order.)
 
 ```{r renaming.tips, echo=TRUE}
 coii.tree$tip.label
 coii.tree$tip.label <- c("shark","coelacanth","lungfish","zebrafish","toad","frog")
 ```
 
-Next, notice that the shark, which is ancestral to the bony fish, appears in the middle of the tree. It's our outgroup, so let's **rotate nodes** in the tree to place the outgroup at the top, using `rotateConstr`. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. 
+11. Next, notice that the shark, which is ancestral to the bony fish, appears in the middle of the tree. It's our outgroup, so let's **rotate nodes** in the tree to place the outgroup at the top, using `rotateConstr`. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. 
 
-```{r rerooting.display, echo=TRUE, fig.align='center', fig.height=2.5, fig.width=6}
+```{r rerooting, echo=TRUE, fig.align='center', fig.height=2.5, fig.width=6}
 coii.tree <- rotateConstr(
   coii.tree, 
   constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
 )
-draw.tree(coii.tree, y.lim = c(0,1))
+draw.tree(coii.tree)
 ```
 
+12. Finally, we can label the clade that contains our tetrapod species, the frog and toad.
+
+```{r label.clade, echo=TRUE, fig.align='center', fig.height=2.5, fig.width=6}
+draw.tree(coii.tree)
+label.clade(
+  tree = coii.tree, 
+  clade = c("frog","toad"), 
+  text = "tetrapods",
+  offset = 2
+)
+```
+
+
+### Questions
+
+Use this tree to **answer the questions below** regarding relationships among fish and tetrapods. Check your conclusions with your instructor.
+
+- According to this tree, which is the group of fish most closely related to the tetrapods?
+- Explain what the genetic distance for the Lungfish represents.
+- Based on this tree, are the bony fish a monophyletic group? Explain.
 
 
 
