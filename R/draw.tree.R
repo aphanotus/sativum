@@ -184,7 +184,7 @@ draw.tree <- function (
     # Add some vetting here...
 
     if (is.null(legend.text)) {
-      legend.text <- unique(tip.groups)
+      legend.text <- sort(unique(tip.groups))
     }
 
     if (legend.text.color == "group") {

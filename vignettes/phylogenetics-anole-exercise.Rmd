@@ -216,7 +216,7 @@ We can clean up the names, making them shorter, so we can see the tree topology 
 
 ```{r simplify.names, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
 anole.tree$tip.label <- simplify.names(anole.tree$tip.label)
-draw.tree(anole.tree, show.scale.bar = FALSE, font = 4)
+draw.tree(anole.tree, show.scale.bar = FALSE, tip.font = 4)
 ```
 
 13. **Save the tree** you've created in the [Newick format](https://en.wikipedia.org/wiki/Newick_format), a simple and common format used in phylogenetics to store trees.
@@ -225,13 +225,38 @@ draw.tree(anole.tree, show.scale.bar = FALSE, font = 4)
 write.tree(anole.tree, "anole.ND2.tre")
 ```
 
-14. Explore
+14. **Explore how factors group on the tree**. Think about the two hypotheses for anole evolution. What predictions does each hypothesis make for relatedness according to the ecomorphs and island origins of species? We can test those hypotheses by mapping those biological factors onto our phylogenetic tree. 
+
+First, examine the metadata we have regarding the ecomorphs and islands origins for each species. This information is stored in a data frame called `anole.natural.history`.
+
+```{r anole.natural.history, echo=FALSE}
+anole.natural.history
+```
+
+Confirm that this table includes all the species in our tree, and that species are named in the same order as the tip labels in our tree object.
+
+```{r show.tip.labels, echo=TRUE}
+anole.tree$tip.label
+```
+
+If the order of the information doesn't match, you will not get the correct answer! However, it's always possible to rearrange the order of rows in this data frame. (Challenge your R skills, or ask your instructor for help.) When you're ready to proceed, you can color-code the taxa on your tree by adding the `tip.groups` argument and pointing to a column in the data frame.
 
 ```{r island.annotation, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
 draw.tree(
   anole.tree, 
   tip.groups = anole.natural.history$island,
   legend.title = "island",
+  show.scale.bar = FALSE, tip.font = 4)
+```
+
+We can do the same for the ecomorph data. to distinguish the plots, we'll use a different [color palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales) to label this tree.
+
+```{r ecomorph.annotation, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
+draw.tree(
+  anole.tree, 
+  tip.groups = anole.natural.history$ecomorph,
+  legend.title = "ecomorph",
+  tip.color = "magma",
   show.scale.bar = FALSE, tip.font = 4)
 ```
 
