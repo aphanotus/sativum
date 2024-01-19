@@ -18,10 +18,10 @@
 #' @export
 #'
 #' @examples
-#' plot.tree(anole.tree)
+#' draw.tree(anole.tree)
 #'
 
-plot.tree <- function (
+draw.tree <- function (
     tree,
     font = 2,
     edge.width = 3,
