@@ -1,7 +1,7 @@
 Package: sativum
 Type: Package
 Title: Tools for teaching genetics
-Version: 2024.01.18
+Version: 2024.01.19
 Description: Functions and data for teaching genetics. 
     Features classic datasets as well as easy-to-use functions
     suitable for novice R users.

@@ -37,6 +37,7 @@ library(sativum)
 - [x] `search.for.ncbi.ids`
 - [x] `fetch.sequences` (also `fetch.sequence`)
 - [X] `simplify.sequence.names`
+- [X] `simplify.names`
 - [x] `write.fasta`
 - [x] `read.fasta` with output to various formats
 - [x] `combine.sequences`
@@ -47,7 +48,7 @@ library(sativum)
 - [x] re-root the tree using existing functions from `ape` (**Be sure to include in vignette!**)
 - [x] `plot.tree` with some sensible aesthetic parameters
 - [x] `add.branch.lengths` to a tree plot (rendered mostly useless by the `plot.tree` function)
-- [x] `label.clade`
+- [x] `label.clade` with a colored bar and text, based on tip names (rather than node numbers)
 - [x] `phylogenetic.distance` finds the totals branch lengths separating two tips on a tree
 - [ ] easily color tree tips or all tips descended from a node
 
@@ -58,7 +59,8 @@ library(sativum)
 
 ### Vignettes
 
-- [ ] Instructions for the BI164 phylogenetics lab (See [Sarah's lab activity](https://docs.google.com/document/d/1q7_6T65jznl8OIv6nZ8lzWuxdYgz1WA2/edit?usp=sharing&ouid=109618221670730570824&rtpof=true&sd=true))
+- [x] **phylogenetics-tetrapod-exercise**: BI163 lab tetrapod phylogenetics introduction
+- [x] **phylogenetics-anole-exercise**: BI164 lab [anole phylogenetics activity](https://docs.google.com/document/d/1q7_6T65jznl8OIv6nZ8lzWuxdYgz1WA2/edit?usp=sharing&ouid=109618221670730570824&rtpof=true&sd=true))
 - [ ] **Genome Sizes**: Exploration of the `genome.size` data with code for producing nice plots
 - [ ] **Mendelian Genetics**: Exploration of Mendel's original data, chi-squared distribution testing, and tests of data from Fawcett et al. 
 - [ ] **Quantitative Genetics**: Exploration of East's quantitative data and the BI164 *Brassica* data

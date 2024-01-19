@@ -145,25 +145,25 @@ names(anole.ND2)
 In addition to the anoles, one unrelated lizard species, *Leiocephalus barahonensis*, is included as an outgroup to root the tree. (It's the first sequence in the dataset.) The common name of this species is the Barahona Curly Tailed Lizard and it is found in Haiti. 
 8. Two more anole species, *Anolis sheplani* and *A. valencienni*, need their sequences added to the dataset. **Search** for the *ND2* sequence for each species in the NCBI database of nucleotide sequences using the `search.for.ncbi.ids` function as shown below.
 
-```{r echo=TRUE}
+```{r search1, echo=TRUE}
 new.ids <- search.for.ncbi.ids("Anolis sheplani ND2")
 ```
 
 Run the second search, and add those results to the first.
 
-```{r echo=TRUE}
+```{r search2, echo=TRUE}
 new.ids <- c(new.ids, search.for.ncbi.ids("Anolis valencienni ND2"))
 ```
 
 The output of `search.for.ncbi.ids` is simply an index number for the NCBI database. To obtain the new sequences, we can use the `fetch.sequence` function.
 
-```{r echo=TRUE}
+```{r fetch, echo=TRUE}
 new.sequences <- fetch.sequence(new.ids) 
 ```
 
 This command saves the sequences in the `new.sequences` object and displays an abbreviated version of those sequences in the R console panel. -- But there are five sequences! We only wanted two; one from each species. Check the full names of these sequences.
 
-```{r echo=TRUE}
+```{r names, echo=TRUE}
 names(new.sequences)
 ```
 
@@ -171,7 +171,7 @@ We have one sequence for *A. sheplani* and four *A. valencienni*. **Discuss** wh
 
 9. We will proceed with just one of the sequences for each species. To do that, we'll subset the `new.sequences` object. Then we'll **combine** the new and old sequences together into a new dataset using the `combine.sequences` function.
 
-```{r echo=TRUE}
+```{r combine, echo=TRUE}
 new.sequences <- new.sequences[c(1,5)]
 
 combined.ND2 <- combine.sequences(anole.ND2, new.sequences)
@@ -191,21 +191,37 @@ FASTA is a text-based format commonly used in bioinformatics and genomics. It ca
 
 11. **Align the sequences** using the ClustalOmega algorithm.
 
-```{r echo=TRUE}
-anole.alignment <- align.sequences(combined.ND2, method = "ClustalOmega", order = "input")
+```{r align.sequences, echo=TRUE}
+anole.alignment <- align.sequences(
+  combined.ND2, 
+  method = "ClustalOmega", order = "input"
+)
 ```
 
-You can look at the full alignment. (Not shown here because it's big!)
+You can look at the full alignment.
 
 ```{r eval=FALSE, include=TRUE}
 print(anole.alignment, "complete")
 ```
 
+(The output is not shown here because it's very long!)
+
 12. **Build a phylogeny** using the Neighbor-Joining method.
 
-```{r echo=TRUE}
+```{r infer.phylogeny, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
 anole.tree <- infer.phylogeny(anole.alignment)
 ```
+
+We can clean up the names, making them shorter, so we can see the tree topology better. Let's also get rid of the scale bar, since it's running into the base of the tree. Since these are species names, we can also put them in italics - bold italics.
+
+```{r simplify.names, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
+anole.tree$tip.label <- simplify.names(anole.tree$tip.label)
+draw.tree(anole.tree, show.scale.bar = FALSE, font = 4)
+```
+
+13. Color code
+
+
 
 
 ---
