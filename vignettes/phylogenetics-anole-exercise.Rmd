@@ -143,6 +143,7 @@ names(anole.ND2)
 ```
 
 In addition to the anoles, one unrelated lizard species, *Leiocephalus barahonensis*, is included as an outgroup to root the tree. (It's the first sequence in the dataset.) The common name of this species is the Barahona Curly Tailed Lizard and it is found in Haiti. 
+
 8. Two more anole species, *Anolis sheplani* and *A. valencienni*, need their sequences added to the dataset. **Search** for the *ND2* sequence for each species in the NCBI database of nucleotide sequences using the `search.for.ncbi.ids` function as shown below.
 
 ```{r search1, echo=TRUE}
@@ -264,20 +265,21 @@ You can save these plots by clicking the "Export" button on the plot panel in Rs
 
 #### **Analysis Questions**
 
-15. Examine the phylogenetic trees you color coded and answer the following questions.
+Examine the phylogenetic trees you color coded and answer the following questions.
 
-What general patterns of organization do you see in the tree that is:
+15. What general patterns of organization do you see in the tree that is:
 
 - Colored-coded by island?
-<br><br><br>
+<br><br><br><br>
+
 - Colored-coded by ecomorph?
-<br><br><br>
+<br><br><br><br>
 
 16. Do species from the same ecomorph or island group together on the tree into the same clade? Provide evidence to support your answer.
-<br><br><br>
+<br><br><br><br>
 
 17. Are the genetic distances varied or all similar in length? What is the approximate average?
-<br><br><br>
+<br><br><br><br>
 
 18. Watch the rest of the film either in lab or as homework. It will help confirm which hypothesis is supported by the nucleotide data.
 
