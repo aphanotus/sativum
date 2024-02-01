@@ -5,13 +5,13 @@
 \alias{anole.ND2}
 \title{Anole DNA sequences}
 \format{
-An object of class \code{DNAStringSet} of length 15.
+An object of class \code{DNAStringSet} of length 16.
 }
 \usage{
 anole.ND2
 }
 \description{
-Unaligned sequences from mitochondrial DNA of 15 species of anoles, including
+Unaligned sequences from mitochondrial DNA of 16 species of anoles, including
     the complete CDS of NADH dehydrogenase subunit 2 (ND2), the complete tRNA-Trp sequence,
     partial sequence from tRNA-Ala.
 }

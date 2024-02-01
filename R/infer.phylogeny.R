@@ -34,7 +34,7 @@ infer.phylogeny <- function (
   ...
 )
 { # Begin the function
-  if (!require(phangorn, quietly = TRUE)) { stop("Please run  `install.packages('phangorn')`  first.") }
+  if (!require(phangorn, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `install.packages('phangorn')`  first.") }
 
   # Vet the input
   if (!exists(quote(x))) {

@@ -74,13 +74,13 @@ write.fasta <- function (
     } else {
       if (class(x)[1] %in% c("DNAStringSet","AAStringSet")) {
         # Input is an XStringSet object
-        if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
+        if (!require(Biostrings, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
         writeXStringSet(x=x, filepath=filename, append=FALSE, compress=FALSE, format="fasta")
         sequence.number <- length(x)
       } else {
         if (class(x)[1] %in% c("MsaDNAMultipleAlignment","MsaAAMultipleAlignment")) {
           # Input is an MsaMultipleAnlignment object
-          if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
+          if (!require(Biostrings, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
           writeXStringSet(x=unmasked(x), filepath=filename, append=FALSE, compress=FALSE, format="fasta")
           sequence.number <- length(unmasked(x))
         }

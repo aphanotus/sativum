@@ -25,7 +25,7 @@ simplify.names <- function (x, separator = NULL, words = 2, abbreviate.genus = T
 { # Begin the function
 
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(stringr, quietly = TRUE)) { stop("Please run  `install.packages('stringr')`  first.") }
+  if (!require(stringr, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `install.packages('stringr')`  first.") }
 
   # Vet the input
   if (class(x)[1] != "character") {

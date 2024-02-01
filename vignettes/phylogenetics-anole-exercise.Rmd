@@ -122,77 +122,92 @@ Using available nucleotide sequence data as well as computational tools and tech
 
 #### **Molecular Phylogenetic Methods**
 
-7. **Explore** the starting dataset in R by running the code below.
+7. **Explore** the starting dataset. The R package `sativum` includes a dataset of anole DNA sequences that we will work with. Load the package using the `library` function.
+
+```{text}
+> library(sativum)
+```
 
 ```{r eval=FALSE, include=TRUE}
 library(sativum)
 ```
 
-```{r echo=TRUE}
+Next, examine the dataset in the `anole.ND2` object.
+
+```{text}
+> anole.ND2
+```
+
+```{r echo=FALSE}
 anole.ND2
 ```
 
-The first command loads the R package `sativum`, which contains data and functions necessary for this lab. The object `anole.ND2` includes the DNA sequences of 14 of the 16 *Anolis* species in the photographs. 
-
-These nucleotide sequences are from a stretch of mitochondrial DNA that includes the *NADH dehydrogenase subunit II* (*ND2*) gene and five tRNA genes (“ND2-tRNAtrp-tRNAala”). These genes are conserved enough among animal species that they can be recognized in two distantly related species, yet they are also variable enough that each species has a unique sequence, and that sequence can be compared to that of closely related species to infer evolutionary relationships. 
+The object `anole.ND2` includes the DNA sequences of 15 of the 16 *Anolis* species in the photographs. These nucleotide sequences are from a stretch of mitochondrial DNA that includes the *NADH dehydrogenase subunit II* (*ND2*) gene and five tRNA genes (“ND2-tRNAtrp-tRNAala”). These genes are conserved enough among animal species that they can be recognized in distantly related species, yet they are also variable enough that each species has a unique sequence, and that sequence can be compared to that of closely related species to infer their evolutionary relationships. 
 
 Look at the species names in this dataset. 
 
-```{r echo=TRUE}
+```{text}
+> names(anole.ND2)
+```
+
+```{r echo=FALSE}
 names(anole.ND2)
 ```
 
 In addition to the anoles, one unrelated lizard species, *Leiocephalus barahonensis*, is included as an outgroup to root the tree. (It's the first sequence in the dataset.) The common name of this species is the Barahona Curly Tailed Lizard and it is found in Haiti. 
 
-8. Two more anole species, *Anolis sheplani* and *A. valencienni*, need their sequences added to the dataset. **Search** for the *ND2* sequence for each species in the NCBI database of nucleotide sequences using the `search.for.ncbi.ids` function as shown below.
+8. One more anole species, *Anolis sheplani*, needs its sequences added to the dataset. **Search** for the *ND2* sequence from this species in the NCBI database of nucleotide sequences using the `search.for.ncbi.ids` function as shown below.
 
-```{r search1, echo=TRUE}
-new.ids <- search.for.ncbi.ids("Anolis sheplani ND2")
+```{text}
+> new.id <- search.for.ncbi.ids("Anolis sheplani ND2")
 ```
 
-Run the second search, and add those results to the first.
-
-```{r search2, echo=TRUE}
-new.ids <- c(new.ids, search.for.ncbi.ids("Anolis valencienni ND2"))
+```{r search1, echo=FALSE}
+new.id <- search.for.ncbi.ids("Anolis sheplani ND2")
 ```
 
-The output of `search.for.ncbi.ids` is simply an index number for the NCBI database. To obtain the new sequences, we can use the `fetch.sequence` function.
+The output of `search.for.ncbi.ids` is simply an GI index number for the NCBI database. To obtain the new sequences, we use the `fetch.sequence` function.
 
-```{r fetch, echo=TRUE}
-new.sequences <- fetch.sequence(new.ids) 
+```{text}
+> new.sequence <- fetch.sequence(new.id) 
 ```
 
-This command saves the sequences in the `new.sequences` object and displays an abbreviated version of those sequences in the R console panel. -- But there are five sequences! We only wanted two; one from each species. Check the full names of these sequences.
-
-```{r names, echo=TRUE}
-names(new.sequences)
+```{r fetch, echo=FALSE}
+new.sequence <- fetch.sequence(new.id) 
 ```
 
-We have one sequence for *A. sheplani* and four *A. valencienni*. **Discuss** why you think this might be the case.
+This command saves the sequences in the `new.sequence` object and displays an abbreviated version of the sequence as output in the R console. 
 
-9. We will proceed with just one of the sequences for each species. To do that, we'll subset the `new.sequences` object. Then we'll **combine** the new and old sequences together into a new dataset using the `combine.sequences` function.
+9. **Combine** the new and old sequences together into a new dataset using the `combine.sequences` function.
 
-```{r combine, echo=TRUE}
-new.sequences <- new.sequences[c(1,5)]
-
-combined.ND2 <- combine.sequences(anole.ND2, new.sequences)
-
-combined.ND2
+```{text}
+> (combined.ND2 <- combine.sequences(anole.ND2, new.sequence))
 ```
 
-Notice that the new sequences for *A. sheplani* and four *A. valencienni* are now below the original sequence for *A. sagrei*.
+```{r combine, echo=FALSE}
+(combined.ND2 <- combine.sequences(anole.ND2, new.sequence))
+```
+
+This command uses a simple trick in R. By surrounding the entire statement with parentheses it forces the contents of `combined.ND2` to be printed in the R console. (Otherwise the output from `combine.sequences` would not be displayed; just stored in the new object called `combined.ND2`.) Notice that the new sequence for *A. sheplani* is now below the original sequence for *A. valencienni*.
 
 10. **Save the dataset** in FASTA format. 
 
-```{r eval=FALSE, include=TRUE}
-write.fasta(combined.ND2, filename = "combined.ND2.fasta")
+```{text}
+> write.fasta(combined.ND2, filename = "combined.ND2.fasta")
 ```
 
 FASTA is a text-based format commonly used in bioinformatics and genomics. It can represent either nucleotide or amino acid (protein) sequences using single-letter codes. FASTA files are convenient because they can include multiple sequences. Each sequence has a short identifying description, which in this case comes from the name of each row in our dataset.
 
 11. **Align the sequences** using the ClustalOmega algorithm.
 
-```{r align.sequences, echo=TRUE}
+```{text}
+> anole.alignment <- align.sequences(
+>   combined.ND2, 
+>   method = "ClustalOmega", order = "input"
+> )
+```
+
+```{r align.sequences, echo=FALSE}
 anole.alignment <- align.sequences(
   combined.ND2, 
   method = "ClustalOmega", order = "input"
@@ -201,64 +216,133 @@ anole.alignment <- align.sequences(
 
 You can look at the full alignment.
 
-```{r eval=FALSE, include=TRUE}
-print(anole.alignment, "complete")
+```{text}
+> print(anole.alignment, "complete")
 ```
 
-(The output is not shown here because it's very long!)
+  (The output is not shown here because it's very long!)
 
 12. **Build a phylogeny** using the Neighbor-Joining method.
 
-```{r infer.phylogeny, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
+```{text}
+> anole.tree <- infer.phylogeny(anole.alignment)
+```
+
+```{r infer.phylogeny, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
 anole.tree <- infer.phylogeny(anole.alignment)
 ```
 
 We can clean up the names, making them shorter, so we can see the tree topology better. Let's also get rid of the scale bar, since it's running into the base of the tree. Since these are species names, we can also put them in italics - bold italics.
 
-```{r simplify.names, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
-anole.tree$tip.label <- simplify.names(anole.tree$tip.label)
+```{text}
+> (anole.tree$tip.label <- simplify.names(anole.tree$tip.label))
+```
+
+```{r simplify.names, echo=FALSE}
+(anole.tree$tip.label <- simplify.names(anole.tree$tip.label))
+```
+
+Then draw the tree again with the shortened taxon names. The command also removed the scale bar using the argument `show.scale.bar = FALSE` and since these are species names we can make the font italics using the argument `tip.font = 4`.
+
+```{text}
+> draw.tree(anole.tree, show.scale.bar = FALSE, tip.font = 4)
+```
+
+```{r draw.tree.w.short.names, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
 draw.tree(anole.tree, show.scale.bar = FALSE, tip.font = 4)
 ```
 
 13. **Save the tree** you've created in the [Newick format](https://en.wikipedia.org/wiki/Newick_format), a simple and common format used in phylogenetics to store trees.
 
-```{r eval=FALSE, include=TRUE}
-write.tree(anole.tree, "anole.ND2.tre")
+```{text}
+> write.tree(anole.tree, "anole.ND2.tre")
 ```
 
 14. **Explore how factors group on the tree**. Think about the two hypotheses for anole evolution. What predictions does each hypothesis make for relatedness according to the ecomorphs and island origins of species? We can test those hypotheses by mapping those biological factors onto our phylogenetic tree. 
 
 First, examine the metadata we have regarding the ecomorphs and islands origins for each species. This information is stored in a data frame called `anole.natural.history`.
 
+```{text}
+> anole.natural.history
+```
+
 ```{r anole.natural.history, echo=FALSE}
 anole.natural.history
 ```
 
-Confirm that this table includes all the species in our tree, and that species are named in the same order as the tip labels in our tree object.
+Check that this table includes all the species in our tree, and that species are named in the same order as the tip labels in our tree object.
 
-```{r show.tip.labels, echo=TRUE}
+```{text}
+> anole.tree$tip.label
+```
+
+```{r show.tip.labels, echo=FALSE}
 anole.tree$tip.label
 ```
 
-If the order of the information doesn't match, you will not get the correct answer! However, it's always possible to rearrange the order of rows in this data frame. (Challenge your R skills, or ask your instructor for help.) When you're ready to proceed, you can color-code the taxa on your tree by adding the `tip.groups` argument and pointing to a column in the data frame.
+If the order of the information doesn't match, you will not get the correct answer! 
 
-```{r island.annotation, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
-draw.tree(
-  anole.tree, 
-  tip.groups = anole.natural.history$island,
-  legend.title = "island",
-  show.scale.bar = FALSE, tip.font = 4)
+Okay, so the table is in alphabetical order, except for the outgroup at the top. However our tip labels in the tree data object are in the order we added them. So the last two species do not match!
+
+Thankfully, it's always possible to rearrange the order of rows in the `anole.natural.history` data frame. We'll need to define a temporary object to hold one row while we make the swap.
+
+```{text}
+> x <- anole.natural.history[17,]
+> anole.natural.history[17,] <- anole.natural.history[16,]
+> anole.natural.history[16,] <- x
+```
+
+Finally, confirm that you've done it correctly by inspecting the data frame.
+
+```{text}
+> tail(anole.natural.history)
+```
+
+```{r swap, echo=FALSE}
+x <- anole.natural.history[17,]
+anole.natural.history[17,] <- anole.natural.history[16,]
+anole.natural.history[16,] <- x
+tail(anole.natural.history)
+```
+
+Then plot the tree using the argument `tip.groups` to color-code the species by island.
+
+```{text}
+> draw.tree(
+>   anole.tree, 
+>   tip.groups = anole.natural.history$island,
+>   legend.title = "island",
+>   show.scale.bar = FALSE, tip.font = 4
+> )
+```
+
+```{r island.annotation, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
+# draw.tree(
+#  anole.tree, 
+#  tip.groups = anole.natural.history$island,
+#  legend.title = "island",
+#  show.scale.bar = FALSE, tip.font = 4)
 ```
 
 We can do the same for the ecomorph data. to distinguish the plots, we'll use a different [color palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales) to label this tree.
 
-```{r ecomorph.annotation, echo=TRUE, fig.align='center', fig.height=3.5, fig.width=6}
-draw.tree(
-  anole.tree, 
-  tip.groups = anole.natural.history$ecomorph,
-  legend.title = "ecomorph",
-  tip.color = "magma",
-  show.scale.bar = FALSE, tip.font = 4)
+```{text}
+> draw.tree(
+>   anole.tree, 
+>   tip.groups = anole.natural.history$ecomorph,
+>   legend.title = "ecomorph",
+>   tip.color = "magma",
+>   show.scale.bar = FALSE, tip.font = 4
+> )
+```
+
+```{r ecomorph.annotation, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
+# draw.tree(
+#   anole.tree, 
+#   tip.groups = anole.natural.history$ecomorph,
+#   legend.title = "ecomorph",
+#   tip.color = "magma",
+#   show.scale.bar = FALSE, tip.font = 4)
 ```
 
 You can save these plots by clicking the "Export" button on the plot panel in Rstudio or by taking a screen-capture. 
@@ -336,7 +420,7 @@ Methods section should include:
 
 Result section should include:
 
-- 2 molecular trees- trees color-coded by ecomorph and one by island of residence.
+- Two molecular trees: one color-coded by ecomorph and one by island of residence.
 - Any details about trees or responses to questions in this handout that are appropriate for a Results section (description of tree organization/patterns, placement of species in relation to one another).
 - Some responses to your analysis questions above may be addressed in the Results. It is up to you to determine what constitutes material to be included in the Results versus Discussion section.
 
@@ -348,6 +432,3 @@ Discussion section should include:
 - Any studies illustrating adaptive radiation and/or evolutionary potential when new species introduced to an island
 - Studies that investigate adaptive radiation of other organisms on islands
 
-
-
----

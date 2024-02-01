@@ -83,7 +83,7 @@ draw.tree <- function (
 )
 {
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(ape, quietly = TRUE)) { stop("Please run  `install.packages('ape')`  first.") }
+  if (!require(ape, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `install.packages('ape')`  first.") }
 
   if (is.null(tip.color)) { tip.color <- par("col") }
 
@@ -101,7 +101,7 @@ draw.tree <- function (
          (all(nchar(tip.color) %in% c(7,9)) & all(grepl("^#[0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]",tip.color))) ) ) {
       specific.colors <- tip.color
     } else { # Otherwise
-      if (!require(viridis, quietly = TRUE)) { stop("Please run  `install.packages('viridis')`  first.") }
+      if (!require(viridis, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `install.packages('viridis')`  first.") }
       if (length(tip.color)==1) {
         if (tip.color %in% c(LETTERS[1:8], "magma","inferno","plasma","viridis","cividis","rocket","mako","turbo")) {
           specific.colors <- tip.color

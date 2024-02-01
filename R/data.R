@@ -367,7 +367,7 @@
 
 #' @title Anole DNA sequences
 #'
-#' @description Unaligned sequences from mitochondrial DNA of 15 species of anoles, including
+#' @description Unaligned sequences from mitochondrial DNA of 16 species of anoles, including
 #'     the complete CDS of NADH dehydrogenase subunit 2 (ND2), the complete tRNA-Trp sequence,
 #'     partial sequence from tRNA-Ala.
 #'

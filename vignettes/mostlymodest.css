@@ -208,12 +208,12 @@ h3 {
 }
 
 blockquote {
-  border-left: 8px solid #fafafa;
+  border-left: 8px solid #ffffff;
   padding: 1rem;
 }
 
 pre,
 code {
-  background-color: #fafafa;
+  background-color: #f0f0f0;
   border-style: none;
 }

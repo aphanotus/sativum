@@ -62,13 +62,13 @@ combine.sequences <- function ( x1, x2, verbose = TRUE, ... )
     } else {
       if (class(x1)[1] == "DNAStringSet") {
         # Input is an DNAStringSet object
-        if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
+        if (!require(Biostrings, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
         output <- DNAStringSet(c(as.character(x1),as.character(x2)))
         sequence.numbers <- c(length(x1),length(x2))
       } else {
         if (class(x1)[1] == "AAStringSet") {
           # Input is an AAStringSet object
-          if (!require(Biostrings, quietly = TRUE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
+          if (!require(Biostrings, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `BiocManager::install('Biostrings')`  first") }
           output <- AAStringSet(c(as.character(x1),as.character(x2)))
           sequence.numbers <- c(length(x1),length(x2))
         }

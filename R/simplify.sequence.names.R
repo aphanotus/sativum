@@ -32,7 +32,7 @@ simplify.sequence.names <- function (
 { # Begin the function
 
   # Don't bother running anything if dependent package isn't installed!
-  if (!require(rentrez, quietly = TRUE)) { stop("Please run  `install.packages('rentrez')`  first.") }
+  if (!require(rentrez, quietly = TRUE, warn.conflicts = FALSE)) { stop("Please run  `install.packages('rentrez')`  first.") }
 
   # Vet the input
   if (!exists(quote(ids))) {
