@@ -317,11 +317,11 @@ Then plot the tree using the argument `tip.groups` to color-code the species by 
 ```
 
 ```{r island.annotation, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
-# draw.tree(
-#  anole.tree, 
-#  tip.groups = anole.natural.history$island,
-#  legend.title = "island",
-#  show.scale.bar = FALSE, tip.font = 4)
+draw.tree(
+  anole.tree, 
+  tip.groups = anole.natural.history$island,
+  legend.title = "island",
+  show.scale.bar = FALSE, tip.font = 4)
 ```
 
 We can do the same for the ecomorph data. to distinguish the plots, we'll use a different [color palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales) to label this tree.
@@ -337,12 +337,12 @@ We can do the same for the ecomorph data. to distinguish the plots, we'll use a 
 ```
 
 ```{r ecomorph.annotation, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
-# draw.tree(
-#   anole.tree, 
-#   tip.groups = anole.natural.history$ecomorph,
-#   legend.title = "ecomorph",
-#   tip.color = "magma",
-#   show.scale.bar = FALSE, tip.font = 4)
+draw.tree(
+  anole.tree, 
+  tip.groups = anole.natural.history$ecomorph,
+  legend.title = "ecomorph",
+  tip.color = "magma",
+  show.scale.bar = FALSE, tip.font = 4)
 ```
 
 You can save these plots by clicking the "Export" button on the plot panel in Rstudio or by taking a screen-capture. 
