@@ -5,6 +5,8 @@ date: "`r format(Sys.time(),'%d %B %Y')`"
 output:
   rmarkdown::html_vignette:
     css: mostlymodest.css
+  word_document:
+    reference_docx: word-styles-mostlymodest.docx
 vignette: >
   %\VignetteIndexEntry{phylogenetics-anole-exercise}
   %\VignetteEngine{knitr::rmarkdown}
@@ -47,12 +49,12 @@ The evolutionary history of these anoles serve as a strong example of **adaptive
 
 |     |     |
 | --- | --- |
-| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/37728705/medium.jpg){height=275px} | ![](https://www.islandlifecaribbean.com/wp-content/uploads/2021/12/Caribbean-Map.png){height=275px} |
+| ![](https://inaturalist-open-data.s3.amazonaws.com/photos/37728705/medium.jpg){height=235px} | ![](https://www.islandlifecaribbean.com/wp-content/uploads/2021/12/Caribbean-Map.png){height=235px} |
 | *Figure 1.* Diverse anoles share common features. *Anolis cristatellus* is a common anole species found in Puerto Rico. Anole species live in diverse habitats and vary greatly in size and other obvious features such as tail and leg length (Photo by [Janson Jones CC BY-NC](https://www.inaturalist.org/photos/37728705)). | *Figure 2.* Caribbean islands are home to the anoles. The anole species you will be studying in this project live in the islands of Cuba, Jamaica, Hispaniola (Haiti and Dominican Republic) and Puerto Rico (https://www.islandlifecaribbean.com/caribbean-map/) |
 
 ## Biogeogrpahy of anoles in the Greater Antilles
 
-If you are to make an informed prediction about the evolution of *Anolis* on these Caribbean Islands, known collectively as the Greater Antilles, you should first have a basic understanding of the history of the formations of the islands themselves (Figure 2). Precursors to some of these the Caribbean Islands, known as the Proto-Antilles, formed in the Pacific Ocean during the Cretaceous Period (145- 65 mya, Figures 3 & 4). 
+If you are to make an informed prediction about the evolution of *Anolis* on these Caribbean Islands, known collectively as the Greater Antilles, you should first have a basic understanding of the history of the formations of the islands themselves (Figure 2). Precursors to some of these the Caribbean Islands, known as the Proto-Antilles, formed in the Pacific Ocean during the Cretaceous Period from 145 to 65 million years ago (Mya) (Figures 3 & 4). 
 
 <center>
 ![](geological.strata.png){height=350px} 
@@ -64,7 +66,7 @@ If you are to make an informed prediction about the evolution of *Anolis* on the
 ![](caribbean.cretaceous.png){width=700px}
 </center>
 
-> *Figure 4.* Paleogeography of the Caribbean in the late Cretaceous. Volcanic arcs supported transient islands, repeatedly exposed and drowned, preventing persistent ecosystems. Modified from [Iturralde-Vinent (2006)](https://doi.org/10.2747/0020-6814.48.9.791).
+> *Figure 4.* Paleogeography of the Caribbean in the late Cretaceous (about 70 Mya). Volcanic arcs supported transient islands, repeatedly exposed and drowned, preventing persistent ecosystems. Modified from [Iturralde-Vinent (2006)](https://doi.org/10.2747/0020-6814.48.9.791).
 
 The Proto-Antilles then moved via tectonic plate action from the Pacific Ocean, through the passage between Central and South America, and into the Carribean around 70 mya. The Proto-Antilles continued to move across the Caribbean, often completely submerged under water for periods. It remained connected as a larger landmass up until the Oligocene (27-29 mya, Figure 5) and then were completely separated 14-16 mya. This landmass included Cuba, Hispaniola, and Puerto Rico but Jamaica had a different geologic history. It was connected to Central America until 50 mya and then moved eastward to its current position and was mostly submerged during that period except for isolated montane islands (Losos 2009). 
 
@@ -72,15 +74,15 @@ The Proto-Antilles then moved via tectonic plate action from the Pacific Ocean, 
 ![](caribbean.oligocene.png){width=700px}
 </center>
 
-> *Figure 5.* Caribbean latest Eocene–Early Oligocene paleogeography (35–33 Mya), updated from Iturralde-Vinent and MacPhee (1999). This scenario provides the possibility of terrestrial biota migration from South America into the Aves–Greater Antilles ridge, and also reduces possibilities of marine biotal exchange across the Caribbean Sea. Figure caption and image taken from [Iturralde-Vinent (2006)](https://doi.org/10.2747/0020-6814.48.9.791).
+> *Figure 5.* Caribbean latest Eocene–Early Oligocene paleogeography (35-33 Mya), updated from Iturralde-Vinent and MacPhee (1999). This scenario provides the possibility of terrestrial biota migration from South America into the Aves–Greater Antilles ridge, and also reduces possibilities of marine biotal exchange across the Caribbean Sea. Figure caption and image taken from [Iturralde-Vinent (2006)](https://doi.org/10.2747/0020-6814.48.9.791).
 
-Based on various methods of dating, the first ancestors to modern-day Anolis are estimated to have evolved between 66-40 mya on the Proto-Antilles, meaning once the land had settled into the Caribbean but long after it passed close to the Central and South American mainland. Once in this position in the Caribbean, there was the neighboring Aves Ridge that could have connected to South America (Figure 6). Much contention surrounds whether the Aves Ridge could have been a land bridge from mainland South America for emigration (Gaarlandia hypothesis) and is still being investigated to this day (Iturralde-Vinent 2006; Ali & Hedges 2021). So although we aren’t sure how the ancestral *Anolis* reached the island (Aves Ridge land bridge or over-water dispersal), we do know the relative timing. 
+Based on various methods of dating, the first ancestors to modern-day *Anolis* are estimated to have evolved between 66-40 mya on the Proto-Antilles, meaning once the contiguous landmass of the Proto-Antilles had settled into the Caribbean region but long after it passed close to the mainland of Central and South America. Once in this position in the Caribbean, the neighboring Aves Ridge could have connected to South America (Figure 6). Much contention surrounds whether the Aves Ridge could have been a land bridge from mainland South America for emigration. This idea is known as the Gaarlandia hypothesis, and it is still being investigated to this day (Iturralde-Vinent 2006; Ali & Hedges 2021). So although we aren’t sure how the ancestral *Anolis* reached the island (Aves Ridge land bridge or over-water dispersal), we do know the relative timing. 
 
 <center>
 ![](ali.hedges.2021.fig2.jpg){width=750px}
 </center>
 
-> Figure 6. This paleogeographic reconstruction of the GAARlandia land bridge shows how it might have appeared 35–33 Ma. Yellow shading represents lowlands, and red shading represents highlands. Thin black lines are outlines of present-day islands and landmasses ([Ali & Hedges 2021](https://doi.org/10.1111/jbi.14234)).
+> Figure 6. This paleogeographic reconstruction of the GAARlandia land bridge shows how it might have appeared 35-33 Mya. ("GAAR" is an acronym for Greater Aves Antilles Ridge.) Yellow shading represents lowlands, and red shading represents highlands. Thin black lines outline the coasts of present-day islands and landmasses ([Ali & Hedges 2021](https://doi.org/10.1111/jbi.14234)).
 
 
 ## Your Study
@@ -91,17 +93,18 @@ Another area of debate is what was the order of events that led this singular an
 
 #### Hypothesis 1: Single Origin of Ecomorphs Hypothesis
 
-Ecomorphs radiated from the ancestral population when islands were likely contiguous or an inter-connected Proto-Antilles. Populations of each type of ecomorph would have dispersed across the contiguous land mass. Then the Proto-Antilles separated as distinct islands, each taking a portion of the population of each ecomorph with it where evolution continued through allopatric means to produce the modern day species. 
+Ecomorphs radiated from the ancestral population when islands were contiguous on an inter-connected Proto-Antilles. Populations of each type of ecomorph would have dispersed across this contiguous landmass. Later the Proto-Antilles separated into distinct islands, each taking a portion of the population of each ecomorph with it where evolution continued through allopatric means to produce the modern day species.
 
-#### Hypothesis 2: Replicated Radiation of Ecomorphs Hypothesis
 
-There was a common distant ancestor present across the contiguous Proto-Antilles landmass like with the single origin hypothesis. The Proto-Antilles broke apart into distinct islands, each taking a portion of the ancestral population with them. Then the ancestral populations on each island independently diversified into the many species that exist today and the ecomorphs evolved repeatedly and independently on each of the islands, in a replicated fashion. This situation can be considered a form of **convergent evolution**, where different groups of organisms independently evolve similar traits by adapting to similar environments or ecological niches. 
+#### Hypothesis 2: Convergent Evolution of Ecomorphs Hypothesis
 
-- Respond to the questions in Parts 1 & 2 below in an electronic version of this document. You can complete one per group or each individual works on their own copy. If done as group work, be sure each group member has an electronic copy since the responses will be helpful in crafting your research paper associated with this project.
+Initially there was a common distant ancestor present across the contiguous Proto-Antilles landmass, as in the single-origin hypothesis. The Proto-Antilles broke apart into distinct islands, each taking a portion of the ancestral population with them. Then the ancestral populations on each island independently diversified into the many species that exist today. In this scenario the ecomorphs evolved repeatedly and independently on each of the islands. This situation can be considered a form of **convergent evolution**, where different groups of organisms independently evolve similar traits by adapting to similar environments or ecological niches. 
+
+- Respond to the questions in Parts 1 & 2 below, individually or in a group. If done as group work, be sure each group member has a copy since the responses will be helpful in crafting your research paper associated with this project.
 
 ### Part 1: Identifying Ecomorphs and Exploring Anole Adaptive Radiation 
 
-1. **Examine the photographs** of 16 species of anole lizards and sort them on the benchtop into as many groups as you want according to how they appear in the photographs. 
+1. **Examine the photographs** of 16 species of anole lizards and sort them on the bench top into as many groups as you want according to how they appear in the photographs. 
 
 2. **Discuss** how you grouped the lizards and your rationale for the various groupings below. If you picked a body feature to sort by, speculate about the advantages or disadvantages of such a body feature in the environment that species occupies. 
 
@@ -124,19 +127,21 @@ Using available nucleotide sequence data as well as computational tools and tech
 
 7. **Explore** the starting dataset. The R package `sativum` includes a dataset of anole DNA sequences that we will work with. Load the package using the `library` function.
 
-```{text}
+```
 > library(sativum)
 ```
 
-```{r eval=FALSE, include=TRUE}
+```{r include=FALSE}
 library(sativum)
 ```
 
 Next, examine the dataset in the `anole.ND2` object.
 
-```{text}
+```
 > anole.ND2
 ```
+
+The sequences below will appear as output in the console.
 
 ```{r echo=FALSE}
 anole.ND2
@@ -146,9 +151,11 @@ The object `anole.ND2` includes the DNA sequences of 15 of the 16 *Anolis* speci
 
 Look at the species names in this dataset. 
 
-```{text}
+```
 > names(anole.ND2)
 ```
+
+The list below will appear as output in the console.
 
 ```{r echo=FALSE}
 names(anole.ND2)
@@ -156,43 +163,38 @@ names(anole.ND2)
 
 In addition to the anoles, one unrelated lizard species, *Leiocephalus barahonensis*, is included as an outgroup to root the tree. (It's the first sequence in the dataset.) The common name of this species is the Barahona Curly Tailed Lizard and it is found in Haiti. 
 
-8. One more anole species, *Anolis sheplani*, needs its sequences added to the dataset. **Search** for the *ND2* sequence from this species in the NCBI database of nucleotide sequences using the `search.for.ncbi.ids` function as shown below.
+8. One more anole species, *Anolis sheplani*, needs its sequences added to the dataset. **Go to NCBI** at http://www.ncbi.nlm.nih.gov and **search** for  `Anolis sheplani ND2`. Among the results, find the "Genomes" panel and **click on "Nucleotide"**. You will see the GenBank ID number, `AF055966`,  under the title. It also appears as the Locus and Accession IDs in the GenBank format file below.
 
-```{text}
-> new.id <- search.for.ncbi.ids("Anolis sheplani ND2")
+To obtain the new sequence, we use the `fetch.sequence` function with the GenBank ID.
+
+```
+> sheplani.sequence <- fetch.sequence(ids = "AF055966")
 ```
 
-```{r search1, echo=FALSE}
-new.id <- search.for.ncbi.ids("Anolis sheplani ND2")
-```
-
-The output of `search.for.ncbi.ids` is simply an GI index number for the NCBI database. To obtain the new sequences, we use the `fetch.sequence` function.
-
-```{text}
-> new.sequence <- fetch.sequence(new.id) 
-```
+This command saves the sequences in the `sheplani.sequence` object and displays an abbreviated version of the sequence as output in the R console. 
 
 ```{r fetch, echo=FALSE}
-new.sequence <- fetch.sequence(new.id) 
+sheplani.sequence <- fetch.sequence(ids = "AF055966")
 ```
 
-This command saves the sequences in the `new.sequence` object and displays an abbreviated version of the sequence as output in the R console. 
 
-9. **Combine** the new and old sequences together into a new dataset using the `combine.sequences` function.
+9. **Combine** the two data objects together into a new dataset using the `combine.sequences` function.
 
-```{text}
-> (combined.ND2 <- combine.sequences(anole.ND2, new.sequence))
 ```
+> (combined.ND2 <- combine.sequences(anole.ND2, sheplani.sequence))
+```
+
+This command uses a simple trick in R. By surrounding the entire statement with parentheses it forces the contents of `combined.ND2` to be printed in the R console. (Otherwise the output from `combine.sequences` would not be displayed; just stored in the new object called `combined.ND2`.) 
 
 ```{r combine, echo=FALSE}
-(combined.ND2 <- combine.sequences(anole.ND2, new.sequence))
+(combined.ND2 <- combine.sequences(anole.ND2, sheplani.sequence))
 ```
 
-This command uses a simple trick in R. By surrounding the entire statement with parentheses it forces the contents of `combined.ND2` to be printed in the R console. (Otherwise the output from `combine.sequences` would not be displayed; just stored in the new object called `combined.ND2`.) Notice that the new sequence for *A. sheplani* is now below the original sequence for *A. valencienni*.
+Notice that the new sequence for *A. sheplani* is now below the original sequence for *A. valencienni*.
 
 10. **Save the dataset** in FASTA format. 
 
-```{text}
+```
 > write.fasta(combined.ND2, filename = "combined.ND2.fasta")
 ```
 
@@ -200,33 +202,39 @@ FASTA is a text-based format commonly used in bioinformatics and genomics. It ca
 
 11. **Align the sequences** using the ClustalOmega algorithm.
 
-```{text}
+```
 > anole.alignment <- align.sequences(
 >   combined.ND2, 
->   method = "ClustalOmega", order = "input"
+>   method = "ClustalOmega", 
+>   order = "input"
 > )
 ```
+
+This command will provide a short summary of what it did, as shown below.
 
 ```{r align.sequences, echo=FALSE}
 anole.alignment <- align.sequences(
   combined.ND2, 
-  method = "ClustalOmega", order = "input"
+  method = "ClustalOmega", 
+  order = "input"
 )
 ```
 
-You can look at the full alignment.
+You can look at the full alignment using the commanmd below.
 
-```{text}
+```
 > print(anole.alignment, "complete")
 ```
 
-  (The output is not shown here because it's very long!)
+*The output is not shown here because it's very long!*
 
 12. **Build a phylogeny** using the Neighbor-Joining method.
 
-```{text}
+```
 > anole.tree <- infer.phylogeny(anole.alignment)
 ```
+
+This command will produce a short summary output in the console and plot a phylogeny in the graphics panel.
 
 ```{r infer.phylogeny, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=6}
 anole.tree <- infer.phylogeny(anole.alignment)
@@ -234,9 +242,11 @@ anole.tree <- infer.phylogeny(anole.alignment)
 
 We can clean up the names, making them shorter, so we can see the tree topology better. Let's also get rid of the scale bar, since it's running into the base of the tree. Since these are species names, we can also put them in italics - bold italics.
 
-```{text}
+```
 > (anole.tree$tip.label <- simplify.names(anole.tree$tip.label))
 ```
+
+This command will produce the following output in the console.
 
 ```{r simplify.names, echo=FALSE}
 (anole.tree$tip.label <- simplify.names(anole.tree$tip.label))
@@ -244,7 +254,7 @@ We can clean up the names, making them shorter, so we can see the tree topology 
 
 Then draw the tree again with the shortened taxon names. The command also removed the scale bar using the argument `show.scale.bar = FALSE` and since these are species names we can make the font italics using the argument `tip.font = 4`.
 
-```{text}
+```
 > draw.tree(anole.tree, show.scale.bar = FALSE, tip.font = 4)
 ```
 
@@ -254,7 +264,7 @@ draw.tree(anole.tree, show.scale.bar = FALSE, tip.font = 4)
 
 13. **Save the tree** you've created in the [Newick format](https://en.wikipedia.org/wiki/Newick_format), a simple and common format used in phylogenetics to store trees.
 
-```{text}
+```
 > write.tree(anole.tree, "anole.ND2.tre")
 ```
 
@@ -262,9 +272,11 @@ draw.tree(anole.tree, show.scale.bar = FALSE, tip.font = 4)
 
 First, examine the metadata we have regarding the ecomorphs and islands origins for each species. This information is stored in a data frame called `anole.natural.history`.
 
-```{text}
+```
 > anole.natural.history
 ```
+
+The table below should appear in your R console.
 
 ```{r anole.natural.history, echo=FALSE}
 anole.natural.history
@@ -272,21 +284,21 @@ anole.natural.history
 
 Check that this table includes all the species in our tree, and that species are named in the same order as the tip labels in our tree object.
 
-```{text}
+```
 > anole.tree$tip.label
 ```
+
+If the order of the information doesn't match, you will not get the correct answer! 
 
 ```{r show.tip.labels, echo=FALSE}
 anole.tree$tip.label
 ```
 
-If the order of the information doesn't match, you will not get the correct answer! 
-
 Okay, so the table is in alphabetical order, except for the outgroup at the top. However our tip labels in the tree data object are in the order we added them. So the last two species do not match!
 
 Thankfully, it's always possible to rearrange the order of rows in the `anole.natural.history` data frame. We'll need to define a temporary object to hold one row while we make the swap.
 
-```{text}
+```
 > x <- anole.natural.history[17,]
 > anole.natural.history[17,] <- anole.natural.history[16,]
 > anole.natural.history[16,] <- x
@@ -294,20 +306,22 @@ Thankfully, it's always possible to rearrange the order of rows in the `anole.na
 
 Finally, confirm that you've done it correctly by inspecting the data frame.
 
-```{text}
-> tail(anole.natural.history)
+```
+> anole.natural.history
 ```
 
 ```{r swap, echo=FALSE}
 x <- anole.natural.history[17,]
 anole.natural.history[17,] <- anole.natural.history[16,]
 anole.natural.history[16,] <- x
-tail(anole.natural.history)
+anole.natural.history
 ```
 
 Then plot the tree using the argument `tip.groups` to color-code the species by island.
 
-```{text}
+15. **Draw the tree, color-coding species by island.** To evaluate if the species group within the tree by island-of-origin or by ecomorph, we will plot the same tree, layered on information about the species using different colors. 
+
+```
 > draw.tree(
 >   anole.tree, 
 >   tip.groups = anole.natural.history$island,
@@ -324,9 +338,9 @@ draw.tree(
   show.scale.bar = FALSE, tip.font = 4)
 ```
 
-We can do the same for the ecomorph data. to distinguish the plots, we'll use a different [color palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales) to label this tree.
+16. **Draw the tree, color-coding species by ecomorph.** We can do the same for the ecomorph data. To distinguish the plots, we'll use a different [color palette](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales) to label this tree.
 
-```{text}
+```
 > draw.tree(
 >   anole.tree, 
 >   tip.groups = anole.natural.history$ecomorph,
@@ -345,13 +359,14 @@ draw.tree(
   show.scale.bar = FALSE, tip.font = 4)
 ```
 
-You can save these plots by clicking the "Export" button on the plot panel in Rstudio or by taking a screen-capture. 
+17. You can **save these plots** by clicking the "Export" button on the plot panel in Rstudio or by taking a screen-capture. 
+
 
 #### **Analysis Questions**
 
 Examine the phylogenetic trees you color coded and answer the following questions.
 
-15. What general patterns of organization do you see in the tree that is:
+18. What general patterns of organization do you see in the tree that is:
 
 - Colored-coded by island?
 <br><br><br><br>
@@ -359,37 +374,37 @@ Examine the phylogenetic trees you color coded and answer the following question
 - Colored-coded by ecomorph?
 <br><br><br><br>
 
-16. Do species from the same ecomorph or island group together on the tree into the same clade? Provide evidence to support your answer.
+19. Do species from the same ecomorph or island group together on the tree into the same clade? Provide evidence to support your answer.
 <br><br><br><br>
 
-17. Are the genetic distances varied or all similar in length? What is the approximate average?
+20. Are the genetic distances varied or all similar in length? What is the approximate average?
 <br><br><br><br>
 
-18. Watch the rest of the film either in lab or as homework. It will help confirm which hypothesis is supported by the nucleotide data.
+21. Watch the rest of the film either in lab or as homework. It will help confirm which hypothesis is supported by the nucleotide data.
 
 #### **Thought Questions**
 
-19. Review the two hypotheses. Which hypothesis is supported by the DNA analysis shown in the tree and how does the color coding help reveal that? Justify your answer and explain your reasoning.
+22. Review the two hypotheses. Which hypothesis is supported by the DNA analysis shown in the tree and how does the color coding help reveal that? Justify your answer and explain your reasoning.
 
-20. What would you imagine the process of evolution looked like from the basal ancestral population prior to Caribbean island formation up through radiation of anole on each island. Describe for the reader so they have a mental picture.
+23. What would you imagine the process of evolution looked like from the basal ancestral population prior to Caribbean island formation up through radiation of anole on each island. Describe for the reader so they have a mental picture.
 
-21. Speculate about what may have led to a radiation like this where similar ecomorph classes can be found on each of the different islands in the Caribbean. Why do we have the same replicated radiations on each island?
+24. Speculate about what may have led to a radiation like this where similar ecomorph classes can be found on each of the different islands in the Caribbean. Why do we have the same replicated radiations on each island?
 
-22. What is the interpretation of the genetic distance and what might the similar values across species indicate about the timing of the radiation event of *Anolis* across the island system?
+25. What is the interpretation of the genetic distance and what might the similar values across species indicate about the timing of the radiation event of *Anolis* across the island system?
 
-23. Is there evidence from some of Losos’ modern day anole studies of adaptive radiation and/or convergent evolution in anoles? Describe how that backs up or contradicts the findings you made.
+26. Is there evidence from some of Losos’ modern day anole studies of adaptive radiation and/or convergent evolution in anoles? Describe how that backs up or contradicts the findings you made.
 
-24. Is there evidence from other systems of adaptive radiation on islands and how does that connect to what you found?
+27. Is there evidence from other species of adaptive radiation on islands and how does that connect to what you found?
 
-25. If there are any species that are outliers in terms of where they are located on the tree given which hypothesis you believe is supported, you’d be expected to address this in your Discussion. Examine the relationship between *Anolis sheplani* and *Anolis angusticeps*. Does it support the hypothesis you provided in the question above? Explain your answer. Develop a possible explanation that could explain this relationship.
+28. If there are any species that are outliers in terms of where they are located on the tree given which hypothesis you believe is supported, you’d be expected to address this in your Discussion. Examine the relationship between *Anolis sheplani* and *Anolis angusticeps*. Does it support the hypothesis you provided in the question above? Explain your answer. Develop a possible explanation that could explain this relationship.
 
-26. What study might you want to do next with anoles?
+29. What study might you want to do next with anoles?
 
 ## References
 
 Materials taken from Howard Hughes Medical Institute, Biointeractive Resources, Using DNA to Explore Lizard Phenology
 
-Ali, J and B. Hedges. 2021. Colonizing the Caribbean: New geological data and an updated land-vertebrate colonization record challenge the GAARlandia land- bridge  hypothesis. Journal of Biogeography 48:2699–2707.
+Ali, J and B. Hedges. 2021. Colonizing the Caribbean: New geological data and an updated land-vertebrate colonization record challenge the GAARlandia land-bridge  hypothesis. Journal of Biogeography 48:2699–2707.
 
 Iturralde-Vinent, M. 2006. Meso-Cenozoic Caribbean Paleogeography: Implications for the Historical Biogeography of the Region. International Geology Review 48: 791–827.
 

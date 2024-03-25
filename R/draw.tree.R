@@ -25,7 +25,7 @@
 #' @param branch.length.cex An integer specifying the character expansion factor for branch length text. (Default is 0.7)
 #' @param branch.length.text.color A color name for the branch length text.
 #' @param show.scale.bar Logical value specifying whether to show a scale bar. (Default is TRUE.)
-#' @param margins A vector of four integers defining the margins of the plot.
+#' @param margins A vector of four integers defining the margins of the plot (bottom, left, top, right).
 #' @param y.lim An integer vector with two values specifying the minimum and maximum vertical limits of the plot. \code{x.lim} can also be specified.
 #' @param show.legend Logical value specifying whether to show a legend for group color-coding. Defaults to TRUE if \code{tip.groups} are defined.
 #' @param legend.position A character string specifying whether on the plot to place the legend. Options are "bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" and "center".

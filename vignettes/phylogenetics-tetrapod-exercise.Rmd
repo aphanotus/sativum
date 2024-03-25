@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
 library(stringr)
 library(sativum)
 library(ape)
+library(phytools)
 library(Biostrings)
 library(rentrez)
 library(msa)
@@ -41,7 +42,7 @@ library(phangorn)
 
 ## Introduction
 
-Biological **systematics** is the study of the relationships among living things. Systematists often seek to produce a classification or **taxonomy**, which reflects the evolutionary history of organisms. Taxonomic relationships are often visualized as phylogenetic trees in which organisms are grouped together based on relatedness to their common ancestors. 
+Biological **systematics** is the study of the relationships among living things. Systematists often seek to produce a classification or **taxonomy**, which reflects the evolutionary history of organisms. Because evolution has occurred over a long time with no witnesses, that history is not always obvious. It must be inferred using phylogenetic methods. Taxonomic relationships are often visualized as phylogenetic trees in which organisms are grouped together based on relatedness to their common ancestors. These trees are essentially hypotheses for the relationships of organisms, and like any hypothesis they can be revised and updated with new data.
 
 ### Understanding a Tree
 
@@ -52,10 +53,12 @@ x <- read.tree(text = "(((D,C),B),A);")
 draw.tree(x)
 ```
 
-- Time in a phylogeny is represented as moving from the base to the tips of the tree (left to right in this example). This tree tells us that the first event was the evolutionary split into two different lineages, one leading to species A and one to the other branches of the tree. The next event was the splitting of B from the line that leads to C and D. The final and most recent event is the splitting of C and D into two separate species. 
-- You can identify three different monophyletic groups (ABCD, BCD, and CD). A monophyletic group is a clade that consists of all species descended from a common ancestor. (So, as a counter-example, a group containing only species A and B is *not* monophyletic because species C and D also share the same common ancestor.)
-- Species B is more closely related to Species D than it is to Species A. That because if you trace the distance along the branches the distance from A to B is greater than the distance from D to B. (Only distance in the root-to-tip direction represents evolutionary time.) 
-- All nodes are able to be rotated 180° without fundamentally changing the tree, because the order of branching is preserved. So, Species B is equally related to Species C and D. In fact, all of the trees below show the *same* relationships as the figure above.
+- The branching pattern of the tree represents the evolutionary history of populations of organisms over time. The moments in time when a lineage splits into two are the branch points, or **nodes**, in the tree. The tips of the tree are taxa in the present time. The taxa at the tips are what have been sampled to create the tree. (More on that later!)
+- Time moves from the base to the tips of the tree (left to right in this example). This tree tells us that the first event was the split into two different lineages, one leading to species A and one to the other tips of the tree. The next event was the splitting of B from the lineage that leads to C and D. The most recent event is the splitting of C and D into two separate species. We know this is the most recent split because it's the closest node to the tips.
+- You can also read a tree from the present (the tips) backwards in time to find the **most recent common ancestor (MRCA)** of existing groups at the tips. For example, the most recent common ancestor of Species C and D is represented by the right-most node. Deeper in the tree (closer to the base) is the MRCA of Species B, C and D. All tips of the tree share a MRCA at the base.
+- You can identify three different monophyletic groups (ABCD, BCD, and CD). A **monophyletic group** is a clade that consists of all species descended from a common ancestor. (So, as a counter-example, a group containing only species A and B is *not* monophyletic because species C and D also share the same common ancestor.)
+- Species B is more closely related to Species D than it is to Species A. That's because Species B and D share a MRCA more recently (closer to the tips) than do Species B and A. Another way of thinking of this is if you trace the distance along the branches from A to B it's greater than the distance from D to B. (The width of the nodes doesn't matter. Only distance in the base-to-tip direction represents evolutionary time.) 
+- All nodes can be flipped (rotated 180°) without changing relationships in the tree, because the order of branching is preserved. So, Species B is equally related to Species C and D. In fact, all of the trees below show the *same* relationships as the figure above.
 
 ```{r more.example.trees, echo=FALSE, fig.height=1.5, fig.width=2, fig.show='hold', message=FALSE, warning=FALSE}
 x <- read.tree(text = "(((C,D),B),A);")
@@ -150,11 +153,11 @@ First you need to obtain the COII amino acid sequences from the fish and tetrapo
 > print(fish.COII)
 ```
 
+You should see output in the R console that looks like what's below. Your console output may be color-coded to highlight specific amino acids.
+
 ```{r fish.COII.preview, echo=FALSE}
 print(fish.COII)
 ```
-
-Your console output may be color-coded to highlight specific amino acids.
 
 In addition to these COII sequences, you will add the amino acid sequence for an additional amphibian, the African clawed frog (*Xenopus laevis*).
 
@@ -162,11 +165,11 @@ The National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.n
 
 1. **Go to NCBI** at http://www.ncbi.nlm.nih.gov
 
-2. **Search** "All Databases" for *Xenopus laevis*. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and click on "Protein".
+2. **Search** "All Databases" for *Xenopus laevis*. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and **click on "Protein"**.
 
-This search returns more than 200,000 results! So you will need to narrow the search. 
+This search returns more than 200,000 results! So you will need to narrow the search.
 
-3. **Refine the search** text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. 
+3. **Refine the search** text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation.
 
 4. The results should now include 10 proteins, a manageable number. **Choose one** sequence whose title includes "cytochrome c oxidase subunit II" (or "subunit 2") but not the word "partial". (We want the complete protein sequence.) Make your selection by checking the box to the left of the entry. In the "Summary" drop-down menu, select "FASTA (text)". This will bring you to the amino acid sequence of the *Xenopus laevis* cytochrome c oxidase subunit II protein in FASTA format. 
 
@@ -178,25 +181,27 @@ RMVVPMESPTRLLVTAEDVLHSWAVPSLGVKTDAIPGRLHQTSFIATRPGVFYGQCSEICGANHSFMPIV
 VEAVPLTDFENWSSSMLEA
 ```
 
-The [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) is the most common way DNA and protein sequences are stored and used by bioinformatics software. The first line contains information about the sequence (the metadata), including the NCBI accession number ("P00407.1"), sequence name ("COX2_XENLA") and description ("RecName: Full=Cytochrome c oxidase..."). The following lines represent the amino acid sequence of the protein using the one-letter [amino acid abbreviations](https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#General_chemical_properties). This is the sequence that comprises the COII protein in this species. 
+The [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) is the most common way DNA and protein sequences are stored and used by bioinformatics software. The first line contains information about the sequence (the metadata), including the NCBI accession number (`P00407.1`), sequence name (`COX2_XENLA`) and description (`RecName: Full=Cytochrome c oxidase...`). The next lines represent the amino acid sequence of the protein using the standard one-letter [amino acid abbreviations](https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#General_chemical_properties). This is the sequence that comprises the COII protein in this species. 
 
-5. **Download the new sequence** for *Xenopus laevis* COII. There are several ways to do this, but the R package `sativum` provides convenient tools. We will need the sequence's GenBank ID or "GI" number. (Sorry, this is different from the accession number!) On the NCBI search results, notice that below the description of each sequence, in smaller print, are two numbers labeled "Accession" and "GI". The first is the NCBI accession number and the second is the GenBank GI number we need. You can copy the GI number and paste it into an R command using the function `fetch.sequence` which will download the sequence matching that GI number into your instance of R. The code below will store that sequence information in a new data object we'll call `frog.sequence`. 
+5. **Download the new sequence** for *Xenopus laevis* COII. There are several ways to do this, but the R package `sativum` provides convenient tools. We will need the sequence's GenBank ID or "GI" number. (Sorry, this is different from the accession number!) On the NCBI search results, notice that below the description of each sequence, in smaller print, are two numbers labeled "Accession" and "GI". The first is the NCBI accession number and the second is the GenBank GI number we need. You can copy the GI number and paste it into an R command using the function `fetch.sequence` which will download the sequence matching that GI number into your instance of R. The code below will store that sequence information in a new data object that we'll call `frog.sequence`. 
 
 ```{text}
 > frog.sequence <- fetch.sequence(ids = "117049", database = "protein", format = "AA")
 ```
 
+The sequence will appear in the console, as shown below.
+
 ```{r frog.fetch, echo=FALSE}
 frog.sequence <- fetch.sequence(ids = "117049", database = "protein", format = "AA")
 ```
 
-Let's dissect what's happening in this command. The `fetch.sequence` function requires several "arguments". The first one, `ids`, take the GI number that uniquely identifies the sequence we want. We got that from the NCBI website. (We could have also used another function, `search.for.ncbi.ids`, to search for the GI number using the GenBank accession number or a description of the sequence we want.) The next argument, `database`, is set to `"protein"` to indicate that we'd like to get data from the NCBI protein database. The default for this function is to use the nucleotide database. The last argument, `format`, is set to `"AA"` indicating that we want to the results returned to use in amino acid format. Each function in R takes different arguments, and some functions don't need any arguments at all. (For example `ls()` will list all the objects currently in memory.) About now, you might be wondering how you're meant to *know* all this stuff! The good news is you don't have to. The more you use R, the more you'll just become familiar with common functions. But for functions that are new to you, you can always get a help page that describes how the function works, what arguments it takes and what it's output will be. You can find a function's help page by searching for it in the Help tab in Rstudio's lower right panel. You can also enter `?` before the function name in the R console, as shown below.
+To better understand how we use R, let's dissect what's happening in this command. The `fetch.sequence` function requires several "arguments". The first one, `ids`, take the GI number that uniquely identifies the sequence we want. We got that from the NCBI website. (We could have also used another function, `search.for.ncbi.ids`, to search for the GI number using the GenBank accession number or a description of the sequence we want.) The next argument, `database`, is set to `"protein"` to indicate that we'd like to get data from the NCBI protein database. The default for this function is to use the nucleotide database. The last argument, `format`, is set to `"AA"` indicating that we want to the results returned to us in amino acid format. Each function in R takes different arguments, and some functions don't need any arguments at all. (For example `ls()` will list all the objects currently in memory.) About now, you might be wondering how you're meant to *know* all this stuff! The good news is that you don't have to. The more you use R, the more you'll just become familiar with common functions. But for functions that are new to you, you can always get a help page that describes how the function works, what arguments it takes and what it's output will be. You can find a function's help page by searching for it in the Help tab in Rstudio's lower right panel. You can also enter `?` before the function name in the R console, as shown below.
 
 ```{text}
 > ?fetch.sequence
 ```
 
-Optional: If you're not comfortable with scientific names, like *Xenopus laevis* or if you simply want this sequence's name to match the format of the others, you can change it as shown below.
+Optional: If you're not comfortable with scientific names, like *Xenopus laevis* or if you simply want this sequence's name to match the style of the others, you can change it as shown below.
 
 ```{text}
 > names(frog.sequence) <- "frog P00407.1 COII [Xenopus laevis]"
@@ -212,11 +217,13 @@ names(frog.sequence) <- "frog P00407.1 COII [Xenopus laevis]"
 > combined.coii <- combine.sequences(fish.COII, frog.sequence)
 ```
 
+This command will provide a short summary of what it did, as shown below.
+
 ```{r combine, echo=FALSE}
 combined.coii <- combine.sequences(fish.COII, frog.sequence)
 ```
 
-7. **Save** this dataset to a file in your R working directory.
+7. **Save** this dataset to a file in your R working directory. We shouldn't need to do anything with this file. However, it's best practice to save your dataset to a file at the stage just before beginning your analysis. 
 
 ```{text}
 > write.fasta(combined.coii, filename = "combined.coii.fasta")
@@ -230,6 +237,8 @@ If you click on the File tab in the lower right panel of Rstudio, a new file sho
 > combined.coii
 ```
 
+The sequence data will appear as output in the console.
+
 ```{r echo=FALSE}
 combined.coii
 ```
@@ -237,21 +246,28 @@ combined.coii
 Notice that the amino acids line up pretty well, but not perfectly. The amphibian sequences are shifted on the right. We need to "align" the sequences so that the amino acids that are homologous (the equivalent characters in our dataset) appear in the same positions. Sequence alignment is a routine step in any phylogenetic analysis. While you can do this manually, it's more reproducible (and faster) to use software. Several algorithms have been developed for alignment of multiple sequences of amino acids or nucleotides. We will use a common algorithm for multiple sequence alignment (MSA) called [ClustalOmega](http://www.clustal.org/omega/). The code below will create a new object called `coii.alignment` using the sequences in the `combined.coii` object as input to the function `align.sequences`.
 
 ```{text}
-> coii.alignment <- align.sequences(combined.coii, 
-> method = "ClustalOmega", order = "input")
+> coii.alignment <- align.sequences(
+>   combined.coii, 
+>   method = "ClustalOmega", 
+>   order = "input"
+> )
 ```
+
+Notice that this command breaks across multiple lines. That's optional. You could also enter the same command into the console as `coii.alignment <- align.sequences(combined.coii, method = "ClustalOmega", order = "input")`
+
+Either way, the command will provide a short summary of what it did, as shown below.
 
 ```{r msa, echo=FALSE}
 coii.alignment <- align.sequences(combined.coii, method = "ClustalOmega", order = "input")
 ```
-
-Notice that this command breaks across two lines in the console. That shown here so that the enter command appears on the page. However, you can enter the command on one line if you prefer.
 
 To see the full alignment we can enter the following command into the console.
 
 ```{text}
 > print(coii.alignment, show="complete")
 ```
+
+It will produce the following output in the console.
 
 ```{r msa.print, echo=FALSE}
 print(coii.alignment, show="complete")
@@ -265,15 +281,19 @@ At this point the sequences are aligned, meaning that each column represents a h
 > coii.tree <- infer.phylogeny(coii.alignment)
 ```
 
+This command will produce a short summary output in the console and plot a phylogeny in the graphics panel.
+
 ```{r nj, echo=FALSE, fig.align='center', fig.height=2.5, fig.width=6}
 coii.tree <- infer.phylogeny(coii.alignment)
 ```
 
-We have a tree! Next we'll want to improve the way its displayed so we can better understand and interpret this result. Let's start by examining the structure of the `coii.tree` object that's been created. We can examine its components using the `names` command.
+We have a tree! Next we'll want to improve the way it is displayed so we can better understand and interpret this result. Let's start by examining the structure of the `coii.tree` object that's been created. We can examine its components using the `names` command.
 
 ```{text}
 > names(coii.tree)
 ```
+
+This will list the "names" of the different components of the the `coii.tree` data object.
 
 ```{r echo=FALSE}
 names(coii.tree)
@@ -285,17 +305,21 @@ Each of these components can be individually displayed. For example:
 > coii.tree$edge.length
 ```
 
+This will print out the numerical values below.
+
 ```{r echo=FALSE}
 coii.tree$edge.length
 ```
 
-These values are the genetic distance along each branch (or "edge") of the tree. Genetic distance is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
+These values are the genetic distances along each branch (or "edge") of the tree that was just plotted above. **Genetic distance** is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
 
 10. Let's do some things to clean up this tree and make it easier to interpret. The labels on the tree are long and have more information than we need. So, let's **make tip labels simpler**. We can examine them first by calling the `tip.label` component of the `coii.tree` data object
 
 ```{text}
 > coii.tree$tip.label
 ```
+
+The current name of each taxon (or tip) will be appear as below.
 
 ```{r echo=FALSE}
 coii.tree$tip.label
@@ -307,16 +331,31 @@ We don't need the NCBI accession numbers anymore, and we know these are all COII
 > coii.tree$tip.label <- c("shark","coelacanth","lungfish","zebrafish","toad","frog")
 ```
 
-```{r renaming.tips, echo=TRUE}
+```{r renaming.tips, include=FALSE}
 coii.tree$tip.label <- c("shark","coelacanth","lungfish","zebrafish","toad","frog")
 ```
 
-11. Next, notice that the shark, which is our outgroup for the bony fish, appears in the middle of the tree. Let's **rotate nodes** in the tree to place the outgroup at the top. We'll do this by modifying the `coii.tree` object using the `rotateConstr` function. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. 
+Let's draw the tree again to see the effect that's had.
+
+```{text}
+> draw.tree(coii.tree)
+```
+
+```{r tree.after.renaming, echo=FALSE, fig.align='center', fig.height=2.5, fig.width=6}
+draw.tree(coii.tree)
+```
+
+11. Next, notice that the shark, which is our outgroup for the bony fish, appears in the middle of the tree. Let's **rotate nodes** in the tree to place the outgroup at the top. We'll do this by modifying the `coii.tree` object using the `rotateConstr` function. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. The order of the species listed will be the order in which the nodes appear.
+
+The indentation in the code below is optional, but it helps keep the code organized. For example, this indent pattern reminds a reader that the most indented lines are surrounded by the parentheses of the `constraint` argument.
 
 ```{text}
 > coii.tree <- rotateConstr(
 >   coii.tree, 
->   constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
+>   constraint = c(
+>     "frog", "toad", "coelacanth",
+>     "lungfish", "zebrafish", "shark"
+>   )
 > )
 ```
 
@@ -326,8 +365,6 @@ coii.tree <- rotateConstr(
   constraint = c("frog","toad","coelacanth","lungfish","zebrafish","shark")
 )
 ```
-
-Notice that this code breaks across multiple lines. It can be easier to organize a long, complex or important command in the R script in the upper left panel, and then run it. Do that that, place the cursor at the beginning of the code you want to run and type `command` `return`, at the same time. You can also click on the "Run" button at the top of the script panel. The indentation shown here is optional, but it helps keep the code organized. For example, this indent pattern reminds a reader that the middle two lines are surrounded by the parentheses of the `rotateConstr` function.
 
 If the `rotateConstr` command works properly, you won't see any messages or output. We can view the effect to plotting the tree again using the function `draw.tree`.
 
@@ -339,7 +376,7 @@ If the `rotateConstr` command works properly, you won't see any messages or outp
 draw.tree(coii.tree)
 ```
 
-Now we have the ougroup, "shark", at the top of the tree.
+Now we have the outgroup, "shark", at the top of the tree.
 
 12. Finally, we can label the clade that contains our tetrapod species, the frog and toad, using the `label.clade` function. This function takes several arguments: `tree` is the tree object. The monophyletic group we want to label is defined by `clade`. (If we wanted to use this on a large group, we'd only need to name two taxa in it that define the outer-most members of the group.) The label itself is given by the `text` argument. The last argument `offset` is optional; ot just moves the label a bit to the right so it doesn't run into the tip labels.
 
@@ -354,7 +391,7 @@ Now we have the ougroup, "shark", at the top of the tree.
 
 ```{r final.tree, echo=FALSE, fig.align='center', fig.height=2.5, fig.width=6}
 draw.tree(coii.tree)
-label.clade(tree = coii.tree, clade = c("frog","toad"), text = "tetrapods", offset = 2)
+label.clade(tree = coii.tree, clade = c("frog","toad"), text = "tetrapods", offset = 2, line.width = 5, cex = 0.85)
 ```
 
 ## Questions
