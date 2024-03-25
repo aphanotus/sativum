@@ -59,7 +59,7 @@ draw.tree(
 
 \item{show.scale.bar}{Logical value specifying whether to show a scale bar. (Default is TRUE.)}
 
-\item{margins}{A vector of four integers defining the margins of the plot.}
+\item{margins}{A vector of four integers defining the margins of the plot (bottom, left, top, right).}
 
 \item{y.lim}{An integer vector with two values specifying the minimum and maximum vertical limits of the plot. \code{x.lim} can also be specified.}
 
