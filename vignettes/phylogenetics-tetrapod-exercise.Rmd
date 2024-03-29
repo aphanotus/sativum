@@ -128,7 +128,7 @@ Today you will explore which type of fish may have given rise to the first tetra
 
 3. Visit Moodle and download the phylogenetics.R script that will help you walk through this tutorial and later your anole project. 
 
-4. Upload the script into your project folder and click on it to open in your source panle. This script will have some lines of code that can be run as is without alterations while other lines require you to edit indicated parts in order for the line to run. Please always read the annotations for directions.
+4. Upload the script into your project folder and click on it to open in your source panel. This script will have some lines of code that can be run as is without alterations while other lines require you to edit indicated parts in order for the line to run. Please always read the annotations for directions.
 
 In the text of this handout, R code will appear in fixed-width font. (That is, a blocky computer font, `like this`.) Things you should run in your script will start with an arrow or greater-than sign (`>`). Example output of the command will be shown below that, also in fixed-width font.
 
@@ -276,7 +276,7 @@ It will produce the following output in the console.
 print(coii.alignment, show="complete")
 ```
 
-AAt this point the sequences are aligned, meaning that each column represents a homologous character. Notice that the character states (in this case the specific amino acids) are all identical at some positions (e.g. position 1), mostly identical at others (e.g. position 55) and very different at some (e.g. position 217). This dataset is what we need to build a phylogenetic tree that will describe the relationships between these species. 
+At this point the sequences are aligned, meaning that each column represents a homologous character. Notice that the character states (in this case the specific amino acids) are all identical at some positions (e.g. position 1), mostly identical at others (e.g. position 55) and very different at some (e.g. position 217). This dataset is what we need to build a phylogenetic tree that will describe the relationships between these species. 
 
 17. **Build a phylogeny.** There are many methods to infer or build phylogenetic trees from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. We will use the NJ method to create a new data object that we'll call, `coii.tree`,  by calling the `infer.phylogeny` function.
 
