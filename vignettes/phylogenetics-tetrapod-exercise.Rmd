@@ -1,7 +1,6 @@
 ---
 title: "Phylogenetics & Bioinformatics"
 author: "Colby College BI164"
-date: "`r format(Sys.time(),'%d %B %Y')`"
 output:
   rmarkdown::html_vignette:
     css: mostlymodest.css
@@ -46,7 +45,7 @@ Biological **systematics** is the study of the relationships among living things
 
 ### Understanding a Tree
 
-Let's consider the simple tree below, where the letters at the tips represent different species.  
+Let's consider the simple tree below, where the letters at the tips represent different species.
 
 ```{r example.tree, echo=FALSE, fig.height=1.5, fig.width=3, fig.align = 'center'}
 x <- read.tree(text = "(((D,C),B),A);")
@@ -116,28 +115,30 @@ Today you will explore which type of fish may have given rise to the first tetra
 
 ### Methods
 
-#### An orientation to Rstudio
+#### An orientation to Rstudio, uploading your script, setting your working directory
 
-Start by logging into Colby's Rstudio server at https://rstudio.colby.edu/  The Rstudio window is divided into four panels that each provide different tools.
+1. Start by logging into Colby's Rstudio server at https://rstudio.colby.edu/  To refresh your memory, the Rstudio window is divided into four panels that each provide different tools.
 
-- The top left panel displays **scripts** and other files that you can edit and save. 
+- The top left panel (source panel) displays **scripts** and other files that you can edit and save. 
 - The R command line or "**R console**" is in the bottom left panel. When a command is run here, it can change the value of an object, but the command itself is not saved. So it's good practice to write your commands first in the script panel.
-- The top right panel shows either a list of objects currently in memory (the environment), or the command history. I find this to be the least useful panel, and you can minimize it by double-clicking on the tabs in the bottom right panel.
+- The top right panel shows either a list of objects currently in memory (the global environment), or the command history. I find this to be the least useful panel, and you can minimize it by double-clicking on the tabs in the bottom right panel.
 - The bottom right panel displays lots of useful stuff, including plots generated in the command line. It also has tabs for navigating folders and files, looking at installed packages, or consulting the help pages.
 
-In this tutorial, R code will appear in fixed-width font. (That is, a blocky computer font, `like this`.) Things you should enter into the R console will start with an arrow or greater-than sign (`>`). Example output of the command will be shown below that, also in fixed-width font.
+2. In the bottom right panel, create a new project folder for today which you will later set as your working directory.
 
-Start by ensuring that R is working in your main user folder. You can set R's working directory (folder) using the command `setwd` as shown below. Type what's shown below into the R console panel and hit the enter key.
+3. Visit Moodle and download the phylogenetics.R script that will help you walk through this tutorial and later your anole project. 
+
+4. Upload the script into your project folder and click on it to open in your source panle. This script will have some lines of code that can be run as is without alterations while other lines require you to edit indicated parts in order for the line to run. Please always read the annotations for directions.
+
+In the text of this handout, R code will appear in fixed-width font. (That is, a blocky computer font, `like this`.) Things you should run in your script will start with an arrow or greater-than sign (`>`). Example output of the command will be shown below that, also in fixed-width font.
+
+5. Complete the first step in your script (setting working directory). Start by ensuring that R is working in your main user folder. You can set R's working directory (folder) using the command `setwd` as shown below. Type what's shown below into the R console panel and hit the enter key.
 
 ```{text}
 > setwd("~")
 ```
 
-Throughout this tutorial, you are meant to type the code shown next the prompt (`>`) into the R console window. (You don't need to type the `>` character. It will already be there to start the line.)
-
-When you run `setwd("~")`, you won't see any obvious change. In general, if things work correctly in R you won't see anything except a new line prompt (`>`). If you get an error message, that's usually a sign something hasn't gone as planned. If you do get an error, such as `Error: object '~' not found`, be sure you have quotes around the tilda (`"~"`). On an America English keyboard, the tilda can be found to the left of the number row, using the shift key. The tilda represents your user home directory in the linux file system. Remember, you are doing this work on a remote server run by Colby, not on your local computer. ([R](https://cran.r-project.org/) and [Rstudio](https://posit.co/download/rstudio-desktop/) are free, and once you're comfortable with it, you might consider using it on your own laptop.)
-
-Next, load the package of tools we'll use for this exercise, called `sativum`.
+6. Next, load the package of tools we'll use for this exercise, called `sativum`.
 
 ```{text}
 > library(sativum)
@@ -145,9 +146,11 @@ Next, load the package of tools we'll use for this exercise, called `sativum`.
 
 Okay, you should be ready to get started!
 
-#### Procedures
+#### Tree-Building Procedures
 
-First you need to obtain the COII amino acid sequences from the fish and tetrapods. As a starting point, most of these sequences have been provided for you already as part of the R package `sativum`. You can preview these sequences by entering the name of the data object, `fish.COII`, in the R console. You should see the output shown below.
+7. First you need to obtain the COII amino acid sequences from the fish and tetrapods. As a starting point, most of these sequences have been provided for you already as part of the R package `sativum`. 
+
+You can preview these sequences by entering the name of the data object, `fish.COII`, in the R console. You should see the output shown below.
 
 ```{text}
 > print(fish.COII)
@@ -163,15 +166,15 @@ In addition to these COII sequences, you will add the amino acid sequence for an
 
 The National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.nih.gov)) hosts a series of databases important to bioinformatics, including [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), one of the oldest, most extensive, and most well-annotated databases of biomolecular sequences. Follow the directions below to download protein sequence data for *Xenopus laevis* COII.
 
-1. **Go to NCBI** at http://www.ncbi.nlm.nih.gov
+8. **Go to NCBI** at http://www.ncbi.nlm.nih.gov
 
-2. **Search** "All Databases" for *Xenopus laevis*. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and **click on "Protein"**.
+9. **Search** "All Databases" for *Xenopus laevis*. Since we are in search of COII, which is a mitochondrial protein, find the "Proteins" panel and **click on "Protein"**.
 
 This search returns more than 200,000 results! So you will need to narrow the search.
 
-3. **Refine the search** text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation.
+10. **Refine the search** text to read `Xenopus laevis [orgn] cytochrome c oxidase ii`. This text specifies that the search for COII should be limited to the organism *Xenopus laevis*. It's often safer to perform searches using the full name of a gene or protein as opposed to an abbreviation.
 
-4. The results should now include 10 proteins, a manageable number. **Choose one** sequence whose title includes "cytochrome c oxidase subunit II" (or "subunit 2") but not the word "partial". (We want the complete protein sequence.) Make your selection by checking the box to the left of the entry. In the "Summary" drop-down menu, select "FASTA (text)". This will bring you to the amino acid sequence of the *Xenopus laevis* cytochrome c oxidase subunit II protein in FASTA format. 
+11. The results should now include 10 proteins, a manageable number. **Choose one** sequence whose title includes "cytochrome c oxidase subunit II" (or "subunit 2") but not the word "partial". (We want the complete protein sequence.) Make your selection by checking the box to the left of the entry. In the "Summary" drop-down menu, select "FASTA (text)". This will bring you to the amino acid sequence of the *Xenopus laevis* cytochrome c oxidase subunit II protein in FASTA format. 
 
 ```{text}
 >sp|P00407.1|COX2_XENLA RecName: Full=Cytochrome c oxidase subunit 2
@@ -183,7 +186,7 @@ VEAVPLTDFENWSSSMLEA
 
 The [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) is the most common way DNA and protein sequences are stored and used by bioinformatics software. The first line contains information about the sequence (the metadata), including the NCBI accession number (`P00407.1`), sequence name (`COX2_XENLA`) and description (`RecName: Full=Cytochrome c oxidase...`). The next lines represent the amino acid sequence of the protein using the standard one-letter [amino acid abbreviations](https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#General_chemical_properties). This is the sequence that comprises the COII protein in this species. 
 
-5. **Download the new sequence** for *Xenopus laevis* COII. There are several ways to do this, but the R package `sativum` provides convenient tools. We will need the sequence's GenBank ID or "GI" number. (Sorry, this is different from the accession number!) On the NCBI search results, notice that below the description of each sequence, in smaller print, are two numbers labeled "Accession" and "GI". The first is the NCBI accession number and the second is the GenBank GI number we need. You can copy the GI number and paste it into an R command using the function `fetch.sequence` which will download the sequence matching that GI number into your instance of R. The code below will store that sequence information in a new data object that we'll call `frog.sequence`. 
+12. **Download the new sequence** for *Xenopus laevis* COII. There are several ways to do this, but the R package `sativum` provides convenient tools. We will need the sequence's GenBank ID or "GI" number. (Sorry, this is different from the accession number!) On the NCBI search results, notice that below the description of each sequence, in smaller print, are two numbers labeled "Accession" and "GI". The first is the NCBI accession number and the second is the GenBank GI number we need. You can copy the GI number and paste it into an R command using the function `fetch.sequence` which will download the sequence matching that GI number into your instance of R. The code below will store that sequence information in a new data object that we'll call `frog.sequence`.
 
 ```{text}
 > frog.sequence <- fetch.sequence(ids = "117049", database = "protein", format = "AA")
@@ -201,7 +204,7 @@ To better understand how we use R, let's dissect what's happening in this comman
 > ?fetch.sequence
 ```
 
-Optional: If you're not comfortable with scientific names, like *Xenopus laevis* or if you simply want this sequence's name to match the style of the others, you can change it as shown below.
+13. Optional: If you're not comfortable with scientific names, like *Xenopus laevis* or if you simply want this sequence's name to match the style of the others, you can change it as shown below.
 
 ```{text}
 > names(frog.sequence) <- "frog P00407.1 COII [Xenopus laevis]"
@@ -211,7 +214,7 @@ Optional: If you're not comfortable with scientific names, like *Xenopus laevis*
 names(frog.sequence) <- "frog P00407.1 COII [Xenopus laevis]"
 ```
 
-6. **Combine** the old and new COII sequences into one dataset using the `combine.sequences` function.
+14. **Combine** the old and new COII sequences into one dataset using the `combine.sequences` function.
 
 ```{text}
 > combined.coii <- combine.sequences(fish.COII, frog.sequence)
@@ -223,7 +226,7 @@ This command will provide a short summary of what it did, as shown below.
 combined.coii <- combine.sequences(fish.COII, frog.sequence)
 ```
 
-7. **Save** this dataset to a file in your R working directory. We shouldn't need to do anything with this file. However, it's best practice to save your dataset to a file at the stage just before beginning your analysis. 
+15. **Save** this dataset to a file in your R working directory. We shouldn't need to do anything with this file. However, it's best practice to save your dataset to a file at the stage just before beginning your analysis. 
 
 ```{text}
 > write.fasta(combined.coii, filename = "combined.coii.fasta")
@@ -231,7 +234,7 @@ combined.coii <- combine.sequences(fish.COII, frog.sequence)
 
 If you click on the File tab in the lower right panel of Rstudio, a new file should appear called `combined.coii.fasta`
 
-8. **Align the sequences**. Inspect the combined sequences by calling up the object `combined.coii`.
+16. **Align the sequences**. Inspect the combined sequences by calling up the object `combined.coii`.
 
 ```{text}
 > combined.coii
@@ -273,9 +276,9 @@ It will produce the following output in the console.
 print(coii.alignment, show="complete")
 ```
 
-At this point the sequences are aligned, meaning that each column represents a homologous character. Notice that the character states (in this case the specific amino acids) are all identical at some positions (e.g. position 1), mostly identical at others (e.g. position 55) and very different at some (e.g. position 217). This dataset is what we need to build a phylogenetic tree that will describe the relationships between these species. 
+AAt this point the sequences are aligned, meaning that each column represents a homologous character. Notice that the character states (in this case the specific amino acids) are all identical at some positions (e.g. position 1), mostly identical at others (e.g. position 55) and very different at some (e.g. position 217). This dataset is what we need to build a phylogenetic tree that will describe the relationships between these species. 
 
-9. **Build a phylogeny.** There are many methods to infer or build phylogenetic trees from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. We will use the NJ method to create a new data object that we'll call, `coii.tree`,  by calling the `infer.phylogeny` function.
+17. **Build a phylogeny.** There are many methods to infer or build phylogenetic trees from aligned biological sequence data. The neighbor-joining (NJ) method of creating a tree is based on the similarities and differences (genetic distance) that existed between the sequences in the alignment. We will use the NJ method to create a new data object that we'll call, `coii.tree`,  by calling the `infer.phylogeny` function.
 
 ```{text}
 > coii.tree <- infer.phylogeny(coii.alignment)
@@ -313,7 +316,7 @@ coii.tree$edge.length
 
 These values are the genetic distances along each branch (or "edge") of the tree that was just plotted above. **Genetic distance** is a measure of percent change in the sequence data from the most recent ancestral node to the taxa at the tips of the tree. Therefore it can range from 0 to 1. Genetic distance is used in the NJ method to calculate the lengths of the tree branches.
 
-10. Let's do some things to clean up this tree and make it easier to interpret. The labels on the tree are long and have more information than we need. So, let's **make tip labels simpler**. We can examine them first by calling the `tip.label` component of the `coii.tree` data object
+18. Let's do some things to clean up this tree and make it easier to interpret. The labels on the tree are long and have more information than we need. So, let's **make tip labels simpler**. We can examine them first by calling the `tip.label` component of the `coii.tree` data object.
 
 ```{text}
 > coii.tree$tip.label
@@ -345,7 +348,7 @@ Let's draw the tree again to see the effect that's had.
 draw.tree(coii.tree)
 ```
 
-11. Next, notice that the shark, which is our outgroup for the bony fish, appears in the middle of the tree. Let's **rotate nodes** in the tree to place the outgroup at the top. We'll do this by modifying the `coii.tree` object using the `rotateConstr` function. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. The order of the species listed will be the order in which the nodes appear.
+19. Next, notice that the shark, which is our outgroup for the bony fish, appears in the middle of the tree. Let's **rotate nodes** in the tree to place the outgroup at the top. We'll do this by modifying the `coii.tree` object using the `rotateConstr` function. (Some people prefer the outgroup to be at the bottom. This is a subjective preference, but it's helpful to put the outgroup to one extreme or the other.) This rotation won't change any relationships shown in the tree, but it should make it easier to interpret relationships. The order of the species listed will be the order in which the nodes appear.
 
 The indentation in the code below is optional, but it helps keep the code organized. For example, this indent pattern reminds a reader that the most indented lines are surrounded by the parentheses of the `constraint` argument.
 
@@ -378,7 +381,7 @@ draw.tree(coii.tree)
 
 Now we have the outgroup, "shark", at the top of the tree.
 
-12. Finally, we can label the clade that contains our tetrapod species, the frog and toad, using the `label.clade` function. This function takes several arguments: `tree` is the tree object. The monophyletic group we want to label is defined by `clade`. (If we wanted to use this on a large group, we'd only need to name two taxa in it that define the outer-most members of the group.) The label itself is given by the `text` argument. The last argument `offset` is optional; ot just moves the label a bit to the right so it doesn't run into the tip labels.
+20. Finally, we can label the clade that contains our tetrapod species, the frog and toad, using the `label.clade` function. This function takes several arguments: `tree` is the tree object. The monophyletic group we want to label is defined by `clade`. (If we wanted to use this on a large group, we'd only need to name two taxa in it that define the outer-most members of the group.) The label itself is given by the `text` argument. The last argument `offset` is optional; it just moves the label a bit to the right so it doesn't run into the tip labels.
 
 ```{text}
 > label.clade(
@@ -401,6 +404,4 @@ Use this tree to **answer the questions below** regarding relationships among fi
 - According to this tree, which is the group of fish most closely related to the tetrapods?
 - Explain what the genetic distance for the Lungfish represents.
 - Based on this tree, are the bony fish a monophyletic group? Explain your answer.
-
-
 

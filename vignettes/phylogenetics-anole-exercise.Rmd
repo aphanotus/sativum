@@ -1,7 +1,6 @@
 ---
-title: "Relationships of Anole Lizards"
+title: "Evolutionary Relationships of Anole Lizards"
 author: "Colby College BI164"
-date: "`r format(Sys.time(),'%d %B %Y')`"
 output:
   rmarkdown::html_vignette:
     css: mostlymodest.css
@@ -10,7 +9,7 @@ output:
 vignette: >
   %\VignetteIndexEntry{phylogenetics-anole-exercise}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include = FALSE}
@@ -45,7 +44,7 @@ library(phangorn)
 
 The more than 700 islands of the Caribbean are home to about 150 species of anoles, a closely related group of lizards (genus *Anolis*) that occupy diverse habitats and niches (Figure 1). Research on these lizards is enriching our understanding of evolutionary processes, such as adaptation by natural selection, evolution, and the formation of new species—and it is helping to illuminate how and why there are so many different kinds of living organisms on Earth. 
 
-The evolutionary history of these anoles serve as a strong example of **adaptive radiation**, where a type of organism diversifies from a common ancestor to occupy a variety of available niches in the environment. The isolated nature of these islands (for land dwelling organisms) makes evaluating adaptive radiation in this system particularly attractive since complexities brought by mainland communities are reduced. Additionally, a pattern revealed by their radiation into numerous species each occupying a distinct niche is that this radiation pattern is replicated on each island in the Greater Antilles. This brings up a question of when the replicated radiation occurred in their evolutionary history. Did it occur earlier on in geologic history when the islands were interconnected into larger island body known as the Proto-Antilles or later after the islands were their own distinct landmasses? Before pursuing how to explore an answer to that question, first let’s learn more about the geologic history of the landscape.
+The evolutionary history of these anoles serves as a strong example of **adaptive radiation**, where a type of organism diversifies from a common ancestor to occupy a variety of available niches in the environment. The isolated nature of these islands (for land dwelling organisms) makes evaluating adaptive radiation in this system particularly attractive since complexities brought by mainland communities are reduced. Additionally, a pattern revealed by their radiation into numerous species each occupying a distinct niche is that this radiation pattern is replicated on each island in the Greater Antilles. This brings up a question of when the replicated radiation occurred in their evolutionary history. Did it occur earlier on in geologic history when the islands were interconnected into larger island body known as the Proto-Antilles or later after the islands were their own distinct landmasses? Before pursuing how to explore an answer to that question, first let’s learn more about the geologic history of the landscape.
 
 |     |     |
 | --- | --- |
@@ -87,7 +86,7 @@ Based on various methods of dating, the first ancestors to modern-day *Anolis* a
 
 ## Your Study
 
-Another area of debate is what was the order of events that led this singular ancestral line that first colonized the Proto-Antilles to become the amazing variety of Anolis we see on these islands today- in other words, how did the radiation process happen? Your challenge in this project is to use molecular data and bioinformatics tools to evaluate two competing hypotheses about the radiation of anoles on the Greater Antilles. Did the ancestral anole disperse across the Proto-Antilles and radiate while the islands were a large landmass or did the radiation occur once the islands were separated, either by an expanse of ocean or allopatrically by impassable barriers between what would be the distinct island later. Regardless of the pathway, the radiation events led to speciation of multiple representatives of different ecological morphotypes or **ecomorphs**.
+Another area of debate is what was the order of events that led this singular ancestral line that first colonized the Proto-Antilles to become the amazing variety of *Anolis* we see on these islands today- in other words, how did the radiation process happen? Your challenge in this project is to use molecular data and bioinformatics tools to evaluate two competing hypotheses about the radiation of anoles on the Greater Antilles. Did the ancestral anole disperse across the Proto-Antilles and radiate while the islands were a large landmass or did the radiation occur once the islands were separated, either by an expanse of ocean or allopatrically by impassable barriers between what would be the distinct island later. Regardless of the pathway, the radiation events led to speciation of multiple representatives of different ecological morphotypes or **ecomorphs**.
 
 **The Research Question**: How did adaptive radiation of *Anolis* occur in the Greater Antilles?
 
@@ -121,7 +120,7 @@ Using available nucleotide sequence data as well as computational tools and tech
 - *Single Origin Hypothesis*: radiation into each ecomorph occurred on the Proto-Antilles landmass
 - *Convergence Hypothesis*: radiation into each ecomorph occurred convergently on each of four islands studied
 
-6. Think about how the phylogenetic tree might need to look in terms of who would be most closely related to each other to support each of the hypotheses. For each hypothesis, **make predictions** below as to whether inhabitants of the same island or species from the same ecomorph would be more closely related and thus form their own monophyletic groups. 
+6. Think about how the phylogenetic tree might need to look in terms of who would be most closely related to each other to support each of the hypotheses. For each hypothesis, **make predictions** as to whether inhabitants of the same island or species from the same ecomorph would be more closely related and thus form their own monophyletic groups. 
 
 #### **Molecular Phylogenetic Methods**
 
@@ -175,6 +174,8 @@ This command saves the sequences in the `sheplani.sequence` object and displays 
 
 ```{r fetch, echo=FALSE}
 sheplani.sequence <- fetch.sequence(ids = "AF055966")
+# database = "nuccore", format = "DNAStringSet"
+# are the defaults for those arguements, so they don't need to be supplied here
 ```
 
 
@@ -429,9 +430,9 @@ Methods section should include:
 
 - Study organism subsection about Caribbean anole lizards
 - Study Site subsection about Greater Antilles
-- Data Collection and Analysis subsection describing Part 2 including the molecular data and its the origins, software used, and any manipulations you made to your trees
+- Data Collection and Analysis subsection describing Part 2 including the name of the molecular data and its origins, the software used, and any manipulations you made to your trees
 - Although the majority of sequences were provided to you for sake of time, you should write the Methods giving directions as if you collected it all yourself.
-- Use the table from `anole.natural.history` in your paper if you want to list info about the *Anolis* species.
+- Use the anole natural history figure in your paper if you want to list information about the anole species.
 
 Result section should include:
 
@@ -444,6 +445,5 @@ Discussion section should include:
 - Some responses to your thought questions above may be addressed in the Discussion. It is up to you to determine what constitutes material to be included in the Results versus Discussion section.
 - Any biological explanation for patterns on phylogeny mentioned in the Results
 - Integration of outside sources that relate to the question about origins of anoles
-- Any studies illustrating adaptive radiation and/or evolutionary potential when new species introduced to an island
-- Studies that investigate adaptive radiation of other organisms on islands
+  - Any studies illustrating adaptive radiation and/or evolutionary potential when new species are introduced to an island
 
