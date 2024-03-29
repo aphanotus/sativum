@@ -1,7 +1,7 @@
 Package: sativum
 Type: Package
 Title: Tools for teaching genetics
-Version: 2024.03.25
+Version: 2024.03.29
 Description: Functions and data for teaching genetics. 
     Features classic datasets as well as easy-to-use functions
     suitable for novice R users.
@@ -14,13 +14,14 @@ VignetteBuilder: knitr
 Author: Dave Angelini [aut, cre],
 Maintainer: Dave Angelini <dave.angelini@colby.edu>
 Imports:
-    stringr,
     ape,
-    rentrez,
     Biostrings,
+    rentrez,
     msa,
     phangorn,
-    phylotools
+    phylotools,
+    stringr,
+    viridis
 Suggests: 
     knitr,
     rmarkdown
