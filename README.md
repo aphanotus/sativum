@@ -1,6 +1,6 @@
 # sativum
 
-![](/Users/drangeli/Documents/3.research/github.repos/sativum/Masclef_1891_Pl88_Pisum_sativum_L.jpg)
+![](Masclef_1891_Pl88_Pisum_sativum_L.jpg)
 
 This package provides user-friendly wrapper functions for student activities in an introductory biology lab focusing on evolution and genetics.
 
