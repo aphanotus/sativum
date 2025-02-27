@@ -1,6 +1,6 @@
 # sativum
 
-![](Masclef_1891_Pl88_Pisum_sativum_L.jpg)
+<img src="Masclef_1891_Pl88_Pisum_sativum_L.jpg" style="zoom:150%;" />
 
 This package provides user-friendly wrapper functions for student activities in an introductory biology lab focusing on evolution and genetics.
 
@@ -12,9 +12,7 @@ devtools::install_github("aphanotus/sativum")
 library(sativum)
 ```
 
-## Tasks for Package Completion
-
-### Data sets
+## Data sets
 
 - Data from **Mendel**'s original (1866) study of garden peas heredity, including monohybrid, dihybrid and trihybrid experiments.
 - Data from **East** (1916) on corolla lengths in tobacco flowers. This dataset is often used in genetics courses to present the effects of selection on quantitative traits. Available in the original (wide) format and a tidy, long format. 
@@ -33,7 +31,7 @@ library(sativum)
 >
 > More datasets are in development, so check back soon!
 
-### Functions for introductory phylogenetics
+## Functions for introductory phylogenetics
 
 - `search.for.ncbi.ids`
 - `fetch.sequences` 
@@ -50,7 +48,7 @@ library(sativum)
 - `label.clade` with a colored bar and text, based on tip names (rather than node numbers)
 - `phylogenetic.distance` finds the totals branch lengths separating two tips on a tree
 
-### Vignettes
+## Vignettes
 
 - **[phylogenetics-tetrapod-exercise](vignettes/phylogenetics-tetrapod-exercise.pdf)**: A basic introduction to phylogenetics using tetrapods
 - **[phylogenetics-anole-exercise](vignettes/phylogenetics-anole-exercise.pdf)**: A more advanced introduction to phylogenetics using anoles
