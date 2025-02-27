@@ -1,6 +1,6 @@
 # sativum
 
-<img src="Masclef_1891_Pl88_Pisum_sativum_L.jpg" style="zoom:150%;" />
+![](Masclef_1891_Pl88_Pisum_sativum_L.jpg)
 
 This package provides user-friendly wrapper functions for student activities in an introductory biology lab focusing on evolution and genetics.
 
